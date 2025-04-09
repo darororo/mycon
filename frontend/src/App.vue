@@ -1,11 +1,12 @@
 <template>
-  <LoginButton /><br />
-  <SignUpButton /><br />
+  <UsernameInputField /><br />
+  <PasswordInputField /><br />
+  <EmailInputField /><br />
 </template>
 
 <script setup>
-import SignUpButton from "./components/SignUpButton.vue";
-import LoginButton from "./components/LoginButton.vue";
+import UsernameInputField from "./components/AuthInputField/UsernameInputField.vue";
+import PasswordInputField from "./components/AuthInputField/PasswordInputField.vue";
+import EmailInputField from "./components/AuthInputField/EmailInputField.vue";
 </script>
-
 <style scoped></style>
