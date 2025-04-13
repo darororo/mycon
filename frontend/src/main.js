@@ -4,6 +4,7 @@ import Aura from "@primevue/themes/aura";
 import App from "./App.vue";
 import PrimeVue from "primevue/config";
 import { Icon } from "@iconify/vue";
+import router from "./router";
 
 const app = createApp(App);
 app.component("Icon", Icon);
@@ -12,4 +13,5 @@ app.use(PrimeVue, {
     preset: Aura,
   },
 });
+app.use(router);
 app.mount("#app");
