@@ -1,12 +1,7 @@
 <template>
-  <UsernameInputField /><br />
-  <PasswordInputField /><br />
-  <EmailInputField /><br />
+  <router-view />
 </template>
 
-<script setup>
-import UsernameInputField from "./components/AuthInputField/UsernameInputField.vue";
-import PasswordInputField from "./components/AuthInputField/PasswordInputField.vue";
-import EmailInputField from "./components/AuthInputField/EmailInputField.vue";
-</script>
+<script setup></script>
+
 <style scoped></style>
