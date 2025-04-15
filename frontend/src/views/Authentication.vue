@@ -41,8 +41,8 @@
 </template>
 
 <script setup>
-import AuthInputField from "@/components/AuthInputField/AuthInputField.vue";
-import AuthButton from "@/components/AuthButton/AuthButton.vue";
+import AuthInputField from "@/components/Auth/AuthInputField.vue";
+import AuthButton from "@/components/Auth/AuthButton.vue";
 import UserIcon from "@/assets/icons/authentication/userIcon.vue";
 import PasswordIcon from "@/assets/icons/authentication/passwordIcon.vue";
 import FacebookIcon from "@/assets/icons/authentication/facebookIcon.vue";
