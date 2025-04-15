@@ -3,10 +3,16 @@ import Authentication from "@/views/Authentication.vue";
 
 const routes = [
   {
-    path: "/Authentication/",
-    name: "Authentication",
+    name: "login",
+    path: "/login",
     component: Authentication,
-    props: true,
+    props: { isLogin: true },
+  },
+  {
+    name: "signup",
+    path: "/signup",
+    component: Authentication,
+    props: { isLogin: false },
   },
 ];
 
