@@ -7,6 +7,7 @@ import { Icon } from "@iconify/vue";
 import router from "./router";
 import Card from "primevue/card";
 import Button from "primevue/button";
+import { definePreset } from "@primevue/themes";
 
 const app = createApp(App);
 
