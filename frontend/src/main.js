@@ -16,10 +16,34 @@ app.component("Icon", Icon);
 app.component("Card", Card);
 app.component("Button", Button);
 
-// use PrimeVue with Aura theme
+const MyPreset = definePreset(Aura, {
+  components: {
+    listbox: {
+      shadow: "none",
+      border: {
+        color: "none",
+      },
+      option: {
+        color: "black",
+        focus: {
+          background: "none",
+          color: "black",
+        },
+        selected: {
+          background: "#333a56",
+
+          focus: {
+            background: "#333a56",
+          },
+        },
+      },
+    },
+  },
+});
+
 app.use(PrimeVue, {
   theme: {
-    preset: Aura,
+    preset: MyPreset,
   },
 });
 
