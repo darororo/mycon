@@ -3,32 +3,22 @@
     <template #title>
       <div class="post-header">
         <div class="user-info">
-          <img
-            src="@/assets/images/avatar/v1.jpg"
-            alt="profile"
-            class="user-avatar"
-          />
+          <img :src="avatarUrl" alt="profile" class="user-avatar" />
           <div class="user-details">
-            <span class="user-name">Yem Daro</span>
-            <span class="use-role">Owner Role</span>
+            <span class="user-name">{{ userName }}</span>
+            <span class="use-role">{{ userRole }}</span>
           </div>
         </div>
         <div class="more-action">
           <OptionIcon />
-          <span class="post-time">08:30am-11:00am</span>
+          <span class="post-time">{{ postTime }}</span>
         </div>
       </div>
     </template>
 
     <template #content>
-      <p class="post-text">
-        Contrary to popular belief, Lorem Ipsum is not simply random text...
-      </p>
-      <img
-        src="@/assets/images/dailyPost/v1.png"
-        alt="Construction Work"
-        class="post-image"
-      />
+      <p class="post-status">{{ postStatus }}</p>
+      <img :src="postImageUrl" alt="post-image" class="post-image" />
     </template>
 
     <template #footer>
@@ -58,7 +48,23 @@ const isLiked = ref(false);
 const toggleLike = () => {
   isLiked.value = !isLiked.value;
 };
+const props = defineProps({
+  userName: { type: String, default: "Vuth Menghuor" },
+  userRole: { type: String, default: "Client" },
+  postTime: { type: String, default: "8:30am-5:00pm" },
+  postStatus: {
+    type: String,
+    default:
+      "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur,",
+  },
+  postImageUrl: {
+    type: String,
+    default: "../src/assets/images/dailyPost/v1.png",
+  },
+  avatarUrl: { type: String, default: "../src/assets/images/avatar/v1.jpg" },
+});
 </script>
+
 <style scoped>
 .p-card-body {
   padding: 0;
@@ -77,14 +83,14 @@ const toggleLike = () => {
   border-color: rgba(153, 153, 153, 0.4);
 }
 .user-avatar {
-  height: 36px;
-  width: 36px;
+  height: 40px;
+  width: 40px;
   border-radius: 100%;
 }
 .post-header {
   display: flex;
   justify-content: space-between;
-  align-items: start;
+  align-items: center;
 }
 .user-name {
   font-weight: 500;
@@ -99,14 +105,14 @@ const toggleLike = () => {
 .use-role {
   font-weight: 300;
   font-family: "Montserrat", sans-serif;
-  font-size: 10px;
+  font-size: 12px;
   color: #333;
 }
 .user-details {
   display: flex;
   flex-direction: column;
   margin-left: 12px;
-  line-height: 16px;
+  line-height: 20px;
 }
 .post-time {
   font-weight: 300;
@@ -119,7 +125,7 @@ const toggleLike = () => {
   flex-direction: column;
   align-items: end;
 }
-.post-text {
+.post-status {
   color: #333;
   font-size: 10px;
   font-weight: 400;
