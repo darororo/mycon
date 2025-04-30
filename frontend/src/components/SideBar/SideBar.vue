@@ -52,8 +52,8 @@
             </template>
             <template #option="slotProps">
                 <div class="container03">
-                    <img :alt="slotProps.option.name" :src="`/src/assets/svg/${slotProps.option.icon}`" :class="`flag flag-${slotProps.option} mr-2`" style="width: 32px" />
-                    <div :class="$style.name01">{{ slotProps.option.label }}</div>
+                    <img :alt="slotProps.option.name" :src="`/src/assets/svg/${slotProps.option.icon}`" :class="[`flag flag-${slotProps.option} mr-2`, { 'icon-white': selectedOption === slotProps.option }]" style="width: 32px" />
+                    <div :class="[$style.name01, { 'name011': selectedOption === slotProps.option}]">{{ slotProps.option.label }}</div>
                 </div>
             </template>
         </Listbox>
@@ -129,12 +129,10 @@ const groupedOption = ref([
   .container033 {
     display: flex;
     align-items: center;
-  }
-  
-  .container033 > *:nth-child(2){
-    display: flex;
-    align-items: center;
-    padding-top: 200px;
+    padding-left: 25px;
+    padding-bottom: 10px;
+    color: black;
+    font-family: "Montserrat", sans-serif;
   }
   
   .p-listbox {
@@ -149,10 +147,27 @@ const groupedOption = ref([
     font-size: 18px;
   }
 
+  .icon-white {
+  filter: brightness(0) invert(1);
+  }
+
+  .name011 {
+    font-weight: bold;
+  }
+
+  
   ::v-deep(.p-listbox){
     .p-listbox-option {
       padding-top: 10px;
       padding-left: 30px;
+    }
+
+    #pv_id_0_0 {
+      padding-top:20px;
+    }
+
+    #pv_id_0_8 {
+      padding-top:200px;
     }
   }
 </style>
@@ -160,7 +175,7 @@ const groupedOption = ref([
 <style module>
   .name01 {
     font-size: 18px;
-    /* font-family: "Montserrat", sans-serif; */
+    font-family: "Montserrat", sans-serif;
     padding-left: 10px;
   }
 </style>
