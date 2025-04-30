@@ -41,64 +41,70 @@
 
 
 
-
-
 <template>
   <div class="container0003">
-    <div>
-      <p class="title01">Main Menu</p>
-      <div class="card flex justify-center">
-        <Listbox v-model="selectedCountry" :options="countries" optionLabel="name" class="container003" listStyle="max-height:600px">
+    <div class="card flex justify-center">
+        <Listbox v-model="selectedOption" :options="groupedOption" optionLabel="label" optionGroupLabel="label" optionGroupChildren="items" class="container003" listStyle="max-height:900px">
+            <template #optiongroup="slotProps">
+                <div class="container033">
+                    <div :class="$style.name01">{{ slotProps.option.label }}</div>
+                </div>
+            </template>
             <template #option="slotProps">
                 <div class="container03">
-                    <img :alt="slotProps.option.name" :src="`/src/assets/svg/${slotProps.option.icon}`" :class="`flag flag-${slotProps.option.code.toLowerCase()} mr-2`" style="width: 32px" />
-                    <!-- <user-icon/> -->
-                    <div :class="$style.name01">{{ slotProps.option.name }}</div>
+                    <img :alt="slotProps.option.name" :src="`/src/assets/svg/${slotProps.option.icon}`" :class="`flag flag-${slotProps.option} mr-2`" style="width: 32px" />
+                    <div :class="$style.name01">{{ slotProps.option.label }}</div>
                 </div>
             </template>
         </Listbox>
-      </div>
-    </div>
-  
-    <div>
-      <p class="title01">User Page</p>
-      <div class="card flex justify-center">
-        <div class="title01">Main Menu</div>
-        <Listbox v-model="selectedOption1" :options="options1" optionLabel="name" class="container003" listStyle="max-height:600px">
-            <template #option="slotProps">
-                <div class="container03">
-                    <img :alt="slotProps.option.name" :src="`/src/assets/svg/${slotProps.option.icon}`" :class="`flag flag-${slotProps.option.code.toLowerCase()} mr-2`" style="width: 32px" />
-                    <!-- <user-icon/> -->
-                    <div :class="$style.name01">{{ slotProps.option.name }}</div>
-                </div>
-            </template>
-        </Listbox>
-      </div>
     </div>
   </div>
 </template>
+
+<!-- <template>
+  <div class="container0003">
+    <div class="card flex justify-center">
+      <Listbox v-model="selectedCountry" :options="countries" optionLabel="label" optionGroupLabel="label" optionGroupChildren="items" class="container003" listStyle="max-height:600px">
+          <template #option="slotProps">
+              <div class="container03">
+                  <img :alt="slotProps.option.name" :src="`/src/assets/svg/${slotProps.option.icon}`" :class="`flag flag-${slotProps.option.code.toLowerCase()} mr-2`" style="width: 32px" />
+                  <div :class="$style.name01">{{ slotProps.option.name }}</div>
+              </div>
+          </template>
+      </Listbox>
+    </div>
+  </div>
+</template> -->
 
 <script setup>
 import { Listbox } from "primevue";
 import { ref } from "vue";
 
-const selectedCountry = ref();
-const countries = ref([
-  { name: 'Dashboard', code: 'DASH', icon:'dashboard-icon.svg' },
-  { name: 'Timeline', code: 'TIME', icon:'timeline-icon.svg' },
-  { name: 'Worksheet', code: 'WORK', icon:'worksheet-icon.svg' },
-  { name: 'Management', code: 'MAN', icon:'manage-icon.svg' },
-  { name: 'Projects', code: 'PRO', icon:'project-icon.svg' },
-  { name: 'Inventory', code: 'INVEN', icon:'inven-icon.svg' },
-  { name: 'Billing', code: 'BILL', icon: 'bill-icon.svg' },
-]);
+const selectedOption = ref();
+const groupedOption = ref([
+  {
+    label: 'Main Menu',
+    items: [
+      { label: 'Dashboard', value: 'DASH', icon:'dashboard-icon.svg' },
+      { label: 'Timeline', value: 'TIME', icon:'timeline-icon.svg' },
+      { label: 'Worksheet', value: 'WORK', icon:'worksheet-icon.svg' },
+      { label: 'Management', value: 'MAN', icon:'manage-icon.svg' },
+      { label: 'Projects', value: 'PRO', icon:'project-icon.svg' },
+      { label: 'Inventory', value: 'INVEN', icon:'inven-icon.svg' },
+      { label: 'Billing', value: 'BILL', icon: 'bill-icon.svg' },
+    ]
+  },
 
-const selectedOption1 = ref();
-const options1 = ref([
-  {name: 'App & Integration', code: 'APP', icon: 'appi-icon.svg'},
-  {name: 'Settings', code: 'SET', icon: 'setting-icon.svg'},
-  {name: 'Help & Support', code: 'HELP', icon: 'help-icon.svg'},
-  {name: 'Logout', code: 'OUT', icon: 'logout-icon.svg'},
+  {
+    label: 'User Page',
+    items: [
+      { label: 'App & Integration', value: 'APP', icon: 'appi-icon.svg' },
+      { label: 'Settings', value: 'SET', icon: 'setting-icon.svg' },
+      { label: 'Help & Support', value: 'HELP', icon: 'help-icon.svg' },
+      { label: 'Logout', value: 'OUT', icon: 'logout-icon.svg' },
+    ]
+  },
+  
 ])
 </script>
 
@@ -108,7 +114,7 @@ const options1 = ref([
     width: 300px;
     background-color: aliceblue;
     height: 900px;
-    border-radius: 15px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -120,6 +126,17 @@ const options1 = ref([
     align-items: center;
   }
 
+  .container033 {
+    display: flex;
+    align-items: center;
+  }
+  
+  .container033 > *:nth-child(2){
+    display: flex;
+    align-items: center;
+    padding-top: 200px;
+  }
+  
   .p-listbox {
     background-color: aliceblue;
     width: 300px;
@@ -143,6 +160,7 @@ const options1 = ref([
 <style module>
   .name01 {
     font-size: 18px;
+    /* font-family: "Montserrat", sans-serif; */
     padding-left: 10px;
   }
 </style>

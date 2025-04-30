@@ -19,6 +19,7 @@ app.component("Button", Button);
 const MyPreset = definePreset(Aura, {
   components: {
     listbox: {
+      height: "900px",
       shadow: "none",
       border: {
         color: "none",
