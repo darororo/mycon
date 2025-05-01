@@ -25,14 +25,13 @@ const MyPreset = definePreset(Aura, {
         color: "none",
       },
       option: {
-        color: "black",
+        color: "#333333",
         focus: {
           background: "none",
-          color: "black",
+          color: "#333333",
         },
         selected: {
           background: "#333a56",
-
           focus: {
             background: "#333a56",
           },
