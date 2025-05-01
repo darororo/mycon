@@ -8,10 +8,17 @@ import router from "./router";
 import Card from "primevue/card";
 import Button from "primevue/button";
 import { definePreset } from "@primevue/themes";
+import "primeicons/primeicons.css";
 
 const app = createApp(App);
 
 // Register global components
+import Button from "primevue/button";
+import Avatar from "primevue/avatar";
+import Popover from "primevue/popover";
+
+app.component("Avatar", Avatar);
+app.component("Popover", Popover);
 app.component("Icon", Icon);
 app.component("Card", Card);
 app.component("Button", Button);
