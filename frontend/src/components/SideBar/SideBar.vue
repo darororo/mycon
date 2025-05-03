@@ -108,7 +108,7 @@ const groupedOption = ref([
 }
 
 .p-listbox {
-  background-color: #f4f4f4;
+  background-color: #f6f8fa;
   width: 300px;
   height: 1010px;
   border-radius: 20px;

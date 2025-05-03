@@ -25,6 +25,9 @@ const MyPreset = definePreset(Aura, {
         color: "none",
       },
       option: {
+        border: {
+          radius: "20px",
+        },
         color: "#333333",
         focus: {
           background: "none",
