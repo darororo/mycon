@@ -4,19 +4,15 @@ import Aura from "@primevue/themes/aura";
 import App from "./App.vue";
 import PrimeVue from "primevue/config";
 import { Icon } from "@iconify/vue";
+import { definePreset } from "@primevue/themes";
 import router from "./router";
 import Card from "primevue/card";
 import Button from "primevue/button";
-import { definePreset } from "@primevue/themes";
+import Avatar from "primevue/avatar";
+import Popover from "primevue/popover";
 import "primeicons/primeicons.css";
 
 const app = createApp(App);
-
-// Register global components
-import Button from "primevue/button";
-import Avatar from "primevue/avatar";
-import Popover from "primevue/popover";
-
 app.component("Avatar", Avatar);
 app.component("Popover", Popover);
 app.component("Icon", Icon);
