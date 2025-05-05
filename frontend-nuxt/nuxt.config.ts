@@ -1,10 +1,28 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 import Aura from "@primeuix/themes/aura";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
+  // alias: {
+  //   "~": "/",
+  //   "@": "/<srcDir>",
+  //   "~~": "/<rootDir>",
+  //   "@@": "/<rootDir>",
+  //   "#shared": "/<rootDir>/shared",
+  //   assets: "/<srcDir>/assets",
+  //   public: "/<srcDir>/public",
+  //   "#build": "/<rootDir>/.nuxt",
+  //   "#internal/nuxt/paths": "/<rootDir>/.nuxt/paths.mjs",
+  // },
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
+
+  css: ["/assets/css/main.css"],
 
   modules: [
     "@nuxt/eslint",
@@ -15,6 +33,13 @@ export default defineNuxtConfig({
     "@primevue/nuxt-module",
   ],
 
+  fonts: {
+    families: [
+      { name: "Montserrat", provider: "google" },
+      { name: "Montserrat Subrayada" },
+    ],
+  },
+
   primevue: {
     options: {
       theme: {
@@ -22,7 +47,7 @@ export default defineNuxtConfig({
       },
     },
     components: {
-      include: ["Button"],
+      include: ["Button", "InputText"],
     },
   },
 });
