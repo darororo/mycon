@@ -24,6 +24,12 @@ export default defineNuxtConfig({
 
   css: ["/assets/css/main.css"],
 
+  // components: [
+  //   {
+  //     pathPrefix: false,
+  //   },
+  // ],
+
   modules: [
     "@nuxt/eslint",
     "@nuxt/fonts",
@@ -47,7 +53,7 @@ export default defineNuxtConfig({
       },
     },
     components: {
-      include: ["Button", "InputText"],
+      include: ["Button", "InputText", "Avatar", "Popover"],
     },
   },
 });
