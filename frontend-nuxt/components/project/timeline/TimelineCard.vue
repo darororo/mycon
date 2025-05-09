@@ -86,7 +86,7 @@ defineProps({
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1.5rem;
 }
 
 .event-card-header {
@@ -94,7 +94,8 @@ defineProps({
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem;
-  border: 2px solid #666666;
+  border: 1px solid #666666;
+  padding: 0 0 20px 0;
   border-top: none;
   border-left: none;
   border-right: none;
@@ -110,7 +111,7 @@ defineProps({
 .event-card-info {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 1rem;
   font-family: "Montserrat", sans-serif;
 }
 
@@ -121,6 +122,9 @@ defineProps({
 }
 
 .event-card-info p {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 16px;
   font-weight: 400;
   color: #999999;
@@ -134,6 +138,9 @@ defineProps({
 }
 
 .event-card-location {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 16px;
   font-family: "Montserrat", sans-serif;
   color: #999999;
