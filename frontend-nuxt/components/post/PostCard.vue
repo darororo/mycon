@@ -18,14 +18,15 @@
 
     <template #content>
       <p class="post-status">{{ postStatus }}</p>
-      <img :src="postImageUrl" alt="post-image" class="w-[100%] py-2" />
+      <img :src="postImageUrl" alt="post-image" class="w-[100%] h-[360px] py-2" />
     </template>
 
     <template #footer>
       <hr />
       <div class="post-active">
         <Button :class="{ 'text-blue-400': isLiked }" @click="toggleLike">
-          <Icon name="ant-design:like-outlined" size="20" :class="{ 'text-blue-400': isLiked }" />
+          <Icon :name="isLiked ? 'mdi:like' : 'mdi:like-outline'" size="20" class="fill-red-500"
+            :class="{ 'text-blue-400': isLiked }" />
           <span :class="{ 'text-blue-400': isLiked }">Like</span>
         </Button>
         <Button class="flex items-center">
@@ -56,7 +57,7 @@ defineProps({
   },
   postImageUrl: {
     type: String,
-    default: "https://picsum.photos/id/237/200/300",
+    default: "https://picsum.photos/200/300?grayscale",
   },
   avatarUrl: { type: String, default: "https://picsum.photos/id/237/200/300" },
 });
