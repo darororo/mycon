@@ -1,180 +1,198 @@
 <template>
-    <div class="card">
-        <Toolbar>
-            <template #start>
-                <div class="start-section">
-                    <!-- Brand Logo, just a Placeholder :DD -->
-                    <svg width="67" height="41" viewBox="0 0 67 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M45.0353 4.66312C45.8331 3.77669 46.7195 3.04539 47.6281 2.46921C49.2236 1.47198 50.9079 0.940125 52.6364 0.940125V15.411C51.3732 11.0232 48.6475 7.25591 45.0353 4.66312ZM66.5533 40.9401H15.2957C6.87461 40.9401 0.0712891 34.1146 0.0712891 25.7157C0.0712891 17.6714 6.3206 11.0675 14.232 10.5135V0.940125C16.0048 0.940125 17.7555 1.44982 19.3954 2.46921C20.304 3.02323 21.1904 3.75453 21.9882 4.59663C25.2458 2.31409 29.1904 0.984446 33.4674 0.984446C33.4674 10.2254 30.1433 20.9734 19.3289 20.9955H33.3566C32.9577 19.2005 31.3178 17.8709 29.3677 17.8487H37.5228C35.5727 17.8487 33.9328 19.2005 33.5339 21.0177H46.6087C49.2236 21.0177 51.8164 21.5274 54.2541 22.5468C56.6696 23.544 58.8857 25.0288 60.725 26.8681C62.5865 28.7296 64.0491 30.9235 65.0464 33.339C66.0436 35.7324 66.5533 38.3252 66.5533 40.9401ZM22.8525 10.7795C23.1849 11.6437 24.0713 12.6188 25.3123 13.3279C26.5533 14.0371 27.8386 14.3252 28.7472 14.1922C28.4148 13.3279 27.5284 12.3529 26.2874 11.6437C25.0464 10.9346 23.761 10.6465 22.8525 10.7795ZM41.5117 13.3279C40.2707 14.0371 38.9854 14.3252 38.0768 14.1922C38.4092 13.3279 39.2957 12.3529 40.5367 11.6437C41.7777 10.9346 43.063 10.6465 43.9716 10.7795C43.6613 11.6437 42.7527 12.6188 41.5117 13.3279Z"
-                            fill="#283841"></path>
-                    </svg>
-                    <span class="logo-name">CONSTRUCTION</span>
-                </div>
-                <!-- <hr class="line-left" /> -->
-            </template>
+  <div class="card">
+    <Toolbar
+      style="
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+          rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        border-color: rgb(204, 204, 204);
+        background-color: #f4f4f4;
+      "
+    >
+      <template #start>
+        <div class="start-section">
+          <Icon name="simple-icons:primevue" size="34" style="color: #333" />
+          <span class="logo-name">CONSTRUCTION</span>
+        </div>
+        <hr class="line-left" />
+      </template>
 
-            <template #center>
-                <div class="center-section">
-                    <!-- Search Icon -->
-                    <Icon name="material-symbols:search" size="28" class="relative left-[40px]" />
-                    <InputText class="search-bar" placeholder="Search for content" />
-                </div>
-            </template>
+      <template #center>
+        <div class="center-section">
+          <Icon
+            name="material-symbols:search-rounded"
+            size="28"
+            class="relative left-[42px]"
+            style="color: grey"
+          />
+          <InputText class="search-bar" placeholder="Search for content" />
+        </div>
+      </template>
 
-            <template #end>
-                <div class="end-section">
-                    <div class="tool-bar-group">
-                        <div class="notification-alert">
-                            <span class="info-language">{{ language }}</span>
-                            <!-- Email Icon -->
-                            <Icon name="ic:outline-email" size="32" />
-                            <!-- Notification Bell Icon -->
-                            <Icon name="mdi:bell-ring-outline" size="32" />
-                        </div>
-                        <hr class="line-right" />
-                        <div class="account-menu">
-                            <img :src="urlProfile" alt="profile" class="user-profile" />
-                            <div class="username-role">
-                                <span class="name">{{ name }}</span>
-                                <span class="role">{{ role }}</span>
-                            </div>
-                            <!-- <Icon name="ph:line-vertical" /> -->
-                        </div>
-                    </div>
-                </div>
-            </template>
-        </Toolbar>
-    </div>
+      <template #end>
+        <div class="end-section">
+          <div class="tool-bar-group">
+            <div class="notification-alert">
+              <span class="info-language">{{ language }}</span>
+              <Icon name="ic:outline-email" size="26" style="color: #333" />
+              <Icon
+                name="mdi:bell-ring-outline"
+                size="26"
+                style="color: #333"
+              />
+            </div>
+            <hr class="line-right" />
+            <div class="account-menu">
+              <img :src="urlProfile" alt="profile" class="user-profile" />
+              <div class="username-role">
+                <span class="name">{{ name }}</span>
+                <span class="role">{{ role }}</span>
+              </div>
+              <Icon
+                name="ion:chevron-down-sharp"
+                size="22"
+                style="color: #333; cursor: pointer"
+              />
+            </div>
+          </div>
+        </div>
+      </template>
+    </Toolbar>
+  </div>
 </template>
 
 <script setup>
 import Toolbar from "primevue/toolbar";
 defineProps({
-    language: {
-        type: String,
-        default: "Cambodia",
-    },
-    name: {
-        type: String,
-        default: "Jonh Cena",
-    },
-    role: {
-        type: String,
-        default: "Super admin",
-    },
-    urlProfile: {
-        type: String,
-        default: "https://picsum.photos/id/237/200/300",
-    },
+  language: {
+    type: String,
+    default: "Cambodia",
+  },
+  name: {
+    type: String,
+    default: "Jonh Cena",
+  },
+  role: {
+    type: String,
+    default: "Super admin",
+  },
+  urlProfile: {
+    type: String,
+    default:
+      "https://i.pinimg.com/736x/8f/86/50/8f8650ffcdfda6f1767a99565d3a4402.jpg",
+  },
 });
 </script>
 
 <style scoped>
 .start-section {
-    display: flex;
-    align-items: center;
-    padding-left: 20px;
-    gap: 4px;
-}
-
-:deep(.p-toolbar) {
-    /* background-color: white; */
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  gap: 1rem;
 }
 
 .logo-name {
-    font-size: 20px;
-    color: white;
-    font-family: "Montserrat", sans-serif;
-    font-weight: 600;
+  font-size: 20px;
+  color: #333;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
 }
 
 .end-section {
-    display: flex;
-    align-items: center;
-    padding-right: 20px;
+  display: flex;
+  align-items: center;
+  padding-right: 20px;
 }
 
 .search-bar {
-    padding: 0 20px 0 50px;
-    width: 650px;
-    height: 42px;
-    border-radius: 100px;
-    font-family: "Montserrat", sans-serif;
-    font-size: 14px;
+  padding: 0 20px 0 50px;
+  width: 650px;
+  height: 42px;
+  border-radius: 100px;
+  font-family: "Montserrat", sans-serif;
+  background-color: transparent;
+  color: #333;
+  font-size: 14px;
+  border: 1px solid rgb(204, 204, 204);
+}
+.search-bar:hover {
+  border-color: rgb(204, 204, 204);
 }
 
 .center-section {
-    display: flex;
-    align-items: center;
-    gap: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .search-icon {
-    position: relative;
-    left: 44px;
+  position: relative;
+  left: 44px;
 }
 
 .notification-alert {
-    display: flex;
-    align-items: center;
-    gap: 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
 }
 
 .tool-bar-group {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .info-language {
-    font-size: 16px;
-    font-family: "Montserrat", sans-serif;
-    color: white;
-    font-weight: 500;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+  color: #333;
+  font-weight: 300;
 }
 
 .user-profile {
-    height: 34px;
-    border-radius: 100px;
+  height: 34px;
+  width: auto;
+  border-radius: 100%;
 }
 
 .account-menu {
-    display: flex;
-    align-items: center;
-    gap: 18px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
 }
 
 .username-role {
-    display: flex;
-    flex-direction: column;
-    font-family: "Montserrat", sans-serif;
-    line-height: 18px;
+  display: flex;
+  flex-direction: column;
+  font-family: "Montserrat", sans-serif;
+  line-height: 18px;
 }
 
 .name {
-    font-weight: 500;
-    font-size: 14px;
+  font-weight: 400;
+  font-size: 14px;
+  color: #333;
 }
 
 .role {
-    font-size: 12px;
-    color: grey;
+  font-size: 12px;
+  color: grey;
+  font-weight: 300;
 }
 
 .line-right {
-    width: 36px;
-    transform: rotate(90deg);
-    border: 1px solid grey;
-    border-radius: 10px;
+  width: 36px;
+  transform: rotate(90deg);
+  border: 1px solid rgb(204, 204, 204);
+  border-radius: 10px;
 }
 
 .line-left {
-    position: relative;
-    width: 36px;
-    transform: rotate(90deg);
-    border: 1px solid grey;
-    border-radius: 10px;
-    left: 110px;
+  position: relative;
+  width: 36px;
+  transform: rotate(90deg);
+  border: 1px solid rgb(204, 204, 204);
+  border-radius: 10px;
+  left: 110px;
 }
 </style>
