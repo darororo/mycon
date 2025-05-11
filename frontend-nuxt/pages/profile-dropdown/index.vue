@@ -1,13 +1,7 @@
-<script setup lang="ts">
-import ProfileDropdown from '~/components/user/ProfileDropdown.vue';
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
-    <NuxtLayout>
-        <ProfileDropdown />
-        <p class="text-red-900">hello</p>
-    </NuxtLayout>
-
-
+  <NuxtLayout>
+    <!-- <div class="text bg-red-700">click</div> -->
+  </NuxtLayout>
 </template>

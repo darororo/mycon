@@ -16,9 +16,6 @@
 // import EmailIcon from "@/assets/icons/authentication/emailIcon.vue";
 // import { ref } from "vue";
 // import router from "@/router";
-
-
-
 </script>
 
 <style scoped>
@@ -86,7 +83,7 @@
   margin-top: 50px;
 }
 
-.signup-text>a {
+.signup-text > a {
   padding-left: 4px;
   font-weight: 600;
   text-decoration: none;

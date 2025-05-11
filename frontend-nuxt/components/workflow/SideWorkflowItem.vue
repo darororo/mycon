@@ -2,7 +2,11 @@
   <Card>
     <template #content>
       <div class="card-header">
-        <Icon name="teenyicons:tick-circle-outline" size="32" class="text-[#3356E0]" />
+        <Icon
+          name="teenyicons:tick-circle-outline"
+          size="32"
+          class="text-[#3356E0]"
+        />
         <p class="card-status-message">{{ statusMessage }}</p>
         <OptionIcon />
       </div>
@@ -15,13 +19,11 @@
 </template>
 
 <script setup>
-
 const statusMessage = ref(
   "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source."
 );
 const userRole = ref("Manager");
 const timestamp = ref("3 days ago");
-
 </script>
 <style scoped>
 :deep(.p-card-body) {
