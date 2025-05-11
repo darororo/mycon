@@ -1,35 +1,33 @@
 <template>
-  <div class="container0003">
-    <div class="card flex justify-center">
-      <Listbox v-model="selectedOption" :options="groupedOption" optionLabel="label" optionGroupLabel="label"
-        optionGroupChildren="items" class="container003" listStyle="max-height:1000px">
-        <template #optiongroup="slotProps">
-          <div class="container033">
-            <div :class="$style.name01">{{ slotProps.option.label }}</div>
-          </div>
-        </template>
-        <template #option="slotProps">
-          <div class="container03" :class="{
-            'selected-option': selectedOption === slotProps.option,
-          }">
-            <!-- <Img :alt="slotProps.option.name" :src="`/src/assets/svg/${slotProps.option.icon}`" class="icon" :class="[
+  <div class="card">
+    <Listbox v-model="selectedOption" :options="groupedOption" optionLabel="label" optionGroupLabel="label"
+      optionGroupChildren="items" class="container003" listStyle="max-height:1000px">
+      <template #optiongroup="slotProps">
+        <div class="container033">
+          <div :class="$style.name01">{{ slotProps.option.label }}</div>
+        </div>
+      </template>
+      <template #option="slotProps">
+        <div class="container03" :class="{
+          'selected-option': selectedOption === slotProps.option,
+        }">
+          <!-- <Img :alt="slotProps.option.name" :src="`/src/assets/svg/${slotProps.option.icon}`" class="icon" :class="[
               `flag flag-${slotProps.option} mr-2`,
               { 'icon-white': selectedOption === slotProps.option },
             ]" style="width: 28px; height: auto" /> -->
-            <Icon name="mdi:emoticon-poop-outline" size="32" alt="slotProps.option.name" class="icon" :class="[
-              `flag flag-${slotProps.option} mr-2`,
-              { 'icon-white': selectedOption === slotProps.option },
-            ]" />
-            <div :class="[
-              $style.name01,
-              { name011: selectedOption === slotProps.option },
-            ]">
-              {{ slotProps.option.label }}
-            </div>
+          <Icon name="mdi:emoticon-poop-outline" size="32" alt="slotProps.option.name" class="icon" :class="[
+            `flag flag-${slotProps.option} mr-2`,
+            { 'icon-white': selectedOption === slotProps.option },
+          ]" />
+          <div :class="[
+            $style.name01,
+            { name011: selectedOption === slotProps.option },
+          ]">
+            {{ slotProps.option.label }}
           </div>
-        </template>
-      </Listbox>
-    </div>
+        </div>
+      </template>
+    </Listbox>
   </div>
 </template>
 

@@ -4,12 +4,10 @@ const router = useRouter();
 function switchPage() {
     router.push({ name: 'auth-login' });
 }
-const layout = 'user-auth';
-
 </script>
 
 <template>
-    <NuxtLayout :name="layout">
+    <NuxtLayout name="auth">
         <div class="login-welcome-section">
             <h1 class="welcome-title">WELCOME<br />BACK!</h1>
             <p class="welcome-description">

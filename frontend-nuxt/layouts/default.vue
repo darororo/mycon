@@ -7,11 +7,11 @@ import TopbarComponent from '~/components/navigation/TopbarComponent.vue';
 <template>
     <div>
         <TopbarComponent />
-
-        <slot></slot>
-
-        <div class="absolute left-0 top-20">
+        <div class="relative top-8 left-0 flex">
             <SidebarComponent />
+            <div class="relative m-8">
+                <slot></slot>
+            </div>
         </div>
     </div>
 

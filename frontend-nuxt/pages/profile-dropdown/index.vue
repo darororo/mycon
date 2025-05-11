@@ -4,8 +4,10 @@ import ProfileDropdown from '~/components/user/ProfileDropdown.vue';
 </script>
 
 <template>
-    <div>
+    <NuxtLayout>
         <ProfileDropdown />
-    </div>
+        <p class="text-red-900">hello</p>
+    </NuxtLayout>
+
 
 </template>
