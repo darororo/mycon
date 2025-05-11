@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" style="padding-bottom: 16px">
     <Toolbar
       style="
         box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
@@ -10,7 +10,7 @@
     >
       <template #start>
         <div class="start-section">
-          <Icon name="simple-icons:primevue" size="34" style="color: #333" />
+          <Icon name="simple-icons:primevue" size="30" style="color: #333" />
           <span class="logo-name">CONSTRUCTION</span>
         </div>
         <hr class="line-left" />
@@ -20,7 +20,7 @@
         <div class="center-section">
           <Icon
             name="material-symbols:search-rounded"
-            size="28"
+            size="24"
             class="relative left-[42px]"
             style="color: grey"
           />
@@ -42,7 +42,8 @@
             </div>
             <hr class="line-right" />
             <div class="account-menu">
-              <img :src="urlProfile" alt="profile" class="user-profile" />
+              <!-- <img :src="urlProfile" alt="profile" class="user-profile" /> -->
+              <UserProfileDropdown />
               <div class="username-role">
                 <span class="name">{{ name }}</span>
                 <span class="role">{{ role }}</span>
@@ -50,7 +51,7 @@
               <Icon
                 name="ion:chevron-down-sharp"
                 size="22"
-                style="color: #333; cursor: pointer"
+                style="color: #333"
               />
             </div>
           </div>
@@ -84,6 +85,9 @@ defineProps({
 </script>
 
 <style scoped>
+.p-toolbar {
+  padding: 10px 10px 10px 10px !important;
+}
 .start-section {
   display: flex;
   align-items: center;
@@ -92,7 +96,7 @@ defineProps({
 }
 
 .logo-name {
-  font-size: 20px;
+  font-size: 18px;
   color: #333;
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
@@ -107,12 +111,13 @@ defineProps({
 .search-bar {
   padding: 0 20px 0 50px;
   width: 650px;
-  height: 42px;
+  height: 36px;
   border-radius: 100px;
   font-family: "Montserrat", sans-serif;
   background-color: transparent;
-  color: #333;
+  color: grey;
   font-size: 14px;
+  font-weight: 500;
   border: 1px solid rgb(204, 204, 204);
 }
 .search-bar:hover {
@@ -143,10 +148,10 @@ defineProps({
 }
 
 .info-language {
-  font-size: 16px;
+  font-size: 15px;
   font-family: "Montserrat", sans-serif;
   color: #333;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .user-profile {
