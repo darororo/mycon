@@ -8,7 +8,7 @@
       optionGroupChildren="items"
       class="container003"
       listStyle="max-height:1000px"
-      :focusOnHover="false"
+      :dt="mylist"
     >
       <template #optiongroup="slotProps">
         <div
@@ -53,6 +53,12 @@
 <script setup>
 import { Listbox } from "primevue";
 import { ref } from "vue";
+
+const mylist = {
+  option: {
+    focus: { background: "none", color: "#333" },
+  },
+};
 
 const selectedOption = ref();
 const groupedOption = ref([
@@ -115,9 +121,9 @@ const groupedOption = ref([
   background-color: transparent;
 }
 ::v-deep(
-    .p-listbox .p-listbox-list .p-listbox-option.p-listbox-option-selected
-  ) {
-  background-color: yellow !important;
+  .p-listbox .p-listbox-list .p-listbox-option.p-listbox-option-selected
+) {
+  background-color: #333 !important;
 }
 .with-margin {
   padding-top: 150px;
@@ -153,7 +159,8 @@ const groupedOption = ref([
   height: 860px;
   border-radius: 10px;
   padding: 0 10px 0 10px;
-  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px,
+  box-shadow:
+    rgba(0, 0, 0, 0.08) 0px 2px 4px,
     rgba(27, 31, 35, 0.25) 0px 0px 0px 1px;
 }
 
