@@ -96,7 +96,7 @@ defineProps({
 }
 
 .logo-name {
-  font-size: 18px;
+  font-size: 16px;
   color: #333;
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
@@ -112,7 +112,7 @@ defineProps({
   padding: 0 20px 0 50px;
   width: 650px;
   height: 36px;
-  border-radius: 100px;
+  border-radius: 20px;
   font-family: "Montserrat", sans-serif;
   background-color: transparent;
   color: grey;

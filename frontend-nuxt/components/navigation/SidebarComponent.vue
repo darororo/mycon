@@ -1,28 +1,47 @@
 <template>
   <div class="card">
-    <Listbox v-model="selectedOption" :options="groupedOption" optionLabel="label" optionGroupLabel="label"
-      optionGroupChildren="items" class="container003" listStyle="max-height:1000px">
+    <Listbox
+      v-model="selectedOption"
+      :options="groupedOption"
+      optionLabel="label"
+      optionGroupLabel="label"
+      optionGroupChildren="items"
+      class="container003"
+      listStyle="max-height:1000px"
+      :focusOnHover="false"
+    >
       <template #optiongroup="slotProps">
-        <div class="container033">
-          <div :class="$style.name01">{{ slotProps.option.label }}</div>
+        <div
+          class="container033"
+          :class="{
+            'with-margin': slotProps.option.label === 'USER PAGE',
+          }"
+        >
+          <div>{{ slotProps.option.label }}</div>
         </div>
       </template>
       <template #option="slotProps">
-        <div class="container03" :class="{
-          'selected-option': selectedOption === slotProps.option,
-        }">
-          <!-- <Img :alt="slotProps.option.name" :src="`/src/assets/svg/${slotProps.option.icon}`" class="icon" :class="[
-              `flag flag-${slotProps.option} mr-2`,
+        <div
+          class="container03"
+          :class="{
+            'selected-option': selectedOption === slotProps.option,
+          }"
+        >
+          <Icon
+            :name="slotProps.option.icon"
+            size="22"
+            class="icon"
+            :class="[
+              `flag flag-${slotProps.option.value} mr-2`,
               { 'icon-white': selectedOption === slotProps.option },
-            ]" style="width: 28px; height: auto" /> -->
-          <Icon name="mdi:emoticon-poop-outline" size="32" alt="slotProps.option.name" class="icon" :class="[
-            `flag flag-${slotProps.option} mr-2`,
-            { 'icon-white': selectedOption === slotProps.option },
-          ]" />
-          <div :class="[
-            $style.name01,
-            { name011: selectedOption === slotProps.option },
-          ]">
+            ]"
+          />
+          <div
+            :class="[
+              // $style.name01,
+              { name011: selectedOption === slotProps.option },
+            ]"
+          >
             {{ slotProps.option.label }}
           </div>
         </div>
@@ -38,36 +57,71 @@ import { ref } from "vue";
 const selectedOption = ref();
 const groupedOption = ref([
   {
-    label: "Main Menu",
+    label: "MAIN MENU",
     items: [
-      { label: "Dashboard", value: "DASH", icon: "mdi:emoticon-poop-outline" },
-      { label: "Timeline", value: "TIME", icon: "mdi:emoticon-poop-outline" },
-      { label: "Worksheet", value: "WORK", icon: "mdi:emoticon-poop-outline" },
-      { label: "Management", value: "MAN", icon: "mdi:emoticon-poop-outline" },
-      { label: "Projects", value: "PRO", icon: "mdi:emoticon-poop-outline" },
-      { label: "Inventory", value: "INVEN", icon: "mdi:emoticon-poop-outline" },
-      { label: "Billing", value: "BILL", icon: "mdi:emoticon-poop-outline" },
+      {
+        label: "Dashboard",
+        value: "DASH",
+        icon: "material-symbols:dashboard-rounded",
+      },
+      {
+        label: "Timeline",
+        value: "TIME",
+        icon: "vaadin:chart-timeline",
+      },
+      { label: "Worksheet", value: "WORK", icon: "material-symbols:flowsheet" },
+      { label: "Management", value: "MAN", icon: "pixel:management" },
+      { label: "Projects", value: "PRO", icon: "eos-icons:project" },
+      { label: "Inventory", value: "INVEN", icon: "ic:baseline-inventory" },
+      { label: "Billing", value: "BILL", icon: "medical-icon:i-billing" },
     ],
   },
 
   {
-    label: "User Page",
+    label: "USER PAGE",
     items: [
-      { label: "App & Integration", value: "APP", icon: "appi-icon.svg" },
-      { label: "Settings", value: "SET", icon: "setting-icon.svg" },
-      { label: "Help & Support", value: "HELP", icon: "help-icon.svg" },
-      { label: "Logout", value: "OUT", icon: "logout-icon.svg" },
+      {
+        label: "App & Integration",
+        value: "APP",
+        icon: "icon-park-solid:more-app",
+      },
+      { label: "Settings", value: "SET", icon: "uil:setting" },
+      { label: "Help & Support", value: "HELP", icon: "material-symbols:help" },
+      { label: "Logout", value: "OUT", icon: "material-symbols:logout" },
     ],
   },
 ]);
 </script>
 
 <style scoped>
-::v-deep(.p-listbox-option.p-listbox-option-selected),
-::v-deep(.p-listbox-option.p-focus) {
-  border-radius: 14px;
+::v-deep(.p-listbox-option.p-listbox-option-selected) {
+  border-radius: 100px;
+  background-color: #333 !important;
 }
-
+::v-deep(.p-listbox-list) {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+::v-deep(.p-listbox-option-group) {
+  padding: 0;
+  margin-top: 20px;
+}
+::v-deep(.p-listbox .p-listbox-list .p-listbox-option.p-listbox-option:hover) {
+  background-color: none !important;
+  color: white;
+}
+::v-deep(.p-listbox-option) {
+  background-color: transparent;
+}
+::v-deep(
+    .p-listbox .p-listbox-list .p-listbox-option.p-listbox-option-selected
+  ) {
+  background-color: yellow !important;
+}
+.with-margin {
+  padding-top: 150px;
+}
 .container0003 {
   height: auto;
   display: flex;
@@ -75,61 +129,65 @@ const groupedOption = ref([
   justify-content: space-between;
   padding-bottom: 20px;
 }
-
 .container03 {
   display: flex;
   position: relative;
   align-items: center;
+  gap: 2px;
   bottom: 6px;
 }
 
 .container033 {
-  padding-left: 25px;
+  padding-left: 40px;
   padding-bottom: 10px;
-  color: #333333;
-  font-weight: 300;
+  font-size: 14px;
+  color: black;
+  font-weight: 400;
   font-family: "Montserrat", sans-serif;
 }
 
 .p-listbox {
-  background-color: #f6f8fa;
-  width: 300px;
-  height: 1010px;
-  border-radius: 20px;
+  background-color: #f4f4f4;
+  border-color: #f4f4f4;
+  width: 265px;
+  height: 860px;
+  border-radius: 10px;
   padding: 0 10px 0 10px;
-  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px,
+    rgba(27, 31, 35, 0.25) 0px 0px 0px 1px;
 }
 
 .icon-white {
   filter: brightness(0) invert(1);
 }
 
-.name011 {
-  font-size: 15px;
-  font-weight: 600;
+.p-listbox-list {
+  display: flex;
+  gap: 100px !important;
 }
-
 ::v-deep(.p-listbox) {
   .p-listbox-option {
-    padding-top: 24px;
-    padding-left: 30px;
+    padding-top: 18px;
+    padding-left: 20px;
+    color: #333;
+    border-radius: 100px;
+    font-weight: 500;
+    height: 44px;
+    font-size: 14px;
   }
 
-  #pv_id_0_0 {
-    padding-top: 30px;
+  /* #pv_id_0_0 {
+    padding-top: 20px;
   }
 
   #pv_id_0_8 {
-    padding-top: 200px;
-  }
+    padding-top: 130px;
+  } */
 }
 </style>
 
-<style module>
+<!-- <style module>
 .name01 {
-  font-size: 15px;
   font-family: "Montserrat", sans-serif;
-  padding-left: 20px;
 }
-</style>
+</style> -->
