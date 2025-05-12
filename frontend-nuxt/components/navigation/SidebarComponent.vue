@@ -51,52 +51,52 @@
 </template>
 
 <script setup>
-import { Listbox } from "primevue";
-import { ref } from "vue";
+import { Listbox } from 'primevue'
+import { ref } from 'vue'
 
 const mylist = {
   option: {
-    focus: { background: "none", color: "#333" },
+    focus: { background: 'none', color: '#333' },
   },
-};
+}
 
-const selectedOption = ref();
+const selectedOption = ref()
 const groupedOption = ref([
   {
-    label: "MAIN MENU",
+    label: 'MAIN MENU',
     items: [
       {
-        label: "Dashboard",
-        value: "DASH",
-        icon: "material-symbols:dashboard-rounded",
+        label: 'Dashboard',
+        value: 'DASH',
+        icon: 'material-symbols:dashboard-rounded',
       },
       {
-        label: "Timeline",
-        value: "TIME",
-        icon: "vaadin:chart-timeline",
+        label: 'Timeline',
+        value: 'TIME',
+        icon: 'vaadin:chart-timeline',
       },
-      { label: "Worksheet", value: "WORK", icon: "material-symbols:flowsheet" },
-      { label: "Management", value: "MAN", icon: "pixel:management" },
-      { label: "Projects", value: "PRO", icon: "eos-icons:project" },
-      { label: "Inventory", value: "INVEN", icon: "ic:baseline-inventory" },
-      { label: "Billing", value: "BILL", icon: "medical-icon:i-billing" },
+      { label: 'Worksheet', value: 'WORK', icon: 'material-symbols:flowsheet' },
+      { label: 'Management', value: 'MAN', icon: 'pixel:management' },
+      { label: 'Projects', value: 'PRO', icon: 'eos-icons:project' },
+      { label: 'Inventory', value: 'INVEN', icon: 'ic:baseline-inventory' },
+      { label: 'Billing', value: 'BILL', icon: 'medical-icon:i-billing' },
     ],
   },
 
   {
-    label: "USER PAGE",
+    label: 'USER PAGE',
     items: [
       {
-        label: "App & Integration",
-        value: "APP",
-        icon: "icon-park-solid:more-app",
+        label: 'App & Integration',
+        value: 'APP',
+        icon: 'icon-park-solid:more-app',
       },
-      { label: "Settings", value: "SET", icon: "uil:setting" },
-      { label: "Help & Support", value: "HELP", icon: "material-symbols:help" },
-      { label: "Logout", value: "OUT", icon: "material-symbols:logout" },
+      { label: 'Settings', value: 'SET', icon: 'uil:setting' },
+      { label: 'Help & Support', value: 'HELP', icon: 'material-symbols:help' },
+      { label: 'Logout', value: 'OUT', icon: 'material-symbols:logout' },
     ],
   },
-]);
+])
 </script>
 
 <style scoped>
@@ -120,9 +120,7 @@ const groupedOption = ref([
 ::v-deep(.p-listbox-option) {
   background-color: transparent;
 }
-::v-deep(
-  .p-listbox .p-listbox-list .p-listbox-option.p-listbox-option-selected
-) {
+::v-deep(.p-listbox .p-listbox-list .p-listbox-option.p-listbox-option-selected) {
   background-color: #333 !important;
 }
 .with-margin {
@@ -149,7 +147,7 @@ const groupedOption = ref([
   font-size: 14px;
   color: black;
   font-weight: 400;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .p-listbox {

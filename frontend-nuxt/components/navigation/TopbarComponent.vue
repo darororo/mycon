@@ -1,8 +1,12 @@
 <template>
-  <div class="card" style="padding-bottom: 16px">
+  <div
+    class="card"
+    style="padding-bottom: 16px"
+  >
     <Toolbar
       style="
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+        box-shadow:
+          rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
           rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
         border-color: rgb(204, 204, 204);
         background-color: #f4f4f4;
@@ -10,7 +14,11 @@
     >
       <template #start>
         <div class="start-section">
-          <Icon name="simple-icons:primevue" size="30" style="color: #333" />
+          <Icon
+            name="simple-icons:primevue"
+            size="30"
+            style="color: #333"
+          />
           <span class="logo-name">CONSTRUCTION</span>
         </div>
         <hr class="line-left" />
@@ -24,7 +32,10 @@
             class="relative left-[42px]"
             style="color: grey"
           />
-          <InputText class="search-bar" placeholder="Search for content" />
+          <InputText
+            class="search-bar"
+            placeholder="Search for content"
+          />
         </div>
       </template>
 
@@ -33,7 +44,11 @@
           <div class="tool-bar-group">
             <div class="notification-alert">
               <span class="info-language">{{ language }}</span>
-              <Icon name="ic:outline-email" size="26" style="color: #333" />
+              <Icon
+                name="ic:outline-email"
+                size="26"
+                style="color: #333"
+              />
               <Icon
                 name="mdi:bell-ring-outline"
                 size="26"
@@ -62,26 +77,25 @@
 </template>
 
 <script setup>
-import Toolbar from "primevue/toolbar";
+import Toolbar from 'primevue/toolbar'
 defineProps({
   language: {
     type: String,
-    default: "Cambodia",
+    default: 'Cambodia',
   },
   name: {
     type: String,
-    default: "Jonh Cena",
+    default: 'Jonh Cena',
   },
   role: {
     type: String,
-    default: "Super admin",
+    default: 'Super admin',
   },
   urlProfile: {
     type: String,
-    default:
-      "https://i.pinimg.com/736x/8f/86/50/8f8650ffcdfda6f1767a99565d3a4402.jpg",
+    default: 'https://i.pinimg.com/736x/8f/86/50/8f8650ffcdfda6f1767a99565d3a4402.jpg',
   },
-});
+})
 </script>
 
 <style scoped>
@@ -98,7 +112,7 @@ defineProps({
 .logo-name {
   font-size: 16px;
   color: #333;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 600;
 }
 
@@ -113,7 +127,7 @@ defineProps({
   width: 650px;
   height: 36px;
   border-radius: 20px;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   background-color: transparent;
   color: grey;
   font-size: 14px;
@@ -149,7 +163,7 @@ defineProps({
 
 .info-language {
   font-size: 15px;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: #333;
   font-weight: 400;
 }
@@ -169,7 +183,7 @@ defineProps({
 .username-role {
   display: flex;
   flex-direction: column;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   line-height: 18px;
 }
 

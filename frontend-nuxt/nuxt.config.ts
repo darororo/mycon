@@ -1,10 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-import Aura from "@primeuix/themes/aura";
-import tailwindcss from "@tailwindcss/vite";
+import Aura from '@primeuix/themes/aura'
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
-  compatibilityDate: "2024-11-01",
+  compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   // alias: {
   //   "~": "/",
@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
 
-  css: ["/assets/css/main.css"],
+  css: ['/assets/css/main.css'],
 
   // components: [
   //   {
@@ -31,19 +31,16 @@ export default defineNuxtConfig({
   // ],
 
   modules: [
-    "@nuxt/eslint",
-    "@nuxt/fonts",
-    "@nuxt/icon",
-    "@nuxt/image",
-    "@nuxt/scripts",
-    "@primevue/nuxt-module",
+    '@nuxt/eslint',
+    '@nuxt/fonts',
+    '@nuxt/icon',
+    '@nuxt/image',
+    '@nuxt/scripts',
+    '@primevue/nuxt-module',
   ],
 
   fonts: {
-    families: [
-      { name: "Montserrat", provider: "google" },
-      { name: "Montserrat Subrayada" },
-    ],
+    families: [{ name: 'Montserrat', provider: 'google' }, { name: 'Montserrat Subrayada' }],
   },
 
   primevue: {
@@ -53,7 +50,7 @@ export default defineNuxtConfig({
       },
     },
     components: {
-      include: ["Button", "InputText", "Avatar", "Popover"],
+      include: ['Button', 'InputText', 'Avatar', 'Popover'],
     },
   },
-});
+})

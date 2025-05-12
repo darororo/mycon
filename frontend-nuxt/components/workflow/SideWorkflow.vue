@@ -5,7 +5,10 @@
       <ScrollPanel class="side-work-flow">
         <div class="workflow-list">
           <div class="workflow-item-content">
-            <div v-for="(item, index) in workflows" :key="index">
+            <div
+              v-for="(item, index) in workflows"
+              :key="index"
+            >
               <SideWorkflowItem :data="item" /><br />
             </div>
           </div>
@@ -16,17 +19,17 @@
 </template>
 
 <script setup>
-import ScrollPanel from "primevue/scrollpanel";
-import SideWorkflowItem from "./SideWorkflowItem.vue";
-import { ref } from "vue";
+import ScrollPanel from 'primevue/scrollpanel'
+import SideWorkflowItem from './SideWorkflowItem.vue'
+import { ref } from 'vue'
 
 const workflows = ref([
-  { id: 1, title: "workflow 1" },
-  { id: 2, title: "workflow 2" },
-  { id: 3, title: "workflow 3" },
-  { id: 4, title: "workflow 4" },
-  { id: 5, title: "workflow 5" },
-]);
+  { id: 1, title: 'workflow 1' },
+  { id: 2, title: 'workflow 2' },
+  { id: 3, title: 'workflow 3' },
+  { id: 4, title: 'workflow 4' },
+  { id: 5, title: 'workflow 5' },
+])
 </script>
 
 <style scoped>
@@ -43,7 +46,7 @@ const workflows = ref([
   width: 438px;
 }
 .worklist-list-title {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-size: 20px;
   color: #333;

@@ -37,11 +37,17 @@
                 <p>{{ user.role }}</p>
                 <div class="contact-info">
                   <p>
-                    <Icon name="material-symbols:mail" size="16px" />
+                    <Icon
+                      name="material-symbols:mail"
+                      size="16px"
+                    />
                     {{ user.email }}
                   </p>
                   <p>
-                    <Icon name="typcn:location" size="16px" />
+                    <Icon
+                      name="typcn:location"
+                      size="16px"
+                    />
                     {{ user.location }}
                   </p>
                 </div>
@@ -79,7 +85,11 @@
           @click="handleAction(action.type)"
         >
           <div class="action-icon">
-            <Icon :name="action.icon" size="23" class="text-[#333333]" />
+            <Icon
+              :name="action.icon"
+              size="23"
+              class="text-[#333333]"
+            />
           </div>
           <span class="action-label">{{ action.name }}</span>
         </div>
@@ -89,54 +99,54 @@
 </template>
 
 <script setup>
-const emit = defineEmits(["logout", "settings", "help"]);
+const emit = defineEmits(['logout', 'settings', 'help'])
 
-const dropdown = ref(null);
-const toggleDropdown = (event) => {
-  dropdown.value.toggle(event);
-};
+const dropdown = ref(null)
+const toggleDropdown = event => {
+  dropdown.value.toggle(event)
+}
 
-const handleAction = (type) => {
-  dropdown.value.hide();
-  emit(type);
-};
+const handleAction = type => {
+  dropdown.value.hide()
+  emit(type)
+}
 
 const user = {
-  name: "Jonh Cena",
-  role: "Super admin",
-  email: "cenajohn169@gmail.com",
-  location: "Cambodia",
-  avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-};
+  name: 'Jonh Cena',
+  role: 'Super admin',
+  email: 'cenajohn169@gmail.com',
+  location: 'Cambodia',
+  avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+}
 
 const companies = [
   {
-    name: "Global Innovation CJ",
-    logo: "https://randomuser.me/api/portraits/men/91.jpg",
+    name: 'Global Innovation CJ',
+    logo: 'https://randomuser.me/api/portraits/men/91.jpg',
   },
   {
-    name: "Visionary Venture LT",
-    logo: "https://randomuser.me/api/portraits/men/32.jpg",
+    name: 'Visionary Venture LT',
+    logo: 'https://randomuser.me/api/portraits/men/32.jpg',
   },
-];
+]
 
 const actions = [
   {
-    name: "Settings & privacy",
-    icon: "uil:setting",
-    type: "settings",
+    name: 'Settings & privacy',
+    icon: 'uil:setting',
+    type: 'settings',
   },
   {
-    name: "Help & Center",
-    icon: "mingcute:question-line",
-    type: "help",
+    name: 'Help & Center',
+    icon: 'mingcute:question-line',
+    type: 'help',
   },
   {
-    name: "Log out",
-    icon: "mdi:logout",
-    type: "logout",
+    name: 'Log out',
+    icon: 'mdi:logout',
+    type: 'logout',
   },
-];
+]
 
 // return { dropdown, toggleDropdown, user, companies, actions, handleAction };
 </script>
@@ -191,7 +201,7 @@ const actions = [
   display: flex;
   align-items: start;
   gap: 16px;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .user-details {
@@ -232,7 +242,7 @@ const actions = [
   display: flex;
   align-items: center;
   gap: 14px;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 13px;
   font-weight: 400;
 }
@@ -262,7 +272,7 @@ const actions = [
   align-items: center;
   padding: 8px 10px 4px 10px;
   cursor: pointer;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   transition: background-color 0.2s;
 }
 

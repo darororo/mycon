@@ -29,29 +29,29 @@
 defineProps({
   months: {
     type: String,
-    default: "JAN",
+    default: 'JAN',
   },
   days: {
     type: String,
-    default: "08",
+    default: '08',
   },
   topic: {
     type: String,
-    default: "Visit #1 - Foundation liad Phase 1",
+    default: 'Visit #1 - Foundation liad Phase 1',
   },
   user: {
     type: String,
-    default: "Dr. John Cena",
+    default: 'Dr. John Cena',
   },
   status: {
     type: String,
-    default: "FINISHED",
+    default: 'FINISHED',
   },
   location: {
     type: String,
-    default: "Phnom Penh, Cambodia",
+    default: 'Phnom Penh, Cambodia',
   },
-});
+})
 </script>
 
 <style scoped>
@@ -71,13 +71,13 @@ defineProps({
 }
 
 .event-month {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 18px;
   font-weight: 600;
 }
 
 .event-day {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 24px;
   font-weight: 600;
 }
@@ -102,7 +102,7 @@ defineProps({
 }
 
 .event-card-title {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-size: 18px;
   color: #333;
@@ -112,7 +112,7 @@ defineProps({
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .event-card-info span {
@@ -133,7 +133,7 @@ defineProps({
 .event-card-status {
   font-weight: 700;
   color: #4bcc50;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 18px;
 }
 
@@ -142,7 +142,7 @@ defineProps({
   align-items: center;
   gap: 0.5rem;
   font-size: 16px;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: #999999;
 }
 
@@ -160,7 +160,8 @@ defineProps({
   width: 600px;
   border-radius: 10px;
   background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 3px 0px,
+  box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 1px 3px 0px,
     rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 </style>

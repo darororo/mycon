@@ -39,7 +39,7 @@
 }
 
 .welcome-title {
-  font-family: "Montserrat Subrayada", sans-serif;
+  font-family: 'Montserrat Subrayada', sans-serif;
   font-size: 66px;
   font-weight: 700;
   color: #333;
@@ -48,7 +48,7 @@
 .welcome-description {
   color: #333;
   font-size: 26px;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   line-height: 2.5rem;
   margin-top: 0px;
 }
@@ -61,7 +61,7 @@
 }
 
 .auth-title {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: white;
   font-size: 40px;
   margin-bottom: 60px;
@@ -78,7 +78,7 @@
 }
 
 .toggle-text {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 20px;
   margin-top: 50px;
 }

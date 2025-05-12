@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import TopbarComponent from '~/components/navigation/TopbarComponent.vue';
-
+import TopbarComponent from '~/components/navigation/TopbarComponent.vue'
 </script>
 
 <template>
-    <TopbarComponent />
+  <TopbarComponent />
 </template>

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import SideWorkflow from '~/components/workflow/SideWorkflow.vue';
-
+import SideWorkflow from '~/components/workflow/SideWorkflow.vue'
 </script>
 
 <template>
-    <SideWorkflow />
+  <SideWorkflow />
 </template>

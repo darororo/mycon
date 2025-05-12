@@ -1,6 +1,10 @@
 <template>
   <div class="container-login-btn">
-    <Button class="login-btn" name="button" :label="label" />
+    <Button
+      class="login-btn"
+      name="button"
+      :label="label"
+    />
   </div>
 </template>
 
@@ -9,8 +13,8 @@ defineProps({
   label: {
     type: String,
     value: '',
-  }
-});
+  },
+})
 </script>
 
 <style scoped>
@@ -27,7 +31,7 @@ defineProps({
 
 .login-btn {
   font-size: 24px;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   background-color: white;
   border: none;
