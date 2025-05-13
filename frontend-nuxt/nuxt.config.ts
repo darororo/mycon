@@ -50,7 +50,7 @@ export default defineNuxtConfig({
       },
     },
     components: {
-      include: ['Button', 'InputText', 'Avatar', 'Popover'],
+      include: ['Button', 'InputText', 'Avatar', 'Popover', 'DataTable'],
     },
   },
 })

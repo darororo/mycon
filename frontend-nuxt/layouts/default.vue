@@ -6,9 +6,11 @@ import TopbarComponent from '~/components/navigation/TopbarComponent.vue'
 <template>
   <div>
     <TopbarComponent />
-    <SidebarComponent />
-    <slot>
-      <!-- <button class="text-blue-700">hello</button> -->
-    </slot>
+    <div class="flex">
+      <SidebarComponent />
+      <div class="relative px-4">
+        <slot> </slot>
+      </div>
+    </div>
   </div>
 </template>
