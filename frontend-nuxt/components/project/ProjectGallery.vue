@@ -10,19 +10,38 @@
     :dt="card"
   >
     <template #content>
-      <div class="grid">
-        <img
-          class="photo large"
-          :src="largeImage"
-          alt="Main"
-        />
-        <img
-          v-for="smallImag in smallImag"
-          :key="smallImag.id"
-          class="photo"
-          :src="smallImag.img"
-          alt="Thumbnail"
-        />
+      <div class="flex flex-col lg:flex-row">
+        <div class="border max-w-[50%]">
+          <img
+            class="h-full rounded-md"
+            :src="largeImage"
+            alt="Main"
+          />
+        </div>
+        <div class="flex flex-row lg:flex-col pl-4 gap-2 h-full">
+          <div class="flex flex-row gap-2 w-full h-[50%] max-h-[50%]">
+            <img
+              v-for="image in smallImages.slice(0, smallImages.length / 2)"
+              :key="image.id"
+              height="180"
+              width="300"
+              class="rounded-md"
+              :src="image.img"
+              alt="Thumbnail"
+            />
+          </div>
+          <div class="flex flex-row gap-2 w-full h-[50%] max-h-[50%]">
+            <img
+              v-for="image in smallImages.slice(smallImages.length / 2)"
+              :key="image.id"
+              height="180"
+              width="300"
+              class="rounded-md"
+              :src="image.img"
+              alt="Thumbnail"
+            />
+          </div>
+        </div>
       </div>
     </template>
   </Card>
@@ -34,7 +53,7 @@ defineProps({
     type: String,
     default: 'https://i.pinimg.com/736x/38/91/90/389190aa127e385cc141095f339779f0.jpg',
   },
-  smallImag: {
+  smallImages: {
     type: Array,
     default: () => [
       {
@@ -64,35 +83,3 @@ const card = {
   shadow: 'none',
 }
 </script>
-
-<style scoped>
-.grid {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  padding-left: 40%;
-}
-
-.photo {
-  position: relative;
-  left: 216px;
-  flex: 0 0 calc(38.5% - 14px);
-  margin: 6px;
-  overflow: hidden;
-  background: black;
-  border-radius: 10px;
-}
-
-.photo:not(.large)::after {
-  content: '';
-  display: block;
-  padding-top: 100%;
-}
-
-.large {
-  position: absolute;
-  left: 0;
-  width: calc(54% - 16px);
-  height: calc(100% - 12px);
-}
-</style>
