@@ -75,7 +75,8 @@ const card = {
 
 .photo {
   position: relative;
-  flex: 0 0 calc(34% - 16px);
+  left: 216px;
+  flex: 0 0 calc(38.5% - 14px);
   margin: 6px;
   overflow: hidden;
   background: black;
@@ -91,7 +92,7 @@ const card = {
 .large {
   position: absolute;
   left: 0;
-  width: calc(40% - 12px);
+  width: calc(54% - 16px);
   height: calc(100% - 12px);
 }
 </style>

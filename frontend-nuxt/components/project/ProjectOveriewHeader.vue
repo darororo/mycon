@@ -17,6 +17,7 @@
           >{{ userName }}<span>{{ role }}</span></label
         >
       </div>
+      <hr style="border-color: #ccc" />
     </Panel>
   </div>
 </template>
@@ -29,7 +30,10 @@ const panel = {
     color: 'none',
   },
   header: {
-    padding: '10px 18px 20px 18px',
+    padding: '20px 8px 14px 8px',
+  },
+  content: {
+    padding: '10px 8px',
   },
 }
 defineProps({
@@ -81,6 +85,7 @@ defineProps({
 .footer-sec {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 20px;
 }
 
 .price-sec span {

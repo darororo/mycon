@@ -18,30 +18,37 @@
         >
       </template>
       <div class="panel-body">
-        <p
+        <div
           style="
-            line-height: 28px;
-            font-size: 16px;
-            font-weight: 400;
-            padding-bottom: 60px;
-            width: 70rem;
+            height: 275px;
+            justify-content: space-between;
+            flex-direction: column;
+            display: flex;
           "
         >
-          {{ content }}
-        </p>
+          <p style="line-height: 28px; font-size: 16px; font-weight: 400; padding-bottom: 30px">
+            {{ content }}
+          </p>
+          <div class="user">
+            <img
+              style="border: 1px solid #ccc; border-radius: 100%; width: 40px; height: auto"
+              :src="UrlImgUser"
+            />
+            <label
+              >{{ username }}<span>{{ role }}</span></label
+            >
+          </div>
+        </div>
         <img
-          style="border: 1px solid #ccc; border-radius: 8px; width: 30%; height: auto"
+          style="
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 30%;
+            height: auto;
+          "
           src="/home/huor/Downloads/photo_2025-05-18_23-27-36.jpg"
         />
-      </div>
-      <div class="user">
-        <img
-          style="border: 1px solid #ccc; border-radius: 100%; width: 40px; height: auto"
-          :src="UrlImgUser"
-        />
-        <label
-          >{{ username }}<span>{{ role }}</span></label
-        >
       </div>
     </Panel>
   </div>
@@ -52,10 +59,13 @@ const panel = {
   background: 'none',
   color: '#333',
   border: {
-    color: 'none',
+    color: '#ccc',
+  },
+  header: {
+    padding: '10px 0 20px 0',
   },
   content: {
-    padding: '0 20px',
+    padding: '0 2px',
   },
 }
 defineProps({
@@ -84,7 +94,6 @@ defineProps({
 }
 .user {
   position: relative;
-  bottom: 42px;
   display: flex;
   align-items: center;
   gap: 10px;
