@@ -17,44 +17,48 @@
           >Project Overview</label
         >
       </template>
-      <div class="panel-body">
-        <div
-          style="
-            height: 275px;
-            justify-content: space-between;
-            flex-direction: column;
-            display: flex;
-          "
-        >
-          <p style="line-height: 28px; font-size: 16px; font-weight: 400; padding-bottom: 30px">
-            {{ content }}
-          </p>
-          <div class="user">
-            <img
-              style="border: 1px solid #ccc; border-radius: 100%; width: 40px; height: auto"
-              :src="UrlImgUser"
-            />
-            <label
-              >{{ username }}<span>{{ role }}</span></label
+      <div class="panel-body w-full">
+        <div class="flex flex-row h-full w-auto">
+          <div class="flex flex-col justify-between pr-20">
+            <p style="line-height: 28px; font-size: 16px; font-weight: 400; padding-bottom: 30px">
+              {{ content }}
+            </p>
+
+            <div class="user">
+              <img
+                style="border: 1px solid #ccc; border-radius: 100%; width: 40px; height: auto"
+                :src="UrlImgUser"
+              />
+              <label
+                >{{ username }}<span>{{ role }}</span></label
+              >
+            </div>
+          </div>
+          <div
+            class="h-[40%] w-[40%] md:h-[240px] md:w-full bg-black mr-4 rounded-lg overflow-hidden"
+          >
+            <LMap
+              ref="map"
+              :zoom="zoom"
+              :center="[47.21322, -1.559482]"
+              :use-global-leaflet="false"
             >
+              <LTileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&amp;copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+                layer-type="base"
+                name="OpenStreetMap"
+              />
+            </LMap>
           </div>
         </div>
-        <img
-          style="
-            cursor: pointer;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            width: 30%;
-            height: auto;
-          "
-          src="/home/huor/Downloads/photo_2025-05-18_23-27-36.jpg"
-        />
       </div>
     </Panel>
   </div>
 </template>
 
 <script setup>
+const zoom = ref(6)
 const panel = {
   background: 'none',
   color: '#333',
@@ -65,7 +69,7 @@ const panel = {
     padding: '10px 0 20px 0',
   },
   content: {
-    padding: '0 2px',
+    padding: '0 0px',
   },
 }
 defineProps({
