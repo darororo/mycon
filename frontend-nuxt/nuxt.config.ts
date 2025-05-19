@@ -6,6 +6,11 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
+  routeRules: {
+    '/': {
+      redirect: '/dashboard',
+    },
+  },
   // alias: {
   //   "~": "/",
   //   "@": "/<srcDir>",
@@ -50,7 +55,7 @@ export default defineNuxtConfig({
       },
     },
     components: {
-      include: ['Button', 'InputText', 'Avatar', 'Popover', 'DataTable'],
+      include: ['Button', 'InputText', 'Avatar', 'Popover', 'DataTable', 'Toast'],
     },
   },
 })

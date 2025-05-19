@@ -6,7 +6,7 @@
       tableContainer: {
         style: `
       border-radius: 16px;
-      max-width: 1200px;
+      width: 1280px;
       `,
       },
     }"
@@ -23,7 +23,7 @@
       :pt="{
         headerCell: {
           style: `
-        background-color: orange;
+        background-color: rgb(55, 86, 122);
         `,
         },
         bodyCell: {
@@ -39,7 +39,18 @@
       :key="i"
       field="day1"
       :header="`Day ${i}`"
-      style="min-width: 6rem"
+      style="max-width: 80px"
+      :pt="{
+        headerCell: {
+          style: `
+  background-color: gray;
+  `,
+        },
+        bodyCell: {
+          style: `
+  background-color: rgb(222, 222, 222)`,
+        },
+      }"
     >
     </Column>
 
@@ -51,7 +62,7 @@
       :pt="{
         headerCell: {
           style: `
-  background-color: orange;
+  background-color: rgb(55, 86, 122);
   `,
         },
         bodyCell: {
@@ -62,6 +73,69 @@
     >
     </Column>
   </DataTable>
+
+  <!-- <DataTable
+    :value="people"
+    :dt="myTable"
+    :pt="{
+      tableContainer: {
+        style: `
+      border-radius: 16px;
+      width: 1000px;
+      `,
+      },
+      header: {
+        style: `
+          width: 20%;
+        `,
+      },
+    }"
+    scrollable
+    scrollHeight="600px"
+  >
+    <ColumnGroup
+      type="header"
+      :pt="{
+        root: {
+          style: `
+          width: 20%;
+          background: red;
+        `,
+        },
+      }"
+    >
+      <Row>
+        <Column
+          header="ID"
+          :rowspan="2"
+        ></Column>
+        <Column
+          header="Name"
+          :rowspan="2"
+        ></Column>
+        <Column
+          header="Role"
+          :rowspan="2"
+        ></Column>
+        <Column
+          header="Day"
+          :colspan="7"
+          :rowspan="1"
+        ></Column>
+      </Row>
+      <Row :pt="{ style: `max-width: 500px;` }">
+        <Column
+          v-for="i in 31"
+          :key="i"
+          :header="i"
+        ></Column>
+      </Row>
+      <Column
+        header="Total Wage"
+        :rowspan="2"
+      ></Column>
+    </ColumnGroup>
+  </DataTable> -->
 </template>
 
 <script setup lang="ts">

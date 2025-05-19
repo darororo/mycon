@@ -20,12 +20,19 @@
           <div>{{ slotProps.option.label }}</div>
         </div>
       </template>
+
       <template #option="slotProps">
         <div
           class="container03"
           :class="{
             'selected-option': selectedOption === slotProps.option,
           }"
+          @click="
+            () => {
+              navigateTo(slotProps.option.route)
+              console.log('GO TO ' + slotProps.option.route.name)
+            }
+          "
         >
           <Icon
             :name="slotProps.option.icon"
@@ -33,7 +40,7 @@
             class="icon"
             :class="[
               `flag flag-${slotProps.option.value} mr-2`,
-              { 'icon-white': selectedOption === slotProps.option },
+              { 'icon-white': $route.name === slotProps.option.route.name },
             ]"
           />
           <div
@@ -69,17 +76,39 @@ const groupedOption = ref([
         label: 'Dashboard',
         value: 'DASH',
         icon: 'material-symbols:dashboard-rounded',
+        route: { name: 'dashboard' },
       },
       {
         label: 'Timeline',
         value: 'TIME',
         icon: 'vaadin:chart-timeline',
+        route: { name: 'project-timeline' },
       },
-      { label: 'Worksheet', value: 'WORK', icon: 'material-symbols:flowsheet' },
-      { label: 'Management', value: 'MAN', icon: 'pixel:management' },
-      { label: 'Projects', value: 'PRO', icon: 'eos-icons:project' },
-      { label: 'Inventory', value: 'INVEN', icon: 'ic:baseline-inventory' },
-      { label: 'Billing', value: 'BILL', icon: 'medical-icon:i-billing' },
+      {
+        label: 'Worksheet',
+        value: 'WORK',
+        icon: 'material-symbols:flowsheet',
+        route: { name: 'payroll' },
+      },
+      {
+        label: 'Management',
+        value: 'MAN',
+        icon: 'pixel:management',
+        route: { name: 'management' },
+      },
+      { label: 'Projects', value: 'PRO', icon: 'eos-icons:project', route: { name: 'projects' } },
+      {
+        label: 'Inventory',
+        value: 'INVEN',
+        icon: 'ic:baseline-inventory',
+        route: { name: 'inventory' },
+      },
+      {
+        label: 'Billing',
+        value: 'BILL',
+        icon: 'medical-icon:i-billing',
+        route: { name: 'billing' },
+      },
     ],
   },
 
@@ -90,10 +119,21 @@ const groupedOption = ref([
         label: 'App & Integration',
         value: 'APP',
         icon: 'icon-park-solid:more-app',
+        route: { name: 'billing' },
       },
-      { label: 'Settings', value: 'SET', icon: 'uil:setting' },
-      { label: 'Help & Support', value: 'HELP', icon: 'material-symbols:help' },
-      { label: 'Logout', value: 'OUT', icon: 'material-symbols:logout' },
+      { label: 'Settings', value: 'SET', icon: 'uil:setting', route: { name: 'billing' } },
+      {
+        label: 'Help & Support',
+        value: 'HELP',
+        icon: 'material-symbols:help',
+        route: { name: 'billing' },
+      },
+      {
+        label: 'Logout',
+        value: 'OUT',
+        icon: 'material-symbols:logout',
+        route: { name: 'billing' },
+      },
     ],
   },
 ])
