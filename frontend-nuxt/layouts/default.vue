@@ -4,10 +4,12 @@ import TopbarComponent from '~/components/navigation/TopbarComponent.vue'
 </script>
 
 <template>
-  <div>
+  <div class="relative">
     <TopbarComponent />
-    <div class="flex">
-      <SidebarComponent />
+    <div class="flex relative h-full">
+      <aside class="sticky top-0 h-full">
+        <SidebarComponent />
+      </aside>
       <div class="relative px-4">
         <slot> </slot>
       </div>

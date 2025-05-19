@@ -164,7 +164,7 @@ const groupedOption = ref([
   background-color: #333 !important;
 }
 .with-margin {
-  padding-top: 150px;
+  padding-top: 20px;
 }
 .container0003 {
   height: auto;
@@ -194,7 +194,7 @@ const groupedOption = ref([
   background-color: #f4f4f4;
   border-color: #f4f4f4;
   width: 265px;
-  height: 860px;
+  /* height: auto; */
   border-radius: 10px;
   padding: 0 10px 0 10px;
   box-shadow:
