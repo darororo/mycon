@@ -1,1 +1,7 @@
-<template><h1>bruh</h1></template>
+<template>
+  <div>
+    <ProjectGallery />
+    <ProjectOveriewHeader />
+    <ProjectOverviewContent />
+  </div>
+</template>
