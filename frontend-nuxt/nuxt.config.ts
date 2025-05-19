@@ -42,6 +42,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/scripts',
     '@primevue/nuxt-module',
+    '@nuxtjs/leaflet',
   ],
 
   fonts: {
