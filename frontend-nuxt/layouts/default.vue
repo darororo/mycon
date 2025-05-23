@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import SidebarComponent from '~/components/navigation/SidebarComponent.vue'
+// import SidebarComponent from '~/components/navigation/SidebarComponent.vue'
 import TopbarComponent from '~/components/navigation/TopbarComponent.vue'
+import MenuComponent from '~/components/navigation/MenuComponent.vue'
 </script>
 
 <template>
@@ -8,9 +9,10 @@ import TopbarComponent from '~/components/navigation/TopbarComponent.vue'
     <TopbarComponent />
     <div class="flex relative h-full">
       <aside class="sticky top-0 h-full">
-        <SidebarComponent />
+        <!-- <SidebarComponent /> -->
+        <MenuComponent />
       </aside>
-      <div class="relative px-4">
+      <div class="relative pl-4">
         <slot> </slot>
       </div>
     </div>

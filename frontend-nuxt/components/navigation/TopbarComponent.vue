@@ -1,7 +1,7 @@
 <template>
   <div
     class="card"
-    style="padding-bottom: 16px"
+    style="padding-bottom: 10px"
   >
     <Toolbar
       style="
