@@ -12,7 +12,7 @@ import MenuComponent from '~/components/navigation/MenuComponent.vue'
         <!-- <SidebarComponent /> -->
         <MenuComponent />
       </aside>
-      <div class="relative pl-4">
+      <div class="relative pl-4 w-full">
         <slot> </slot>
       </div>
     </div>
