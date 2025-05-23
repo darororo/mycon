@@ -8,8 +8,7 @@ import MenuComponent from '~/components/navigation/MenuComponent.vue'
   <div class="relative">
     <TopbarComponent />
     <div class="flex relative h-full">
-      <aside class="sticky top-0 h-full">
-        <!-- <SidebarComponent /> -->
+      <aside class="sticky top-4 h-1">
         <MenuComponent />
       </aside>
       <div class="relative pl-4 w-full">
