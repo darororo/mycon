@@ -25,8 +25,43 @@
       }"
     >
       <template #item="{ item }">
+        <NuxtLink
+          v-if="item.route"
+          :to="item.route"
+          v-slot="{ href, navigate }"
+          custom
+        >
+          <a
+            class="menu-item cursor-pointer"
+            style="display: flex; align-items: center; justify-content: space-between; width: 100%"
+            @click="navigate"
+            :href="href"
+          >
+            <Icon
+              v-if="Array.isArray(item.icon) ? item.icon[0] : item.icon"
+              :icon="Array.isArray(item.icon) ? item.icon[0] : item.icon"
+              width="20"
+              height="20"
+              class="icon"
+              style="margin-right: 0.5rem"
+            />
+
+            <span style="flex: 1">{{ item.label }}</span>
+
+            <template v-if="Array.isArray(item.icon) && item.icon.length > 1">
+              <Icon
+                :icon="item.icon[1]"
+                width="20"
+                height="20"
+                class="icon"
+                style="margin-left: auto"
+              />
+            </template>
+          </a>
+        </NuxtLink>
         <a
-          class="menu-item"
+          v-else
+          class="menu-item cursor-pointer"
           style="display: flex; align-items: center; justify-content: space-between; width: 100%"
         >
           <Icon
@@ -82,14 +117,14 @@ import { ref } from 'vue'
 import { Icon } from '@iconify/vue'
 
 const mainMenu = ref([
-  { label: 'Dashboard', icon: 'material-symbols:dashboard-rounded' },
-  { label: 'Timeline', icon: 'fluent:timeline-20-filled' },
+  { label: 'Dashboard', icon: 'material-symbols:dashboard-rounded', route: { name: 'dashboard' } },
+  { label: 'Timeline', icon: 'fluent:timeline-20-filled', route: { name: 'timeline' } },
   {
     label: 'Management',
     icon: ['ix:user-management-settings-filled', 'solar:alt-arrow-down-bold'],
     items: [
-      { label: 'Workers', icon: 'mdi:worker' },
-      { label: 'Payrolls', icon: 'carbon:user-role' },
+      { label: 'Workers', icon: 'mdi:worker', route: { name: 'dashboard' } },
+      { label: 'Payrolls', icon: 'carbon:user-role', route: { name: 'payroll' } },
     ],
   },
   {
@@ -103,7 +138,7 @@ const mainMenu = ref([
     ],
   },
   { label: 'Inventory', icon: 'material-symbols-light:inventory-2' },
-  { label: 'Billing', icon: 'medical-icon:i-billing' },
+  { label: 'Billing', icon: 'medical-icon:i-billing', route: { name: 'dashboard-expense-card' } },
 ])
 
 const userMenu = ref([
