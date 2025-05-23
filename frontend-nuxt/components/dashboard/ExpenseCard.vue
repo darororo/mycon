@@ -67,7 +67,7 @@ defineProps({
 
 <style scoped>
 .card-container {
-  width: 400px;
+  width: 440px;
   padding: 0 10px;
   border-radius: 18px;
   background: linear-gradient(135deg, #f5f7fa, #e0eafc);
