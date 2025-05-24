@@ -138,7 +138,7 @@ const mainMenu = ref([
     ],
   },
   { label: 'Inventory', icon: 'material-symbols-light:inventory-2' },
-  { label: 'Billing', icon: 'medical-icon:i-billing', route: { name: 'dashboard-expense-card' } },
+  { label: 'Billing', icon: 'medical-icon:i-billing', route: { name: 'billing' } },
 ])
 
 const userMenu = ref([
