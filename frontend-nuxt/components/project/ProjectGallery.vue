@@ -3,39 +3,40 @@
     :pt="{
       root: {
         style: `
-              margin-right: '100px'
-              `,
+          margin-right: 100px;
+        `,
       },
     }"
     :dt="card"
   >
     <template #content>
       <div class="flex flex-col lg:flex-row">
-        <div class="border max-w-[50%]">
+        <div class="border">
           <img
+            style="width: auto; height: 392px"
             class="h-full rounded-md"
             :src="largeImage"
             alt="Main"
           />
         </div>
-        <div class="flex flex-row lg:flex-col pl-4 gap-2 h-full">
-          <div class="flex flex-row gap-2 w-full h-[50%] max-h-[50%]">
+        <div class="flex flex-row lg:flex-col pl-4 gap-2 h-full justify-between">
+          <div class="flex flex-row gap-2 w-full h-[50%] max-h-[50%] justify-between">
             <img
+              height="auto"
+              width="250px"
               v-for="image in smallImages.slice(0, smallImages.length / 2)"
               :key="image.id"
-              height="180"
-              width="300"
               class="rounded-md"
               :src="image.img"
               alt="Thumbnail"
             />
           </div>
-          <div class="flex flex-row gap-2 w-full h-[50%] max-h-[50%]">
+          <div class="flex flex-row gap-2 w-full h-[50%] max-h-[50%] justify-between">
             <img
               v-for="image in smallImages.slice(smallImages.length / 2)"
               :key="image.id"
-              height="180"
-              width="300"
+              height="auto"
+              width="250px"
               class="rounded-md"
               :src="image.img"
               alt="Thumbnail"
@@ -48,7 +49,7 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   largeImage: {
     type: String,
     default: 'https://i.pinimg.com/736x/38/91/90/389190aa127e385cc141095f339779f0.jpg',
@@ -75,11 +76,14 @@ defineProps({
     ],
   },
 })
+
+const { largeImage, smallImages } = props
+
 const card = {
   body: {
     padding: '0',
   },
-  background: 'transparent  ',
+  background: 'transparent',
   shadow: 'none',
 }
 </script>

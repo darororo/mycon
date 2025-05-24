@@ -2,22 +2,27 @@
   <div class="card">
     <Panel :dt="panel">
       <template #header>
-        <div class="header-sec">
-          <label style="font-size: 18px; font-weight: 600">{{ projectName }}</label>
-          <div class="price-sec">
-            <span>{{ status }}</span>
+        <div class="header-container">
+          <div class="header-sec">
+            <label class="project-name">{{ projectName }}</label>
+            <div class="status-badge">
+              <span>{{ status }}</span>
+            </div>
           </div>
+          <label class="price">$40000</label>
         </div>
       </template>
+
       <div class="footer-sec">
-        <label class="location"
-          >Location: <span>{{ location }}</span></label
-        >
-        <label class="user"
-          >{{ userName }}<span>{{ role }}</span></label
-        >
+        <label class="location">
+          <span>{{ location }}</span>
+        </label>
+        <label class="user">
+          {{ userName }} <span>{{ role }}</span>
+        </label>
       </div>
-      <hr style="border-color: #ccc" />
+
+      <hr class="divider" />
     </Panel>
   </div>
 </template>
@@ -30,12 +35,13 @@ const panel = {
     color: 'none',
   },
   header: {
-    padding: '20px 8px 14px 8px',
+    padding: '0 ',
   },
   content: {
-    padding: '10px 8px',
+    padding: '0',
   },
 }
+
 defineProps({
   projectName: {
     type: String,
@@ -61,47 +67,88 @@ defineProps({
 </script>
 
 <style scoped>
-.user {
-  display: flex;
-  gap: 4px;
-  font-size: 16px;
-  font-weight: 500;
-  color: grey;
-}
-.user span {
-  color: cornflowerblue;
-}
-.location {
-  display: flex;
-  gap: 10px;
-  font-weight: 400;
-  color: grey;
-  font-size: 16px;
-}
-.location span {
-  color: #333;
-  font-weight: 500;
-}
-.footer-sec {
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 20px;
+.card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  padding-top: 16px;
+  max-width: 100%;
 }
 
-.price-sec span {
-  background-color: rgb(169, 253, 173);
-  color: green;
-  border-radius: 10px;
-  padding: 10px 20px 10px 20px;
-  font-size: 14px;
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.project-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.status-badge span {
+  background-color: #e6f9ed;
+  color: #2ecc71;
+  border-radius: 9999px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .header-sec {
   display: flex;
-  color: #333;
-  width: 100%;
+  gap: 14px;
+  align-items: center;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: 600;
+  color: #10b981;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.footer-sec {
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: 'Monserrate', sans-serif;
+  padding: 10px 0;
+  font-size: 13px;
+}
+
+.location,
+.user {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #6b7280;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.user span {
+  color: #4f46e5;
+  font-weight: 500;
+  margin-left: 4px;
+}
+
+.location span {
+  color: #111827;
+  font-weight: 500;
+}
+
+.icon {
+  font-size: 16px;
+  color: #6b7280;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 10px;
+  padding-top: 10px;
 }
 </style>

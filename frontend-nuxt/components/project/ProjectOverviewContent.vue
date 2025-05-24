@@ -4,7 +4,7 @@
       :pt="{
         root: {
           style: `
-            padding: 10px 10px;
+            padding: 20px;
         `,
         },
       }"
@@ -13,20 +13,20 @@
       <template #header>
         <label
           class="header-title"
-          style="color: #333; font-weight: 600; font-size: 18px"
+          style="color: #333; font-weight: 600; font-size: 14px"
           >Project Overview</label
         >
       </template>
       <div class="panel-body w-full">
         <div class="flex flex-row h-full w-auto">
           <div class="flex flex-col justify-between pr-20">
-            <p style="line-height: 28px; font-size: 16px; font-weight: 400; padding-bottom: 30px">
+            <p style="line-height: 22px; font-size: 13px; font-weight: 400; padding-bottom: 30px">
               {{ content }}
             </p>
 
             <div class="user">
               <img
-                style="border: 1px solid #ccc; border-radius: 100%; width: 40px; height: auto"
+                style="border: 1px solid #ccc; border-radius: 100%; width: 30px; height: auto"
                 :src="UrlImgUser"
               />
               <label
@@ -109,6 +109,7 @@ defineProps({
 .user label {
   display: flex;
   gap: 4px;
+  font-size: 12px;
 }
 .panel-body {
   display: flex;
