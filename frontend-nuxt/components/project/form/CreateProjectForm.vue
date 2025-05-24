@@ -36,8 +36,8 @@
                         <InputText :dt="inputTextDt" id="price" class="input" autocomplete="off" />
                     </div>
                 </div>
-                <!-- <div style="width: 335px; height: 200px; background-color: aqua;">Upload</div> -->
-                 <UploadImage />
+                <div style="width: 335px; height: 200px; background-color: aqua;">Upload</div>
+                 <!-- <UploadImage /> -->
             </div>
             <div class="big-container">
                 <div class="big-fill">
