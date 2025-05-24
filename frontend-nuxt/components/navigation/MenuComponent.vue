@@ -2,13 +2,16 @@
   <div
     style="
       gap: 10px;
-      padding: 20px 18px;
+      padding: 40px 20px;
       background-color: #222831;
       border-radius: 10px;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       display: flex;
+      max-height: 1000px;
+      overflow: scroll;
+      /* height: 400px; */
     "
     class=""
   >
@@ -95,17 +98,72 @@
       :dt="menu"
       :model="userMenu"
       multiple
+      :pt="{
+        rootList: {
+          style: 'display: flex; flex-direction: column; gap: 10px; margin-top: 10px',
+        },
+      }"
     >
       <template #item="{ item }">
-        <a class="menu-item">
+        <NuxtLink
+          v-if="item.route"
+          :to="item.route"
+          v-slot="{ href, navigate }"
+          custom
+        >
+          <a
+            class="menu-item cursor-pointer"
+            style="display: flex; align-items: center; justify-content: space-between; width: 100%"
+            @click="navigate"
+            :href="href"
+          >
+            <Icon
+              v-if="Array.isArray(item.icon) ? item.icon[0] : item.icon"
+              :icon="Array.isArray(item.icon) ? item.icon[0] : item.icon"
+              width="20"
+              height="20"
+              class="icon"
+              style="margin-right: 0.5rem"
+            />
+
+            <span style="flex: 1">{{ item.label }}</span>
+
+            <template v-if="Array.isArray(item.icon) && item.icon.length > 1">
+              <Icon
+                :icon="item.icon[1]"
+                width="20"
+                height="20"
+                class="icon"
+                style="margin-left: auto"
+              />
+            </template>
+          </a>
+        </NuxtLink>
+        <a
+          v-else
+          class="menu-item cursor-pointer"
+          style="display: flex; align-items: center; justify-content: space-between; width: 100%"
+        >
           <Icon
-            :icon="item.icon"
+            v-if="Array.isArray(item.icon) ? item.icon[0] : item.icon"
+            :icon="Array.isArray(item.icon) ? item.icon[0] : item.icon"
             width="20"
             height="20"
             class="icon"
             style="margin-right: 0.5rem"
           />
-          <span>{{ item.label }}</span>
+
+          <span style="flex: 1">{{ item.label }}</span>
+
+          <template v-if="Array.isArray(item.icon) && item.icon.length > 1">
+            <Icon
+              :icon="item.icon[1]"
+              width="20"
+              height="20"
+              class="icon"
+              style="margin-left: auto"
+            />
+          </template>
         </a>
       </template>
     </PanelMenu>
@@ -145,7 +203,7 @@ const userMenu = ref([
   { label: 'App & Integration', icon: 'duo-icons:app' },
   { label: 'Setting', icon: 'weui:setting-filled' },
   { label: 'Help & Support', icon: 'material-symbols:help' },
-  { label: 'Log out', icon: 'material-symbols:logout-rounded' },
+  { label: 'Log out', icon: 'material-symbols:logout-rounded', route: { name: 'auth-login' } },
 ])
 
 const menu = {
@@ -204,6 +262,6 @@ const menu = {
   padding: 10px 20px;
 }
 .user-menu {
-  margin-top: 100%;
+  margin-top: 20px;
 }
 </style>
