@@ -14,14 +14,14 @@
           font-family: 'Montserrat', sans-serif;
         "
       >
-        Inventory
+        Worker
       </h2>
       <div style="flex-direction: row; gap: 10px; display: flex">
         <Select
           v-model="selectedCity"
           :options="cities"
           optionLabel="name"
-          placeholder="Filter Category"
+          placeholder="Filter Worker"
           :dt="select"
           :pt="{
             root: {
@@ -36,7 +36,7 @@
               style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
             },
           }"
-          label="Create Item"
+          label="Add Worker"
         >
           <template #icon>
             <Icon

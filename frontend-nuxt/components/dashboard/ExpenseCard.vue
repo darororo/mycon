@@ -1,5 +1,14 @@
 <template>
-  <div style="align-items: center; gap: 20px; display: flex">
+  <div
+    style="
+      border-radius: 10px;
+      padding: 0 20px;
+      border: 1px solid #ccc;
+      align-items: center;
+      gap: 20px;
+      display: flex;
+    "
+  >
     <Card
       v-for="item in card"
       :key="item.id"
@@ -77,7 +86,7 @@ defineProps({
 .card-title {
   color: #2c3e50;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
   font-family: 'Montserrat', sans-serif;
   margin-bottom: 8px;
 }

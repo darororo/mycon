@@ -14,14 +14,14 @@
           font-family: 'Montserrat', sans-serif;
         "
       >
-        Inventory
+        Project History
       </h2>
       <div style="flex-direction: row; gap: 10px; display: flex">
         <Select
           v-model="selectedCity"
           :options="cities"
           optionLabel="name"
-          placeholder="Filter Category"
+          placeholder="Filter Project"
           :dt="select"
           :pt="{
             root: {
@@ -29,22 +29,6 @@
             },
           }"
         />
-        <Button
-          :dt="button"
-          :pt="{
-            root: {
-              style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
-            },
-          }"
-          label="Create Item"
-        >
-          <template #icon>
-            <Icon
-              style="font-size: 20px; background-color: white"
-              name="ic:round-plus"
-            />
-          </template>
-        </Button>
       </div>
     </div>
     <hr style="margin: 12px 0; border-color: #ccc" />
@@ -70,36 +54,6 @@ const select = {
   },
   padding: {
     x: '18px',
-    y: '10px',
-  },
-}
-const button = {
-  primary: {
-    background: '#222831',
-    color: 'white',
-    border: {
-      color: 'none',
-    },
-    hover: {
-      background: '#222831',
-      color: 'white',
-      border: {
-        color: 'none',
-      },
-    },
-    active: {
-      background: '#222831',
-      color: 'white',
-      border: {
-        color: 'none',
-      },
-    },
-  },
-  border: {
-    radius: '12px',
-  },
-  padding: {
-    x: '20px',
     y: '10px',
   },
 }

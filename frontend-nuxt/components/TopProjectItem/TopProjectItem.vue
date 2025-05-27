@@ -3,7 +3,7 @@
     :pt="{
       root: {
         style: `
-          border-radius: 20px;
+          border-radius: 10px;
           border: 1px solid #ccc;
           width: 100%;
           height: 400px`,
@@ -124,7 +124,7 @@ const card = {
   background: 'none',
   color: 'black',
   body: {
-    padding: '20px 30px 20px 30px',
+    padding: '20px',
     border: 'none',
   },
   shadow: 'none',

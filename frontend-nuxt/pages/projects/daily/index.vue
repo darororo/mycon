@@ -14,7 +14,7 @@
           font-family: 'Montserrat', sans-serif;
         "
       >
-        Inventory
+        Daily Tasks
       </h2>
       <div style="flex-direction: row; gap: 10px; display: flex">
         <Select
@@ -36,7 +36,7 @@
               style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
             },
           }"
-          label="Create Item"
+          label="Create new Task"
         >
           <template #icon>
             <Icon

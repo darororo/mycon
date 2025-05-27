@@ -1,13 +1,40 @@
 <template>
-  <div class="p-4 rounded-md border-gray-400 border-2">
-    <div class="flex flex-row justify-between items-center pb-4">
-      <h2 class="text-black font-[Montserrat] font-weight-bold">{{ title }}</h2>
+  <div style="margin-bottom: 10px; border-radius: 10px; padding: 10px 20px; border: 1px solid #ccc">
+    <div class="flex flex-row justify-between items-center pb-2">
+      <h2
+        style="
+          color: black;
+          font-weight: 600;
+          font-size: 16px;
+          font-family: 'Montserrat', sans-serif;
+        "
+        class="font-[Montserrat]"
+      >
+        {{ title }}
+      </h2>
       <Select
+        :pt="{
+          root: {
+            style: 'font-family: Montserrat, sans-serif; font-size: 12px',
+          },
+        }"
         :dt="{
           background: 'none',
-          color: 'black',
           focus: {
-            borderColor: 'black',
+            borderColor: '#ccc',
+          },
+          border: {
+            color: '#ccc',
+            radius: '100px',
+          },
+          hover: {
+            border: {
+              color: '#ccc',
+            },
+          },
+          padding: {
+            y: '6px',
+            x: '14px',
           },
         }"
         placeholder="Filter"
@@ -85,6 +112,34 @@ const setChartOptions = () => {
       title: {
         display: true,
         text: 'Site Expense',
+        font: {
+          family: 'Montserrat',
+          size: 12,
+          weight: '600',
+        },
+        color: 'grey',
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          font: {
+            family: 'Montserrat',
+            size: 12,
+            weight: '500',
+          },
+          color: 'grey',
+        },
+      },
+      y: {
+        ticks: {
+          font: {
+            family: 'Montserrat',
+            size: 12,
+            weight: '500',
+          },
+          color: 'grey',
+        },
       },
     },
   }

@@ -9,8 +9,8 @@
       justify-content: center;
       align-items: center;
       display: flex;
-      max-height: 1000px;
-      overflow: scroll;
+      /* max-height: 1000px; */
+      /* overflow: scroll; */
       /* height: 400px; */
     "
     class=""
@@ -181,21 +181,51 @@ const mainMenu = ref([
     label: 'Management',
     icon: ['ix:user-management-settings-filled', 'solar:alt-arrow-down-bold'],
     items: [
-      { label: 'Workers', icon: 'mdi:worker', route: { name: 'dashboard' } },
-      { label: 'Payrolls', icon: 'carbon:user-role', route: { name: 'payroll' } },
+      { label: 'Workers', icon: 'mdi:worker', route: { name: 'management-worker' } },
+      { label: 'Payrolls', icon: 'carbon:user-role', route: { name: 'management-payroll' } },
     ],
   },
   {
     label: 'Project',
     icon: ['eos-icons:project', 'solar:alt-arrow-down-bold'],
     items: [
-      { label: 'Create Project', icon: 'carbon:new-tab' },
-      { label: 'Assign Managers', icon: 'clarity:assign-user-line' },
-      { label: 'Daily Task', icon: 'carbon:task' },
-      { label: 'History', icon: 'material-symbols:history' },
+      {
+        label: 'Create Project',
+        icon: 'carbon:new-tab',
+        route: {
+          name: 'projects-create',
+        },
+      },
+      {
+        label: 'Assign Managers',
+        icon: 'clarity:assign-user-line',
+        route: {
+          name: 'projects-assign',
+        },
+      },
+      {
+        label: 'Daily Task',
+        icon: 'carbon:task',
+        route: {
+          name: 'projects-daily',
+        },
+      },
+      {
+        label: 'History',
+        icon: 'material-symbols:history',
+        route: {
+          name: 'projects-history',
+        },
+      },
     ],
   },
-  { label: 'Inventory', icon: 'material-symbols-light:inventory-2' },
+  {
+    label: 'Inventory',
+    icon: 'material-symbols-light:inventory-2',
+    route: {
+      name: 'inventory',
+    },
+  },
   { label: 'Billing', icon: 'medical-icon:i-billing', route: { name: 'billing' } },
 ])
 
@@ -262,6 +292,7 @@ const menu = {
   padding: 10px 20px;
 }
 .user-menu {
-  margin-top: 20px;
+  /* margin-top: 20px; */
+  margin-top: 240px;
 }
 </style>

@@ -15,9 +15,9 @@
       <template #start>
         <div class="start-section">
           <Icon
-            name="simple-icons:primevue"
+            name="fluent-mdl2:google-drive-logo"
             size="30"
-            style="color: #333"
+            style="color: black"
           />
           <span class="logo-name">CONSTRUCTION</span>
         </div>

@@ -37,12 +37,11 @@ const workflows = ref([
   display: flex;
   justify-content: center;
   padding-top: 14px;
-  height: 900px;
+  height: auto;
   width: 450px;
-  border: 1px rgb(209, 209, 209) solid;
 }
 .side-work-flow {
-  height: 790px;
+  height: auto;
   width: 438px;
 }
 .worklist-list-title {

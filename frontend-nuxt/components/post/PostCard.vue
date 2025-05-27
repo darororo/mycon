@@ -4,28 +4,28 @@
       <div class="post-header">
         <div class="user-info">
           <img
-            :src="avatarUrl"
+            :src="post.avatarUrl"
             alt="profile"
             class="user-avatar"
           />
           <div class="user-details">
-            <span class="user-name">{{ userName }}</span>
-            <span class="use-role">{{ userRole }}</span>
+            <span class="user-name">{{ post.userName }}</span>
+            <span class="use-role">{{ post.userRole }}</span>
           </div>
         </div>
         <div class="more-action">
           <OptionIcon />
-          <span class="post-time">{{ postTime }}</span>
+          <span class="post-time">{{ post.postTime }}</span>
         </div>
       </div>
     </template>
 
     <template #content>
-      <p class="post-status">{{ postStatus }}</p>
+      <p class="post-status">{{ post.postStatus }}</p>
       <img
-        :src="postImageUrl"
+        :src="post.postImageUrl"
         alt="post-image"
-        class="w-[100%] h-[360px] py-2"
+        class="post-image"
       />
     </template>
 
@@ -65,19 +65,7 @@ const toggleLike = () => {
 }
 
 defineProps({
-  userName: { type: String, default: 'Vuth Menghuor' },
-  userRole: { type: String, default: 'Client' },
-  postTime: { type: String, default: '8:30am-5:00pm' },
-  postStatus: {
-    type: String,
-    default:
-      'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur,',
-  },
-  postImageUrl: {
-    type: String,
-    default: 'https://picsum.photos/200/300?grayscale',
-  },
-  avatarUrl: { type: String, default: 'https://picsum.photos/id/237/200/300' },
+  post: {},
 })
 </script>
 
@@ -92,8 +80,8 @@ defineProps({
 
 .post-card {
   height: auto;
-  width: 400px;
-  background-color: #f4f4f4;
+  width: auto;
+  background-color: white;
   box-shadow:
     rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
@@ -103,8 +91,8 @@ defineProps({
 }
 
 .user-avatar {
-  height: 40px;
-  width: 40px;
+  height: 30px;
+  width: 30px;
   border-radius: 100%;
 }
 
@@ -118,7 +106,7 @@ defineProps({
   font-weight: 500;
   font-family: 'Montserrat', sans-serif;
   font-size: 12px;
-  color: #333;
+  color: black;
 }
 
 .user-info {
@@ -137,14 +125,14 @@ defineProps({
   display: flex;
   flex-direction: column;
   margin-left: 12px;
-  line-height: 20px;
+  line-height: 18px;
 }
 
 .post-time {
-  font-weight: 300;
+  font-weight: 400;
   font-family: 'Montserrat', sans-serif;
   font-size: 12px;
-  color: #333;
+  color: black;
 }
 
 .more-action {
@@ -154,22 +142,23 @@ defineProps({
 }
 
 .post-status {
-  color: #333;
-  font-size: 10px;
-  font-weight: 400;
-  font-family: 'Montserrat', sans-serif;
+  color: black;
+  font-size: 12px;
+  font-weight: 300;
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 10px;
 }
 
 .post-image {
   height: auto;
-  width: 343px;
+  width: auto;
   border-radius: 4px;
 }
 
 hr {
-  border-width: 0.5px;
+  border-width: 1px;
   margin: 0;
-  color: #999;
+  color: #ccc;
   opacity: 0.5;
 }
 
@@ -186,7 +175,7 @@ hr {
   color: #999;
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
-  background-color: #f4f4f4;
+  background-color: white;
   border: none;
   transition:
     color 0.25s ease,
@@ -195,14 +184,14 @@ hr {
 }
 
 .p-button:hover {
-  background-color: #f4f4f4 !important;
+  background-color: white !important;
   color: #999 !important;
   box-shadow: none !important;
   border: none !important;
 }
 
 .p-button:active {
-  background-color: #f0f0f0 !important;
+  background-color: white !important;
 }
 
 .deep-color {

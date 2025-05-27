@@ -1,12 +1,27 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="max-w-[1440px]">
-    <div class="flex flex-row justify-between items-center mb-2">
-      <h2 class="text-black text-2xl font-bold">Dashboard</h2>
+  <div class="max-w-[1500px]">
+    <div
+      style="display: flex; flex-direction: row; justify-content: space-between; align-items: end"
+    >
+      <h2
+        style="
+          font-weight: 600;
+          font-size: 22px;
+          color: black;
+          font-family: 'Montserrat', sans-serif;
+        "
+      >
+        Dashboard
+      </h2>
       <DashboardNotificationCard />
     </div>
-    <div class="flex flex-row gap-2 p-4 rounded-md border-2 border-gray-200">
+    <hr style="margin: 12px 0; border-color: #ccc" />
+    <div
+      style="margin-bottom: 10px; gap: 10px"
+      class="flex flex-row gap-2 rounded-md border-2"
+    >
       <DashboardExpenseCard />
       <div class="w-full max-w-[800px] h-auto">
         <DashboardTotalExpenseChart />

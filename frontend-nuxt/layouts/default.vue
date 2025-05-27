@@ -32,7 +32,7 @@ import MenuComponent from '~/components/navigation/MenuComponent.vue'
   flex-direction: column;
   gap: 6px;
   font-family: 'Montserrat', sans-serif;
-  color: #333;
+  color: black;
   font-weight: 600;
   font-size: 18px;
   padding-bottom: 20px;
@@ -40,6 +40,6 @@ import MenuComponent from '~/components/navigation/MenuComponent.vue'
 .welcome-page span {
   font-size: 12px;
   font-weight: 500;
-  color: #666;
+  color: grey;
 }
 </style>

@@ -1,13 +1,11 @@
 <template>
-  <div style="display: flex; flex-wrap: wrap; gap: 1rem">
+  <div>
     <Card
-      v-for="(person, index) in people"
-      :key="index"
       :pt="{
         root: {
           style: `
             height: auto;
-            width: 22rem;
+            width: 23rem;
             border: 1px solid #ccc;
             position: relative;
             overflow: visible; 
@@ -19,7 +17,7 @@
         },
       }"
       :dt="card"
-      @click="toggleSelected(index)"
+      @click="toggleSelected()"
     >
       <template #content>
         <transition name="fade-scale">
@@ -65,8 +63,11 @@
           </div>
         </div>
 
-        <div class="availability">
-          <span>{{ person.availability }}</span>
+        <div
+          class="availability text-black bg-[#e8f5e9]"
+          :class="[{ 'bg-red-200': !person.availability, 'text-black': !person.availability }]"
+        >
+          <span>{{ person.availability ? 'Available' : 'Not Available' }}</span>
         </div>
       </template>
     </Card>
@@ -74,8 +75,13 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+const props = defineProps({
+  person: {
+    type: Object,
+  },
+})
 
+const person = props.person
 const card = {
   body: {
     padding: 0,
@@ -84,47 +90,10 @@ const card = {
   Shadow: 'none',
 }
 
-const people = reactive([
-  {
-    name: 'Yuzui Tengen',
-    role: 'Servicer',
-    avatar: 'https://i.pinimg.com/736x/88/10/0a/88100a490178cd2f05beb67134cf60ef.jpg',
-    hours: '1-8',
-    price: '10$',
-    availability: 'available',
-    selected: false,
-  },
-  {
-    name: 'Kyojuro Rengoku',
-    role: 'Trainer',
-    avatar: 'https://i.pinimg.com/736x/ae/00/3b/ae003baf057596bf2d62c8ffd0393d30.jpg',
-    hours: '4-6',
-    price: '15$',
-    availability: 'non available',
-    selected: false,
-  },
-  {
-    name: 'Itachi Uciha',
-    role: 'Trainer',
-    avatar: 'https://i.pinimg.com/736x/f3/78/96/f37896c54355b9ad4a6d1c8d43fabb25.jpg',
-    hours: '2-6',
-    price: '15$',
-    availability: 'non available',
-    selected: false,
-  },
-  {
-    name: 'Anna Yamada',
-    role: 'Trainer',
-    avatar: 'https://i.pinimg.com/736x/cc/bc/bb/ccbcbb4377d41a5ce435b331cb798355.jpg',
-    hours: '4-6',
-    price: '30$',
-    availability: 'non available',
-    selected: false,
-  },
-])
-
-const toggleSelected = index => {
-  people[index].selected = !people[index].selected
+const toggleSelected = () => {
+  if (person.availability) {
+    person.selected = !person.selected
+  }
 }
 </script>
 
@@ -188,10 +157,10 @@ const toggleSelected = index => {
   display: flex;
   padding: 6px 20px;
   border-radius: 100px;
-  background-color: #e8f5e9;
+  /* background-color: #e8f5e9; */
   margin: 0 20px 20px 20px;
   border: 1px solid #ccc;
-  color: #666;
+  /* color: #666; */
 }
 
 .m1 {
