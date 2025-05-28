@@ -174,12 +174,15 @@
 import { ref } from 'vue'
 import { Icon } from '@iconify/vue'
 
+const isClient = true
+
 const mainMenu = ref([
   { label: 'Dashboard', icon: 'material-symbols:dashboard-rounded', route: { name: 'dashboard' } },
   { label: 'Timeline', icon: 'fluent:timeline-20-filled', route: { name: 'timeline' } },
   {
     label: 'Management',
     icon: ['ix:user-management-settings-filled', 'solar:alt-arrow-down-bold'],
+    visible: !isClient,
     items: [
       { label: 'Workers', icon: 'mdi:worker', route: { name: 'management-worker' } },
       { label: 'Payrolls', icon: 'carbon:user-role', route: { name: 'management-payroll' } },
