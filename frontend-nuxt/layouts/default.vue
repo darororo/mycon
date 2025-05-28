@@ -5,13 +5,14 @@ import MenuComponent from '~/components/navigation/MenuComponent.vue'
 </script>
 
 <template>
-  <div class="relative">
-    <TopbarComponent />
-    <div style="display: flex; position: relative; height: 100%">
-      <aside class="sticky top-0 h-full">
-        <!-- <SidebarComponent /> -->
-        <MenuComponent />
-      </aside>
+  <div class="relative overflow-x-clip">
+    <div class="fixed z-30 w-full pr-4 top-0">
+      <TopbarComponent />
+    </div>
+    <div style="height: 1000px; top: 80px; width: auto; position: fixed">
+      <MenuComponent />
+    </div>
+    <div style="display: flex; position: relative; height: 100%; top: 60px; left: 280px">
       <div style="padding: 10px 30px 0 30px">
         <div>
           <label class="welcome-page"

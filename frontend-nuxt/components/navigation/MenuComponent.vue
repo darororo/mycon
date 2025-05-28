@@ -15,30 +15,63 @@
     "
     class=""
   >
-    <h1 class="menu-sec">Main Menu</h1>
-    <PanelMenu
-      style="border-radius: 10px; height: auto; width: 230px"
-      :dt="menu"
-      :model="mainMenu"
-      multiple
-      :pt="{
-        rootList: {
-          style: 'display: flex; flex-direction: column; gap: 10px; margin-top: 10px',
-        },
-      }"
-    >
-      <template #item="{ item }">
-        <NuxtLink
-          v-if="item.route"
-          :to="item.route"
-          v-slot="{ href, navigate }"
-          custom
-        >
+    <ScrollPanel style="height: 800px">
+      <h1 class="menu-sec">Main Menu</h1>
+      <PanelMenu
+        style="border-radius: 10px; height: auto; width: 230px"
+        :dt="menu"
+        :model="mainMenu"
+        multiple
+        :pt="{
+          rootList: {
+            style: 'display: flex; flex-direction: column; gap: 10px; margin-top: 10px',
+          },
+        }"
+      >
+        <template #item="{ item }">
+          <NuxtLink
+            v-if="item.route"
+            :to="item.route"
+            v-slot="{ href, navigate }"
+            custom
+          >
+            <a
+              class="menu-item cursor-pointer"
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+              "
+              @click="navigate"
+              :href="href"
+            >
+              <Icon
+                v-if="Array.isArray(item.icon) ? item.icon[0] : item.icon"
+                :icon="Array.isArray(item.icon) ? item.icon[0] : item.icon"
+                width="20"
+                height="20"
+                class="icon"
+                style="margin-right: 0.5rem"
+              />
+
+              <span style="flex: 1">{{ item.label }}</span>
+
+              <template v-if="Array.isArray(item.icon) && item.icon.length > 1">
+                <Icon
+                  :icon="item.icon[1]"
+                  width="20"
+                  height="20"
+                  class="icon"
+                  style="margin-left: auto"
+                />
+              </template>
+            </a>
+          </NuxtLink>
           <a
+            v-else
             class="menu-item cursor-pointer"
             style="display: flex; align-items: center; justify-content: space-between; width: 100%"
-            @click="navigate"
-            :href="href"
           >
             <Icon
               v-if="Array.isArray(item.icon) ? item.icon[0] : item.icon"
@@ -61,61 +94,66 @@
               />
             </template>
           </a>
-        </NuxtLink>
-        <a
-          v-else
-          class="menu-item cursor-pointer"
-          style="display: flex; align-items: center; justify-content: space-between; width: 100%"
-        >
-          <Icon
-            v-if="Array.isArray(item.icon) ? item.icon[0] : item.icon"
-            :icon="Array.isArray(item.icon) ? item.icon[0] : item.icon"
-            width="20"
-            height="20"
-            class="icon"
-            style="margin-right: 0.5rem"
-          />
+        </template>
+      </PanelMenu>
 
-          <span style="flex: 1">{{ item.label }}</span>
+      <h1 class="menu-sec user-menu">User Menu</h1>
 
-          <template v-if="Array.isArray(item.icon) && item.icon.length > 1">
-            <Icon
-              :icon="item.icon[1]"
-              width="20"
-              height="20"
-              class="icon"
-              style="margin-left: auto"
-            />
-          </template>
-        </a>
-      </template>
-    </PanelMenu>
+      <PanelMenu
+        style="border-radius: 10px; height: auto; width: 230px"
+        :dt="menu"
+        :model="userMenu"
+        multiple
+        :pt="{
+          rootList: {
+            style: 'display: flex; flex-direction: column; gap: 10px; margin-top: 10px',
+          },
+        }"
+      >
+        <template #item="{ item }">
+          <NuxtLink
+            v-if="item.route"
+            :to="item.route"
+            v-slot="{ href, navigate }"
+            custom
+          >
+            <a
+              class="menu-item cursor-pointer"
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+              "
+              @click="navigate"
+              :href="href"
+            >
+              <Icon
+                v-if="Array.isArray(item.icon) ? item.icon[0] : item.icon"
+                :icon="Array.isArray(item.icon) ? item.icon[0] : item.icon"
+                width="20"
+                height="20"
+                class="icon"
+                style="margin-right: 0.5rem"
+              />
 
-    <h1 class="menu-sec user-menu">User Menu</h1>
+              <span style="flex: 1">{{ item.label }}</span>
 
-    <PanelMenu
-      style="border-radius: 10px; height: auto; width: 230px"
-      :dt="menu"
-      :model="userMenu"
-      multiple
-      :pt="{
-        rootList: {
-          style: 'display: flex; flex-direction: column; gap: 10px; margin-top: 10px',
-        },
-      }"
-    >
-      <template #item="{ item }">
-        <NuxtLink
-          v-if="item.route"
-          :to="item.route"
-          v-slot="{ href, navigate }"
-          custom
-        >
+              <template v-if="Array.isArray(item.icon) && item.icon.length > 1">
+                <Icon
+                  :icon="item.icon[1]"
+                  width="20"
+                  height="20"
+                  class="icon"
+                  style="margin-left: auto"
+                />
+              </template>
+            </a>
+          </NuxtLink>
           <a
+            v-else
             class="menu-item cursor-pointer"
             style="display: flex; align-items: center; justify-content: space-between; width: 100%"
-            @click="navigate"
-            :href="href"
           >
             <Icon
               v-if="Array.isArray(item.icon) ? item.icon[0] : item.icon"
@@ -138,35 +176,9 @@
               />
             </template>
           </a>
-        </NuxtLink>
-        <a
-          v-else
-          class="menu-item cursor-pointer"
-          style="display: flex; align-items: center; justify-content: space-between; width: 100%"
-        >
-          <Icon
-            v-if="Array.isArray(item.icon) ? item.icon[0] : item.icon"
-            :icon="Array.isArray(item.icon) ? item.icon[0] : item.icon"
-            width="20"
-            height="20"
-            class="icon"
-            style="margin-right: 0.5rem"
-          />
-
-          <span style="flex: 1">{{ item.label }}</span>
-
-          <template v-if="Array.isArray(item.icon) && item.icon.length > 1">
-            <Icon
-              :icon="item.icon[1]"
-              width="20"
-              height="20"
-              class="icon"
-              style="margin-left: auto"
-            />
-          </template>
-        </a>
-      </template>
-    </PanelMenu>
+        </template>
+      </PanelMenu>
+    </ScrollPanel>
   </div>
 </template>
 
@@ -292,11 +304,11 @@ const menu = {
 }
 .menu-sec {
   position: relative;
-  right: 40px;
+  /* right: 40px; */
   padding: 10px 20px;
 }
 .user-menu {
   /* margin-top: 20px; */
-  margin-top: 240px;
+  margin-top: 180px;
 }
 </style>
