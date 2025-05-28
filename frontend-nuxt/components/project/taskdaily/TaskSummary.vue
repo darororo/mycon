@@ -18,27 +18,27 @@
         <div class="table-container card">
           <DataTable
             :value="data"
-            tableStyle="min-width: 100%;"
+            table-style="min-width: 100%;"
             :dt="table"
             scrollable
-            scrollHeight="394px"
+            scroll-height="394px"
           >
             <Column
               field="task"
               header="Task"
-            ></Column>
+            />
             <Column
               field="totalAmount"
               header="Total Amount"
-            ></Column>
+            />
             <Column
               field="unit"
               header="Unit"
-            ></Column>
+            />
             <Column
               field="totalDay"
               header="Total Day"
-            ></Column>
+            />
           </DataTable>
         </div>
 
