@@ -8,38 +8,72 @@
       scrollable
       show-gridlines=""
       scroll-height="600px"
+      v-model:editingRows="editingRows"
+      editMode="row"
+      data-key="id"
+      @row-edit-save="onRowEditSave"
     >
       <Column
         field="id"
         header="ID"
         :pt="{}"
       />
+
       <Column
         field="task"
         header="Task"
-      />
+      >
+        <template #editor="{ data, field }">
+          <InputText
+            v-model="data[field]"
+            fluid
+          />
+        </template>
+      </Column>
       <Column
         field="amount"
         header="Amount"
-      />
+      >
+        <template #editor="{ data, field }">
+          <InputNumber v-model="data[field]" />
+        </template>
+      </Column>
       <Column
         field="unit"
         header="Unit"
-      />
+      >
+        <template #editor="{ data, field }">
+          <InputText v-model="data[field]" />
+        </template>
+      </Column>
       <Column
         field="category"
         header="Category"
-      />
+      >
+        <template #editor="{ data, field }">
+          <InputText v-model="data[field]" />
+        </template>
+      </Column>
       <Column
-        field="action"
         header="Action"
-      />
+        :rowEditor="true"
+        style="width: 10%; min-width: 8rem"
+        bodyStyle="text-align:center"
+      ></Column>
     </DataTable>
   </div>
 </template>
 
 <script setup>
 const { data } = await useFetch('https://6817864126a599ae7c3aa650.mockapi.io/api/users')
+
+console.log(data)
+
+const editingRows = ref([])
+const onRowEditSave = event => {
+  const { newData, index } = event
+  data.value[index] = newData
+}
 
 const table = {
   header: {
