@@ -3,8 +3,17 @@
     style="width: 100rem"
     class="max-w-[1500px]"
   >
+    <div>
+      <TaskSummary />
+    </div>
     <div
-      style="display: flex; flex-direction: row; justify-content: space-between; align-items: end"
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: end;
+        margin-top: 20px;
+      "
     >
       <h2
         style="
@@ -48,10 +57,14 @@
       </div>
     </div>
     <hr style="margin: 12px 0; border-color: #ccc" />
+    <DailyTaskTable />
   </div>
 </template>
 
 <script setup>
+import TaskSummary from '~/components/project/taskdaily/TaskSummary.vue'
+import DailyTaskTable from '~/components/table/DailyTaskTable.vue'
+
 const select = {
   background: 'white',
   border: {
