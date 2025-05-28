@@ -65,7 +65,7 @@
 </template>
 
 <script setup>
-const { data } = await useFetch('https://6817864126a599ae7c3aa650.mockapi.io/api/users')
+const { data } = await useFetch('https://6817864126a599ae7c3aa650.mockapi.io/api/api_dashboard_ip')
 
 console.log(data)
 
@@ -97,7 +97,7 @@ const table = {
       border: {
         color: '#e0e0e0',
       },
-      padding: '12px 16px',
+      padding: '4px 20px',
     },
   },
 }
@@ -145,5 +145,10 @@ const table = {
 .table-container {
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 #f0f0f0;
+}
+
+::v-deep(.p-inputtext) {
+  padding: 6px 20px;
+  font-size: 14px;
 }
 </style>

@@ -28,7 +28,7 @@
               header="Task"
             />
             <Column
-              field="totalAmount"
+              field="amount"
               header="Total Amount"
             />
             <Column
@@ -36,7 +36,7 @@
               header="Unit"
             />
             <Column
-              field="totalDay"
+              field="totalday"
               header="Total Day"
             />
           </DataTable>
