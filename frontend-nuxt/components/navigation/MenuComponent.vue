@@ -174,7 +174,8 @@
 import { ref } from 'vue'
 import { Icon } from '@iconify/vue'
 
-const isClient = true
+// Hide management panel if the user role is Client
+const isClient = false
 
 const mainMenu = ref([
   { label: 'Dashboard', icon: 'material-symbols:dashboard-rounded', route: { name: 'dashboard' } },
