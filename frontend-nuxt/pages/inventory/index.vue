@@ -48,10 +48,15 @@
       </div>
     </div>
     <hr style="margin: 12px 0; border-color: #ccc" />
+    <div>
+      <InventoryTable />
+    </div>
   </div>
 </template>
 
 <script setup>
+import InventoryTable from '~/components/inventory/table/InventoryTable.vue'
+
 const select = {
   background: 'white',
   border: {

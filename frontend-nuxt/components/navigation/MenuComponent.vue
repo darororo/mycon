@@ -9,13 +9,10 @@
       justify-content: center;
       align-items: center;
       display: flex;
-      /* max-height: 1000px; */
-      /* overflow: scroll; */
-      /* height: 400px; */
     "
     class=""
   >
-    <ScrollPanel style="height: 800px">
+    <ScrollPanel style="height: 75vh">
       <h1 class="menu-sec">Main Menu</h1>
       <PanelMenu
         style="border-radius: 10px; height: auto; width: 230px"
@@ -309,6 +306,6 @@ const menu = {
 }
 .user-menu {
   /* margin-top: 20px; */
-  margin-top: 180px;
+  margin-top: 120px;
 }
 </style>
