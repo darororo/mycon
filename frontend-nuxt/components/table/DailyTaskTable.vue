@@ -3,37 +3,37 @@
   <div class="table-container card">
     <DataTable
       :value="data"
-      tableStyle="min-width: 100%;"
+      table-style="min-width: 100%;"
       :dt="table"
       scrollable
-      showGridlines=""
-      scrollHeight="600px"
+      show-gridlines=""
+      scroll-height="600px"
     >
       <Column
         field="id"
         header="ID"
         :pt="{}"
-      ></Column>
+      />
       <Column
         field="task"
         header="Task"
-      ></Column>
+      />
       <Column
         field="amount"
         header="Amount"
-      ></Column>
+      />
       <Column
         field="unit"
         header="Unit"
-      ></Column>
+      />
       <Column
         field="category"
         header="Category"
-      ></Column>
+      />
       <Column
         field="action"
         header="Action"
-      ></Column>
+      />
     </DataTable>
   </div>
 </template>
