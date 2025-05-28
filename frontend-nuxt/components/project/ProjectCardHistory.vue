@@ -1,86 +1,77 @@
 <template>
-  <div>
-    <ScrollPanel
-      class=""
-      style="width: 60rem; height: 300px"
-    >
-      <div class="project-history-list">
-        <Card
-          v-for="item in projects"
-          :key="item.id"
-        >
-          <template #content>
-            <div class="history-card-wrapper">
-              <img
-                :src="item.imageUrl"
-                class="project-history-image"
-              />
-              <div class="project-history-details">
-                <div class="project-history-header">
-                  <h1>{{ item.topic }}</h1>
-                  <div class="header-action">
-                    <span class="history-date">{{ item.date }}</span>
-                    <Icon
-                      class="close-icon"
-                      name="material-symbols:close"
-                    />
-                  </div>
-                </div>
-                <p>{{ item.content }}</p>
-                <label class="history-location"
-                  >Booking Location<span>{{ item.location }}</span></label
-                >
-                <div class="project-history-footer">
-                  <label class="history-status">{{ item.status }}</label>
-                  <label class="history-details">More Details</label>
-                </div>
+  <div class="project-history-list">
+    <Card>
+      <template #content>
+        <div class="history-card-wrapper">
+          <img
+            :src="item.imageUrl"
+            class="project-history-image"
+          />
+          <div class="project-history-details">
+            <div class="project-history-header">
+              <h1>{{ item.topic }}</h1>
+              <div class="header-action">
+                <span class="history-date">{{ item.date }}</span>
+                <Icon
+                  class="close-icon"
+                  name="material-symbols:close"
+                />
               </div>
             </div>
-          </template>
-        </Card>
-      </div>
-    </ScrollPanel>
+            <p>{{ item.content }}</p>
+            <label class="history-location"
+              >Booking Location<span>{{ item.location }}</span></label
+            >
+            <div class="project-history-footer">
+              <label
+                class="history-status"
+                :class="statusBg(item.status)"
+                >{{ item.status }}</label
+              >
+              <label class="history-details">More Details</label>
+            </div>
+          </div>
+        </div>
+      </template>
+    </Card>
   </div>
 </template>
 
 <script setup>
 defineProps({
-  projects: {
-    type: Array,
-    default: () => [
-      {
-        id: 1,
-        imageUrl: 'https://i.pinimg.com/736x/5c/2a/63/5c2a637d9a96fcf32d28d57d89ba9f14.jpg',
-        topic: 'Skyline Tower',
-        date: '03/04/2025',
-        content:
-          'Nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
-        location: 'Phnom Penh City',
-        status: 'In Progress',
-      },
-      {
-        id: 2,
-        imageUrl: 'https://i.pinimg.com/736x/25/bb/24/25bb24305a9db641bbcfad9a748a1607.jpg',
-        topic: 'Chip Mong Tower',
-        date: '03/04/2025',
-        content:
-          'Nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
-        location: 'Phnom Penh City',
-        status: 'In Progress',
-      },
-      {
-        id: 3,
-        imageUrl: 'https://i.pinimg.com/736x/fb/4c/b7/fb4cb7488464e53463375233d72d969f.jpg',
-        topic: 'Garden City Water Park',
-        date: '03/04/2025',
-        content:
-          'Nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
-        location: 'Phnom Penh City',
-        status: 'In Progress',
-      },
-    ],
+  item: {
+    type: Object,
   },
 })
+
+const statusBg = function (status) {
+  switch (status) {
+    case 'FINISHED': {
+      return 'status-finished'
+      break
+    }
+    case 'IN PROGRESS': {
+      return 'status-inprogress'
+      break
+    }
+    case 'NEGOTIATION': {
+      return 'status-negotiation'
+      break
+    }
+    case 'PENDING': {
+      return 'status-pending'
+      break
+    }
+    case 'CANCELLED': {
+      return 'status-cancelled'
+      break
+    }
+    default: {
+      return 'status-pending'
+      break
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -113,7 +104,7 @@ defineProps({
 .project-history-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 20px;
 }
 .project-history-footer {
   display: flex;
@@ -156,7 +147,7 @@ defineProps({
 .project-history-details p {
   line-height: 24px;
   padding-bottom: 10px;
-  width: 38rem;
+  width: 50rem;
   font-size: 14px;
   font-weight: 400;
   color: #555555;
@@ -175,7 +166,7 @@ defineProps({
   padding: 0;
 }
 ::v-deep(.p-card) {
-  width: 60rem;
+  width: 80rem;
   height: auto;
   display: flex;
   box-shadow:
@@ -188,5 +179,34 @@ defineProps({
   width: 16rem;
   border-radius: 10px;
   border-color: #f8f8f8;
+}
+
+.status-finished {
+  color: #388e3c;
+  background-color: #c8e6c9;
+  font-weight: bold;
+}
+
+.status-pending {
+  color: #f9a825;
+  background-color: #fff59d;
+  font-weight: bold;
+}
+
+.status-negotiation {
+  color: #1976d2;
+  background-color: #bbdefb;
+  font-weight: bold;
+}
+
+.status-inprogress {
+  color: #f57c00;
+  background-color: #ffe0b2;
+  font-weight: bold;
+}
+.status-cancelled {
+  color: #d32f2f;
+  background-color: #ffcdd2;
+  font-weight: bold;
 }
 </style>
