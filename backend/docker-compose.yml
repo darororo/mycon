@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  db-dev:
+    image: postgres:17
+    env_file:
+      - .env
+    ports:
+      - '${POSTGRES_PUBLIC_PORT}:5432'
+    networks:
+      - backend
+networks:
+  backend:
