@@ -12,7 +12,7 @@
     "
     class=""
   >
-    <ScrollPanel style="height: 75vh">
+    <ScrollPanel style="height: 82vh">
       <h1 class="menu-sec">Main Menu</h1>
       <PanelMenu
         style="border-radius: 10px; height: auto; width: 230px"
@@ -306,6 +306,6 @@ const menu = {
 }
 .user-menu {
   /* margin-top: 20px; */
-  margin-top: 120px;
+  margin-top: 160px;
 }
 </style>

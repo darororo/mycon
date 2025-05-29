@@ -5,7 +5,7 @@
       tableStyle="min-width: 50rem"
       scrollable
       show-gridlines=""
-      scroll-height="660px"
+      scroll-height="720px"
       v-model:editingRows="editingRows"
       editMode="row"
       data-key="id"
@@ -13,6 +13,7 @@
       :pt="{
         tableContainer: {
           style: `
+          max-height: 100vh;
           border-top-left-radius: 10px;
           border-top-right-radius: 10px;
           font-family: 'Montserrat', sans-serif;
@@ -237,5 +238,32 @@ function formatDate(date) {
 ::v-deep(.p-select-label) {
   padding: 6px 20px;
   font-size: 14px;
+}
+
+/* customize scrollbar */
+
+.table-container::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 8px;
+  border: 2px solid #f0f0f0;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
+}
+
+.table-container {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f0f0f0;
 }
 </style>

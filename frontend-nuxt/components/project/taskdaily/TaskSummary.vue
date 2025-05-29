@@ -205,7 +205,7 @@ onMounted(() => {
 }
 
 ::v-deep(.p-datatable-thead > tr > th) {
-  background-color: #222831 !important;
+  background-color: #008080 !important;
   color: white !important;
   font-weight: 600;
   text-align: left;

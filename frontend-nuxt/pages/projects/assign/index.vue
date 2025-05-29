@@ -90,7 +90,7 @@
         <ScrollPanel
           style="
             position: sticky;
-            top: 0;
+            top: 80px;
             max-height: 1130px;
             width: auto;
             border: 1px solid #ccc;

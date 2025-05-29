@@ -55,28 +55,24 @@
           </div>
         </div>
         <hr style="margin: 12px 0; border-color: #ccc" />
-        <ScrollPanel
-          style="max-height: 60rem"
-          class="sticky top-0 h-full"
-        >
-          <div class="grid grid-cols-1 gap-4">
-            <div
-              v-for="post in posts"
-              :key="post"
-              class="flex flex-row justify-center w-full h-full"
-            >
-              <div class="min-w-[360px] max-w-[540px] max-h-[1000px]">
-                <PostCard :post="post" />
-              </div>
+
+        <div class="grid grid-cols-1 gap-4">
+          <div
+            v-for="post in posts"
+            :key="post"
+            class="flex flex-row justify-center w-full h-full"
+          >
+            <div class="min-w-[360px] max-w-[540px] max-h-[1000px]">
+              <PostCard :post="post" />
             </div>
           </div>
-        </ScrollPanel>
+        </div>
       </div>
-      <div
-        style="border: 1px solid #ccc"
-        class="sticky top-0 h-full border-1 rounded-sm"
-      >
-        <SideWorkflow />
+      <div style="border-radius: 10px; padding: 20px 0; border: 1px solid #ccc">
+        <h1 class="worklist-list-title">All Workflows</h1>
+        <div class="sticky top-20 h-50">
+          <SideWorkflow />
+        </div>
       </div>
     </div>
   </div>
@@ -169,3 +165,13 @@ const posts = [
   },
 ]
 </script>
+
+<style scoped>
+.worklist-list-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  color: #333;
+  padding: 0 0 20px 20px;
+}
+</style>

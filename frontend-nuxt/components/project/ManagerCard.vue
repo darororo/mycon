@@ -6,7 +6,7 @@
           style: `
             height: auto;
             width: 23rem;
-            border: 1px solid #ccc;
+            border: 1px solid grey;
             position: relative;
             overflow: visible; 
             border-radius: 10px;
@@ -104,7 +104,7 @@ const toggleSelected = () => {
   right: -12px;
   width: 30px;
   height: 30px;
-  background-color: grey;
+  background-color: black;
   border-radius: 50%;
   border: 3px solid white;
   display: flex;
@@ -157,10 +157,8 @@ const toggleSelected = () => {
   display: flex;
   padding: 6px 20px;
   border-radius: 100px;
-  /* background-color: #e8f5e9; */
   margin: 0 20px 20px 20px;
-  border: 1px solid #ccc;
-  /* color: #666; */
+  border: 1px solid grey;
 }
 
 .m1 {

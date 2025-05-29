@@ -1,67 +1,69 @@
 <template>
-  <DataTable
-    style="
-      font-family: 'Montserrat', sans-serif;
-      font-size: 14px;
-      width: auto;
-      max-width: 1500px;
-      overflow-x: hidden;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-    "
-    :value="people"
-    :dt="myTable"
-    scrollable
-    scrollHeight="800px"
-  >
-    <Column
-      v-for="item in myColumns"
-      :key="item.field"
-      :field="item.field"
-      :header="item.header"
-      :frozen="item.frozen"
-      :pt="{
-        bodyCell: {
-          style: 'background-color: white;',
-        },
-      }"
-      style="padding: 0 10px 0 20px"
+  <div class="table-container">
+    <DataTable
+      style="
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        width: auto;
+        max-width: 1500px;
+        overflow-x: hidden;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+      "
+      :value="people"
+      :dt="myTable"
+      scrollable
+      scrollHeight="800px"
     >
-    </Column>
+      <Column
+        v-for="item in myColumns"
+        :key="item.field"
+        :field="item.field"
+        :header="item.header"
+        :frozen="item.frozen"
+        :pt="{
+          bodyCell: {
+            style: 'background-color: white;',
+          },
+        }"
+        style="padding: 0 10px 0 20px"
+      >
+      </Column>
 
-    <Column
-      v-for="i in 30"
-      :key="i"
-      field="day1"
-      :header="`Day ${i}`"
-      :pt="{
-        headerCell: {
-          style: `
+      <Column
+        v-for="i in 30"
+        :key="i"
+        field="day1"
+        :header="`Day ${i}`"
+        :pt="{
+          headerCell: {
+            style: `
             background-color: orange;
             margin: 20px;
             `,
-        },
-        bodyCell: {
-          style: `background-color: white`,
-        },
-      }"
-    >
-    </Column>
+          },
+          bodyCell: {
+            style: `background-color: white`,
+          },
+        }"
+      >
+      </Column>
 
-    <Column
-      field="rate"
-      header="TOTAL"
-      frozen
-      alignFrozen="right"
-      :pt="{
-        bodyCell: {
-          style: 'background-color: white',
-        },
-      }"
-      style="padding: 0 20px"
-    >
-    </Column>
-  </DataTable>
+      <Column
+        field="rate"
+        header="TOTAL"
+        frozen
+        alignFrozen="right"
+        :pt="{
+          bodyCell: {
+            style: 'background-color: white',
+          },
+        }"
+        style="padding: 0 20px"
+      >
+      </Column>
+    </DataTable>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -106,5 +108,30 @@ const myColumns = ref([
 <style scoped>
 ::v-deep(.p-datatable-column-title) {
   width: 90px;
+}
+
+.table-container::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 8px;
+  border: 2px solid #f0f0f0;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
+}
+
+.table-container {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f0f0f0;
 }
 </style>
