@@ -5,6 +5,17 @@
       :value="data"
       table-style="min-width: 100%;"
       :dt="table"
+      :pt="{
+        tableContainer: {
+          style: `
+          max-height: 100vh;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 14px;
+          `,
+        },
+      }"
       scrollable
       show-gridlines=""
       scroll-height="600px"
@@ -20,8 +31,8 @@
       />
 
       <Column
-        field="task"
-        header="Task"
+        field="worker"
+        header="Worker"
       >
         <template #editor="{ data, field }">
           <InputText
@@ -31,24 +42,24 @@
         </template>
       </Column>
       <Column
-        field="amount"
-        header="Amount"
+        field="gender"
+        header="Gender"
       >
         <template #editor="{ data, field }">
           <InputNumber v-model="data[field]" />
         </template>
       </Column>
       <Column
-        field="unit"
-        header="Unit"
+        field="role"
+        header="Role"
       >
         <template #editor="{ data, field }">
           <InputText v-model="data[field]" />
         </template>
       </Column>
       <Column
-        field="category"
-        header="Category"
+        field="project"
+        header="Project"
       >
         <template #editor="{ data, field }">
           <InputText v-model="data[field]" />
@@ -78,7 +89,7 @@ const onRowEditSave = event => {
 const table = {
   header: {
     cell: {
-      background: '#222831',
+      background: '#008080',
       color: 'white',
       fontWeight: '600',
       padding: '10px 20px',
@@ -111,7 +122,6 @@ const table = {
 .table-container {
   overflow-x: auto;
   width: 100%;
-  max-width: auto;
   border: 1px solid #ccc;
   border-radius: 10px;
 }

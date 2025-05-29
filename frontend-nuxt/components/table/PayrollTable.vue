@@ -78,7 +78,7 @@ const myTable = ref({
   },
   header: {
     cell: {
-      background: '#222831',
+      background: '#008080',
       border: {
         color: '#ccc',
       },
