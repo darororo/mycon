@@ -48,10 +48,14 @@
       </div>
     </div>
     <hr style="margin: 12px 0; border-color: #ccc" />
+    <div>
+      <WorkerTable />
+    </div>
   </div>
 </template>
 
 <script setup>
+import WorkerTable from '~/components/table/DailyTaskTable.vue'
 const select = {
   background: 'white',
   border: {

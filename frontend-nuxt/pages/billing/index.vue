@@ -1,8 +1,16 @@
+<script setup>
+import BillingTable from '~/components/table/BillingTable.vue'
+import BillingTimeline from '~/components/timeline/BillingTimeline.vue'
+</script>
+
 <template>
   <div
     style="width: 100rem"
     class="max-w-[1500px]"
   >
+    <div>
+      <BillingTimeline style="margin-bottom: 20px" />
+    </div>
     <div
       style="display: flex; flex-direction: row; justify-content: space-between; align-items: end"
     >
@@ -18,7 +26,8 @@
       </h2>
     </div>
     <hr style="margin: 12px 0; border-color: #ccc" />
+    <div>
+      <BillingTable />
+    </div>
   </div>
 </template>
-
-<script setup></script>
