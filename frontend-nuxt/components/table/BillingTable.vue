@@ -1,15 +1,10 @@
 <template>
+  <!-- Table Card -->
   <div class="table-container card">
     <DataTable
       :value="data"
-      tableStyle="min-width: 50rem"
-      scrollable
-      show-gridlines=""
-      scroll-height="660px"
-      v-model:editingRows="editingRows"
-      editMode="row"
-      data-key="id"
-      :dt="billingTable"
+      table-style="min-width: 100%;"
+      :dt="table"
       :pt="{
         tableContainer: {
           style: `
@@ -21,27 +16,23 @@
           `,
         },
       }"
+      scrollable
+      show-gridlines=""
+      scroll-height="600px"
+      v-model:editingRows="editingRows"
+      editMode="row"
+      data-key="id"
       @row-edit-save="onRowEditSave"
     >
       <Column
-        field="itemName"
-        header="Client Name"
-        :pt="{
-          headerCell: {
-            style: 'border-top-left-radius: 10px',
-          },
-        }"
-      >
-        <template #editor="{ data, field }"
-          ><InputText
-            v-model="data[field]"
-            fluid=""
-          />
-        </template>
-      </Column>
+        field="id"
+        header="ID"
+        :pt="{}"
+      />
+
       <Column
-        field="category"
-        header="Amount Due"
+        field="worker"
+        header="Worker"
       >
         <template #editor="{ data, field }">
           <InputText
@@ -51,80 +42,29 @@
         </template>
       </Column>
       <Column
-        field="quantity"
-        header="Due Date"
+        field="gender"
+        header="Gender"
       >
         <template #editor="{ data, field }">
-          <InputNumber
-            v-model="data[field]"
-            fluid
-          />
+          <InputNumber v-model="data[field]" />
         </template>
       </Column>
       <Column
-        field="status"
-        header="Status"
-        style="width: 14%"
+        field="role"
+        header="Role"
       >
         <template #editor="{ data, field }">
-          <Select
-            v-model="data[field]"
-            :options="statuses"
-            optionLabel="label"
-            optionValue="value"
-            placeholder="Select a Status"
-            fluid
-          >
-            <template #option="slotProps">
-              <Tag
-                :value="slotProps.option.value"
-                :severity="getStatusLabel(slotProps.option.value)"
-              />
-            </template>
-          </Select>
-        </template>
-        <template #body="slotProps">
-          <Tag
-            :value="slotProps.data.status"
-            :class="getStatusLabel(slotProps.data.status)"
-            style="font-family: 'Montserrate', sans-serif"
-          />
+          <InputText v-model="data[field]" />
         </template>
       </Column>
-      <!-- <Column
-        header="Download"
-        style="width: 10%; min-width: 8rem"
-        body-style="text-align:center"
-      >
-        <template #editor="{ data }">
-          <Button
-            style="padding: 6px 20px; font-size: 12px; color: black"
-            label="Download"
-            @click="downloadFile(data.recept)"
-            fluid
-          />
-        </template>
-      </Column> -->
       <Column
-        header="Receipt"
-        style="width: 10%; min-width: 8rem"
-        bodyStyle="text-align:center"
+        field="project"
+        header="Project"
       >
-        <template #body="{ data }">
-          <Button
-            style="
-              border: 1px solid grey;
-              background-color: transparent;
-              padding: 6px 20px;
-              font-size: 12px;
-              color: black;
-            "
-            label="Download"
-            @click="downloadFile(data.recept)"
-          />
+        <template #editor="{ data, field }">
+          <InputText v-model="data[field]" />
         </template>
       </Column>
-
       <Column
         header="Action"
         :rowEditor="true"
@@ -136,9 +76,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+const { data } = await useFetch('https://6817864126a599ae7c3aa650.mockapi.io/api/api_dashboard_ip')
 
-const { data } = await useFetch('https://6817864126a599ae7c3aa650.mockapi.io/api/users')
+console.log(data)
 
 const editingRows = ref([])
 const onRowEditSave = event => {
@@ -146,106 +86,51 @@ const onRowEditSave = event => {
   data.value[index] = newData
 }
 
-const statuses = ref([
-  { label: 'In Stock', value: 'INSTOCK' },
-  { label: 'Low Stock', value: 'LOWSTOCK' },
-  { label: 'Out of Stock', value: 'OUTOFSTOCK' },
-])
-
-const billingTable = {
+const table = {
   header: {
     cell: {
-      padding: '10px 20px 10px 20px',
       background: '#008080',
+      color: 'white',
+      fontWeight: '600',
+      padding: '10px 20px',
       border: {
         color: '#ccc',
-        width: '2px',
+        width: '1px',
       },
     },
   },
   row: {
-    background: 'white',
-    color: 'black',
-    font: 'Montserrate',
+    background: '#fff',
+    color: '#111',
   },
   body: {
     cell: {
       border: {
-        color: '#ccc',
+        color: '#e0e0e0',
       },
       padding: '4px 20px',
     },
   },
 }
-
-const getStatusLabel = status => {
-  switch (status) {
-    case 'INSTOCK':
-      return 'tag-instock'
-
-    case 'LOWSTOCK':
-      return 'tag-lowstock'
-
-    case 'OUTOFSTOCK':
-      return 'tag-outofstock'
-
-    default:
-      return 'tag default'
-  }
-}
-// set defualt stock
-data.value = data.value.map(item => ({
-  ...item,
-  status: item.status || 'INSTOCK',
-}))
-
-// download static field (just test)
-function downloadFile(fileUrl) {
-  if (!fileUrl) return
-  const link = document.createElement('a')
-  link.href = fileUrl
-  link.setAttribute('download', '') // use filename from URL
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
-}
 </script>
 
 <style scoped>
+.card {
+  font-family: 'Montserrat', sans-serif;
+}
+
 .table-container {
   overflow-x: auto;
   width: 100%;
-  max-width: auto;
   border: 1px solid #ccc;
-  border-radius: 10px 10px 0 0;
+  border-radius: 10px;
 }
 
-.tag-instock {
-  background-color: #c8e6c9;
-  color: #388e3c;
+.chart-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
 }
-.tag-lowstock {
-  background-color: #fff59d;
-  color: #f9a825;
-}
-.tag-outofstock {
-  background-color: #ffcdd2;
-  color: #d32f2f;
-}
-.tag-default {
-  background-color: #f5f5f5;
-  color: #616161;
-}
-::v-deep(.p-inputtext) {
-  padding: 6px 20px;
-  font-size: 14px;
-}
-::v-deep(.p-select-label) {
-  padding: 6px 20px;
-  font-size: 14px;
-}
-
-/* customize  scrollbar */
 
 .table-container::-webkit-scrollbar {
   width: 10px;
@@ -270,5 +155,10 @@ function downloadFile(fileUrl) {
 .table-container {
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 #f0f0f0;
+}
+
+::v-deep(.p-inputtext) {
+  padding: 6px 20px;
+  font-size: 14px;
 }
 </style>
