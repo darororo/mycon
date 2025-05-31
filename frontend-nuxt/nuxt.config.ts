@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
+import { options } from '#build/eslint.config.mjs'
 import Aura from '@primeuix/themes/aura'
 import tailwindcss from '@tailwindcss/vite'
 
@@ -53,6 +54,9 @@ export default defineNuxtConfig({
     options: {
       theme: {
         preset: Aura,
+        options: {
+          darkModeSelector: 'none',
+        },
       },
     },
     components: {
