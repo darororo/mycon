@@ -1,9 +1,6 @@
 {
-  "name": "backend",
+  "name": "mycon-backend",
   "version": "0.1.1",
-  "description": "",
-  "author": "",
-  "private": true,
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
