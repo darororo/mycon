@@ -1,52 +1,51 @@
 <template>
-  <div class="container">
-    <hr />
+  <div class="form-wrapper">
     <div class="small-container">
-      <div class="">
-        <div class="small-fill">
-          <label
-            for="project-name"
-            class="tag"
-            >Project Name</label
-          >
-          <InputText
-            :dt="inputTextDt"
-            id="project-name"
-            class="input"
-            autocomplete="off"
-          />
-        </div>
-        <div class="small-fill">
-          <label
-            for="owner-name"
-            class="tag"
-            >Owner</label
-          >
-          <InputText
-            :dt="inputTextDt"
-            id="owner-name"
-            class="input"
-            autocomplete="off"
-          />
-        </div>
-        <div class="small-fill">
-          <label
-            for="price"
-            class="tag"
-            >Price</label
-          >
-          <InputText
-            :dt="inputTextDt"
-            id="price"
-            class="input"
-            autocomplete="off"
-          />
-        </div>
+      <div class="small-fill">
+        <label
+          for="project-name"
+          class="tag"
+          >Project Name</label
+        >
+        <InputText
+          :dt="inputTextDt"
+          id="project-name"
+          class="input"
+          autocomplete="off"
+        />
       </div>
-      <div style="width: 100%; height: 100%; padding: 2rem">
-        <ProjectFormUploadImage />
+      <div class="small-fill">
+        <label
+          for="owner-name"
+          class="tag"
+          >Owner</label
+        >
+        <InputText
+          :dt="inputTextDt"
+          id="owner-name"
+          class="input"
+          autocomplete="off"
+        />
+      </div>
+      <div class="small-fill">
+        <label
+          for="price"
+          class="tag"
+          >Price</label
+        >
+        <InputText
+          :dt="inputTextDt"
+          id="price"
+          class="input"
+          autocomplete="off"
+        />
       </div>
     </div>
+
+    <div style="margin-top: 24px">
+      <UploadImage />
+    </div>
+
     <div class="big-container">
       <div class="big-fill">
         <label
@@ -75,19 +74,40 @@
         />
       </div>
     </div>
+
     <div class="button">
-      <!-- <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button> -->
       <Button
         type="button"
         label="Confirm"
+        class="creative-button"
+        :dt="{
+          primary: {
+            background: 'red',
+            border: { color: 'none' },
+            active: {
+              background: 'blue',
+              color: 'white',
+              border: { color: 'none' },
+            },
+            hover: {
+              background: 'blue',
+              color: 'white',
+              border: { color: 'none' },
+            },
+          },
+          focus: {
+            ring: { width: 'none' },
+          },
+        }"
         @click="visible = false"
-      ></Button>
+      />
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import UploadImage from './UploadImage.vue'
 
 const visible = ref(false)
 
@@ -101,47 +121,76 @@ const inputTextDt = {
 </script>
 
 <style scoped>
-.small-fill {
-  display: flex;
-  flex-direction: column;
-  padding-left: 40px;
-}
-
-.big-fill {
-  display: flex;
-  flex-direction: column;
-  padding: 15px 40px 0;
-}
-
-.input {
-  width: 335px;
-  color: black;
-  background-color: white;
-}
-
-.input-big {
-  width: 720px;
-  color: black;
-  background-color: white;
-}
-.input:focus {
-  border-color: none;
+.form-wrapper {
+  padding: 30px;
+  padding-bottom: 10px;
+  font-family: 'Montserrat', sans-serif;
+  background: #f9f9fb;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 .small-container {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding-right: 40px;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: space-between;
+}
+
+.small-fill,
+.big-fill {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 30%;
+}
+
+.big-container {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input,
+.input-big {
+  padding: 10px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  transition: 0.3s ease;
+  background-color: white;
+  font-size: 15px;
+}
+
+.input-big {
+  width: 100%;
+}
+
+.input:focus,
+.input-big:focus {
+  border-color: grey;
+  outline: none;
+}
+
+.tag {
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
 }
 
 .button {
   display: flex;
-  justify-content: end;
-  padding-right: 40px;
-  padding-top: 18px;
+  justify-content: flex-end;
+  margin-top: 30px;
 }
-label {
-  padding-bottom: 2px;
+.creative-button {
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 500;
+  color: white;
+  border-radius: 6px;
+  background-color: #007bff;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
 }
 </style>

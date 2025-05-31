@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div>
     <Toast />
     <FileUpload
       name="demo[]"
@@ -9,88 +9,134 @@
       accept="image/*"
       :maxFileSize="1000000"
       @select="onSelectedFiles"
-      :dt="uploadDt"
+      :dt="{
+        background: 'white',
+        border: {
+          color: '#ccc',
+        },
+      }"
     >
-      <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
+      <template #header="{ chooseCallback, uploadCallback, files }">
         <div class="flex flex-wrap justify-between items-center flex-1 gap-4">
           <div class="flex gap-2">
             <Button
               @click="chooseCallback()"
-              icon="pi pi-images"
               rounded
               outlined
               severity="secondary"
-              >Btn 1</Button
+              style="border-color: grey"
             >
+              <template #icon>
+                <Icon
+                  style="color: grey; font-size: 16px"
+                  name="bi:image"
+                />
+              </template>
+            </Button>
             <Button
               @click="uploadEvent(uploadCallback)"
-              icon="pi pi-cloud-upload"
               rounded
               outlined
-              severity="success"
               :disabled="!files || files.length === 0"
+              style="border-color: #64dd17; display: flex; align-items: center"
             >
-              Btn 2</Button
-            >
-            <Button
-              @click="clearCallback()"
-              icon="pi pi-times"
-              rounded
-              outlined
-              severity="danger"
-              :disabled="!files || files.length === 0"
-              >Btn 3</Button
-            >
+              <template #icon>
+                <Icon
+                  style="font-size: 18px; color: #64dd17"
+                  name="fontisto:cloud-up"
+                />
+              </template>
+            </Button>
           </div>
           <ProgressBar
             :value="totalSizePercent"
             :showValue="false"
+            :pt="{
+              root: {
+                style: 'border: 1px solid #ccc',
+              },
+            }"
+            :dt="{
+              background: 'white',
+            }"
             class="md:w-20rem h-1 w-full md:ml-auto"
           >
             <span class="whitespace-nowrap">{{ totalSize }}B / 1Mb</span>
           </ProgressBar>
         </div>
       </template>
-      <template #content="{ files, uploadedFiles, removeUploadedFileCallback, removeFileCallback }">
+      <template #content="{ files, removeFileCallback }">
         <div class="flex flex-col gap-8 pt-4">
           <div v-if="files.length > 0">
-            <h5>Pending</h5>
-            <div class="flex flex-wrap gap-4 w-full">
+            <h5
+              style="
+                color: black;
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 500;
+                margin-bottom: 10px;
+              "
+            >
+              Pending
+            </h5>
+            <div class="flex flex-wrap gap-4">
               <div
                 v-for="(file, index) of files"
                 :key="file.name + file.type + file.size"
-                class="p-8 rounded-border flex flex-col border border-surface items-center gap-4 w-full"
+                style="
+                  padding: 8px;
+                  border-radius: 4px;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  gap: 4px;
+                  border: 1px solid #ccc;
+                "
               >
                 <div>
                   <img
                     role="presentation"
                     :alt="file.name"
                     :src="file.objectURL"
-                    width="100"
+                    style="border-radius: 4px"
+                    width="140"
                     height="50"
                   />
                 </div>
                 <span
-                  class="font-semibold text-ellipsis max-w-60 whitespace-nowrap overflow-hidden"
+                  class="text-ellipsis max-w-60 whitespace-nowrap"
+                  style="
+                    font-weight: 600;
+                    max-width: 60px;
+                    overflow: hidden;
+                    color: grey;
+                    font-family: 'Montserrat', sans-serif;
+                    font-weight: 600;
+                    font-size: 14px;
+                  "
                   >{{ file.name }}</span
                 >
-                <div>{{ formatSize(file.size) }}</div>
+                <div style="color: grey; font-family: 'Montserrat', sans-serif; font-size: 14px">
+                  {{ formatSize(file.size) }}
+                </div>
                 <Badge
+                  style="color: black; font-family: 'Montserrat', sans-serif; font-weight: 500"
                   value="Pending"
                   severity="warn"
                 />
                 <Button
-                  icon="pi pi-times"
                   @click="onRemoveTemplatingFile(file, removeFileCallback, index)"
                   outlined
                   rounded
                   severity="danger"
-                />
+                  style="color: red; border-color: red"
+                >
+                  <template #icon><Icon name="si:close-duotone" /> </template>
+                </Button>
               </div>
             </div>
           </div>
 
-          <div v-if="uploadedFiles.length > 0">
+          <!-- <div v-if="uploadedFiles.length > 0">
             <h5>Completed</h5>
             <div class="flex flex-wrap gap-4">
               <div
@@ -126,13 +172,37 @@
                 />
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </template>
       <template #empty>
         <div class="flex items-center justify-center flex-col">
-          <i class="pi pi-cloud-upload !border-2 !rounded-full !p-8 !text-4xl !text-muted-color" />
-          <p class="mt-6 mb-0">Drag and drop files to here to upload.</p>
+          <i
+            style="
+              display: flex;
+              padding: 20px;
+              border: 1px solid white;
+              align-items: center;
+              border-radius: 100%;
+              border-color: grey;
+            "
+          >
+            <Icon
+              style="font-size: 24px; color: grey"
+              name="fontisto:cloud-up"
+            />
+          </i>
+          <p
+            style="
+              color: grey;
+              margin-top: 6px;
+              margin-bottom: 0;
+              font-family: 'Montserrat', sans-serif;
+              font-weight: 500;
+            "
+          >
+            Drag and drop files to here to upload.
+          </p>
         </div>
       </template>
     </FileUpload>
@@ -157,11 +227,11 @@ const onRemoveTemplatingFile = (file, removeFileCallback, index) => {
   totalSizePercent.value = totalSize.value / 10
 }
 
-const onClearTemplatingUpload = clear => {
-  clear()
-  totalSize.value = 0
-  totalSizePercent.value = 0
-}
+// const onClearTemplatingUpload = clear => {
+//   clear()
+//   totalSize.value = 0
+//   totalSizePercent.value = 0
+// }
 
 const onSelectedFiles = event => {
   files.value = event.files
@@ -193,6 +263,4 @@ const formatSize = bytes => {
 
   return `${formattedSize} ${sizes[i]}`
 }
-
-const uploadDt = {}
 </script>
