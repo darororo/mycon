@@ -37,9 +37,6 @@
         </h2>
         <div style="flex-direction: row; gap: 10px; display: flex">
           <Select
-            v-model="selectedCity"
-            :options="cities"
-            optionLabel="name"
             placeholder="Filter Project"
             :dt="select"
             :pt="{
@@ -56,6 +53,7 @@
               },
             }"
             label="Create Project"
+            @click="createFormVisible = true"
           >
             <template #icon>
               <Icon
@@ -88,10 +86,37 @@
         </div>
       </ScrollPanel>
     </div>
+
+    <Dialog
+      v-model:visible="createFormVisible"
+      modal
+      header="Create Project"
+      :style="{ width: '800px', height: '600px' }"
+      :pt="{
+        content: {
+          style: `
+                    padding :0;
+                `,
+        },
+      }"
+      :dt="{
+        background: 'white',
+        color: 'black',
+        header: {
+          padding: '30px',
+        },
+      }"
+    >
+      <div>
+        <ProjectFormCreateProjectForm />
+      </div>
+    </Dialog>
   </div>
 </template>
 
 <script setup>
+const createFormVisible = ref(false)
+
 const select = {
   background: 'white',
   border: {
