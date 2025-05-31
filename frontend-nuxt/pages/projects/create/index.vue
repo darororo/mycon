@@ -68,23 +68,26 @@
       </div>
       <hr style="margin: 12px 0; border-color: #ccc" />
     </div>
-    <ScrollPanel
-      style="
-        width: 62rem;
-        height: 50rem;
-        border: 1px solid #ccc;
-        padding: 12px 0;
-        border-radius: 8px;
-      "
-    >
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 14px">
-        <ProjectCard
-          v-for="item in projects"
-          :key="item.id"
-          :item="item"
-        />
-      </div>
-    </ScrollPanel>
+    <div class="flex flex-row w-full justify-between">
+      <ScrollPanel style="width: 62rem; height: 50rem; padding: 12px 0; border-radius: 8px">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 14px">
+          <ProjectCard
+            v-for="item in projects"
+            :key="item.id"
+            :item="item"
+          />
+        </div>
+      </ScrollPanel>
+      <ScrollPanel style="width: 20rem; height: 50rem">
+        <div
+          class="mb-4"
+          v-for="i in 20"
+          :key="i"
+        >
+          <ProjectUpcomingProject />
+        </div>
+      </ScrollPanel>
+    </div>
   </div>
 </template>
 
