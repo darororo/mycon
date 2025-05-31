@@ -1,6 +1,19 @@
-<script setup>
+<script setup lang="ts">
 import BillingTable from '~/components/table/BillingTable.vue'
 import BillingTimeline from '~/components/timeline/BillingTimeline.vue'
+
+const projectOverviewVisible = ref(false)
+
+const dialogStyle = {
+  height: '30rem',
+  width: '48rem',
+  background: '#fff',
+  color: 'black',
+}
+const dialogBreakpoints = {
+  '1199px': '75vw',
+  '575px': '90vw',
+}
 </script>
 
 <template>
@@ -27,7 +40,19 @@ import BillingTimeline from '~/components/timeline/BillingTimeline.vue'
     </div>
     <hr style="margin: 12px 0; border-color: #ccc" />
     <div>
-      <BillingTable />
+      <BillingTable @open-project-dialog="projectOverviewVisible = true" />
     </div>
+  </div>
+  <div>
+    <Dialog
+      v-model:visible="projectOverviewVisible"
+      :style="dialogStyle"
+      :breakpoints="dialogBreakpoints"
+      modal
+      class="test"
+      header="Project Overview"
+    >
+      <BillingPopupOverview />
+    </Dialog>
   </div>
 </template>

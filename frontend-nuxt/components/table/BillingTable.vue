@@ -23,6 +23,7 @@
       editMode="row"
       data-key="id"
       @row-edit-save="onRowEditSave"
+      @row-click="e => handleRowClick(e)"
     >
       <Column
         field="id"
@@ -75,15 +76,23 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import type { DataTableRowClickEvent, DataTableRowEditSaveEvent } from 'primevue'
+
+const emit = defineEmits(['open-project-dialog'])
+
 const { data } = await useFetch('https://6817864126a599ae7c3aa650.mockapi.io/api/api_dashboard_ip')
 
 console.log(data)
 
 const editingRows = ref([])
-const onRowEditSave = event => {
+const onRowEditSave = (event: DataTableRowEditSaveEvent) => {
   const { newData, index } = event
   data.value[index] = newData
+}
+
+const handleRowClick = function (event: DataTableRowClickEvent) {
+  emit('open-project-dialog')
 }
 
 const table = {
