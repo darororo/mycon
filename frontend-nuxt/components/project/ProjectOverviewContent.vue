@@ -35,7 +35,7 @@
             </div>
           </div>
           <div
-            class="h-[40%] w-[40%] md:h-[240px] md:w-full bg-black mr-4 rounded-lg overflow-hidden"
+            class="h-[40%] w-[40%] md:h-[240px] md:w-full max-w-lg bg-black mr-4 rounded-lg overflow-hidden"
           >
             <LMap
               ref="map"

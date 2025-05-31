@@ -28,7 +28,12 @@
                 :class="statusBg(item.status)"
                 >{{ item.status }}</label
               >
-              <label class="history-details">More Details</label>
+              <NuxtLink
+                :to="'/projects/1'"
+                class="history-details"
+                no-rel
+                >More Details</NuxtLink
+              >
             </div>
           </div>
         </div>
@@ -38,6 +43,8 @@
 </template>
 
 <script setup>
+import { NuxtLink } from '#components'
+
 defineProps({
   item: {
     type: Object,
