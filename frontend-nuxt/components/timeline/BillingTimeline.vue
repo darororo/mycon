@@ -5,6 +5,7 @@
         root: {
           style: `
                 background-color: white;
+                height: 280px;
                 color: black;
                 box-shadow: none;
                 width: 100%;
@@ -13,19 +14,25 @@
         },
         content: {
           style: `
-                // background-color: red;
                 color: black;
                 box-shadow: none;
                 width: auto;
                 `,
         },
       }"
+      :dt="{
+        body: {
+          padding: '16px 20px',
+        },
+      }"
     >
-      <template #title>Ash's House</template>
+      <template #title>
+        <h1 style="color: black; font-weight: 600">{{ items.projectName }}</h1>
+      </template>
       <template #subtitle>
-        It is a long established fact that a reader will be distracted by the readable content of a
-        page when looking at its layout. The point of using Lorem Ipsum is that it has a
-        more-or-less normal distribution of letters.
+        <p style="font-size: 14px; color: grey">
+          {{ items.content }}
+        </p>
       </template>
       <template #content>
         <div>
@@ -33,16 +40,11 @@
             :value="events"
             layout="horizontal"
             align="top"
+            style="margin-top: 30px"
             :pt="{
-              eventMarker: {
-                style: `
-                        flex: 0 0 32px;
-                        align-self: center;
-                    `,
-              },
               eventContent: {
                 style: `
-                    width: 10ch;
+                    width: 10rem;
                     word-break: break-word;
                     align-self: start;
                 `,
@@ -77,7 +79,8 @@
 
               <div
                 v-else
-                class="size-8 bg-[#F4F4F4] rounded-full border border-2 border-black flex justify-center items-center"
+                class="size-8 rounded-full flex justify-center items-center"
+                style="background-color: white; border: 1px solid grey"
               >
                 <div class="size-3 bg-[#4A5069] rounded-full"></div>
               </div>
@@ -85,22 +88,32 @@
 
             <template #connector="timeProps">
               <div
-                class="w-[80%] h-1.5 rounded-md mx-1"
+                style="margin-left: 7px"
+                class="w-[80%] h-1 rounded-full mx-1"
                 :class="[timeProps.item.completed ? 'bg-[#4A5069]' : 'bg-gray-400']"
-              ></div>
+              />
             </template>
 
             <template #content="timeProps">
-              {{ timeProps.item.name }}
+              <div style="font-size: 14px; margin-top: 6px; font-weight: 400">
+                {{ timeProps.item.name }}
+              </div>
             </template>
           </Timeline>
         </div>
       </template>
     </Card>
-    <Divider
+    <!-- <Divider
       layout="vertical"
       type="solid"
-    />
+      style="height: 280px; max-height: 280px"
+      :dt="{
+        border: {
+          color: 'grey',
+          radius: '10px',
+        },
+      }"
+    /> -->
     <Card
       :pt="{
         root: {
@@ -123,43 +136,94 @@
     >
       <template #title>
         <div class="person-info">
-          <div class="person-container">
-            <h1>{{ name }}</h1>
-            <p class="role">{{ role }}</p>
+          <div style="display: flex; flex-direction: column; align-items: start; gap: 4px">
+            <h1 style="font-weight: 600; font-size: 16px">{{ items.name }}</h1>
+            <p style="font-size: 14px; color: grey">{{ items.role }}</p>
           </div>
           <img
-            class="image"
-            src=""
-            alt=" "
+            style="height: 50px; border-radius: 100%"
+            :src="items.UrlProfile"
           />
         </div>
       </template>
       <template #subtitle>
-        <div class="sub-container">
-          <div class="sub">
+        <div
+          style="
+            display: flex;
+            margin-top: 10px;
+            align-items: start;
+            flex-direction: column;
+            gap: 4px;
+          "
+        >
+          <div style="display: flex; align-items: center; gap: 10px">
             <Icon
-              name="material-symbols:schedule-outline-rounded"
-              alt=""
-              size="16px"
+              name="mingcute:time-line"
+              size="18px"
             />
-            <p class="sub-p">1-8 hours / day</p>
+            <p style="font-size: 14px">{{ items.timePerDay }}</p>
           </div>
-          <div class="sub">
+          <div style="display: flex; align-items: center; gap: 10px">
             <Icon
-              name="material-symbols:location-on-outline-rounded"
-              alt=""
-              size="16px"
+              name="mingcute:location-line"
+              size="18px"
             />
-            <p class="sub-p">Phnom Penh, Cambodia</p>
+            <p style="font-size: 14px">{{ items.location }}</p>
           </div>
         </div>
       </template>
       <template #content>
-        <div class="button">
-          <Button label="Contact" />
+        <div style="display: flex; flex-direction: column; gap: 14px">
           <Button
-            class="button2"
-            label="View Detail"
+            style="font-size: 14px"
+            :dt="{
+              primary: {
+                background: 'white',
+                border: {
+                  color: 'grey',
+                },
+                hover: {
+                  background: 'none',
+                  border: {
+                    color: 'grey',
+                  },
+                },
+                active: {
+                  background: 'none',
+                  border: {
+                    color: 'grey',
+                  },
+                },
+              },
+            }"
+            label="Contact"
+          />
+          <Button
+            :dt="{
+              primary: {
+                background: '#222831',
+                color: 'white',
+                border: {
+                  color: 'grey',
+                },
+                hover: {
+                  background: '#222831',
+                  color: 'white',
+                  border: {
+                    color: 'grey',
+                  },
+                },
+                active: {
+                  background: '#222831',
+                  color: 'white',
+                  border: {
+                    color: 'white',
+                  },
+                },
+              },
+            }"
+            style="font-size: 14px"
+            label="View Details"
           />
         </div>
       </template>
@@ -171,84 +235,33 @@
 import { ref } from 'vue'
 
 defineProps({
-  name: { type: String, default: 'Cena Jr.' },
-  role: { type: String, default: 'Son of the Invisible' },
+  items: {
+    type: Object,
+  },
 })
-
-// const events = ref([
-//   'Invoice Created',
-//   'Invoice Sent',
-//   'Payment Pending',
-//   'Payment Received',
-//   'Success',
-// ])
 
 const events = ref([
   { name: 'Invoice Created', completed: true },
-  { name: 'Invoice Created', completed: true },
-  { name: 'Invoice Created', completed: true },
-  { name: 'Invoice Created', completed: false },
-  { name: 'Invoice Created', completed: false },
+  { name: 'Invoice Sent', completed: true },
+  { name: 'Payment Pending', completed: true },
+  { name: 'Payment Received', completed: false },
+  { name: 'Completed', completed: false },
 ])
 </script>
 
 <style scoped>
 .container {
   display: flex;
-  width: auto;
-  height: auto;
-  padding: 8px;
-  background-color: #f4f4f4;
-}
-
-.role {
-  margin-top: -2px;
-  font-weight: 400;
-  font-size: 14px;
-  color: var(--p-zinc-400);
-}
-
-.image {
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
-  background-color: white;
+  align-items: center;
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 10px;
+  gap: 20px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .person-info {
   display: flex;
   justify-content: space-between;
-}
-
-.sub {
-  display: flex;
-  align-items: center;
-}
-
-.sub-p {
-  font-size: 14px;
-  padding-left: 5px;
-  font-family: 'Montserrat', sans-serif;
-}
-
-.button {
-  height: 95px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.p-button {
-  background-color: var(--p-neutral-300);
-  border-color: var(--p-neutral-500);
-  border-radius: 12px;
-}
-
-.button2 {
-  background-color: #4a5069;
-}
-
-.sub-container {
-  padding-top: 15px;
 }
 </style>
