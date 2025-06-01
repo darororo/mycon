@@ -9,19 +9,17 @@
         <div
           style="display: flex; align-items: center; justify-content: space-between; width: 100%"
         >
-          <label style="font-size: 14px; font-weight: 600">Taiki Inomata</label>
+          <label style="font-size: 14px; font-weight: 600">{{ post.userName }}</label>
           <Icon
             style="font-size: 24px; position: relative; right: 20px; cursor: pointer"
             name="proicons:more"
           />
         </div>
-        <span style="color: grey; font-size: 12px">Client</span>
+        <span style="color: grey; font-size: 12px">{{ post.userRole }}</span>
       </div>
     </div>
     <p style="font-size: 13px; color: black; font-weight: 400; margin-top: 10px">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, similique in tempora labore
-      accusamus sed nulla corrupti laboriosam iste nesciunt vel autem sunt atque culpa. Dolore,
-      provident. Eius, quaerat eos.
+      {{ post.postStatus }}
     </p>
     <div style="display: flex; justify-content: center">
       <img
@@ -45,7 +43,10 @@
         />
         <span :class="{ 'text-blue-400': isLiked }">Like</span>
       </Button>
-      <Button class="flex items-center">
+      <Button
+        @click="handleSubmitComment"
+        class="flex items-center"
+      >
         <Icon
           name="iconamoon:comment"
           size="20"
@@ -55,27 +56,11 @@
       </Button>
     </div>
     <hr style="border-color: #ccc; margin: 0" />
-    <div style="margin-top: 10px; display: flex; align-items: start; gap: 10px">
-      <img
-        style="height: 30px; border-radius: 100%"
-        src="https://i.pinimg.com/736x/2b/d6/ed/2bd6ed25527d6a2750e423ea2c619e42.jpg"
-      />
-      <div
-        style="
-          background-color: white;
-          padding: 10px;
-          border-radius: 10px;
-          width: 20rem;
-          border: 1px solid #ccc;
-        "
-      >
-        <label style="font-size: 13px; font-weight: 600">Chinatsu</label>
-        <p style="font-size: 13px; color: #333">
-          Lorem, ipsum maxime corporis quaerat? Quisquam nam magni aliquam commodi illum error
-          veniam fugiat quasi quis!
-        </p>
-      </div>
-    </div>
+    <PostPopupComment
+      v-for="(comment, index) in comments"
+      :key="index"
+      :content="comment.content"
+    />
   </div>
 </template>
 
@@ -86,9 +71,10 @@ const toggleLike = () => {
   isLiked.value = !isLiked.value
 }
 
-defineProps({
-  post: {},
-})
+const postStore = usePostStore()
+const comments = postStore.comments
+
+const post = postStore.posts[0]
 </script>
 
 <style scoped>
