@@ -54,7 +54,7 @@
               event: {
                 marker: {
                   size: '32px',
-                  background: '#4A5069',
+                  background: '#222831',
                 },
               },
               horizontal: {
@@ -69,7 +69,7 @@
             <template #marker="timeProps">
               <div
                 v-if="timeProps.item.completed"
-                class="w-8 h-8 bg-[#4A5069] rounded-full flex justify-center items-center"
+                class="w-8 h-8 bg-[#222831] rounded-full flex justify-center items-center"
               >
                 <Icon
                   name="mingcute:check-fill"
@@ -82,7 +82,7 @@
                 class="size-8 rounded-full flex justify-center items-center"
                 style="background-color: white; border: 1px solid grey"
               >
-                <div class="size-3 bg-[#4A5069] rounded-full"></div>
+                <div class="size-3 bg-[#222831] rounded-full"></div>
               </div>
             </template>
 
@@ -90,7 +90,7 @@
               <div
                 style="margin-left: 7px"
                 class="w-[80%] h-1 rounded-full mx-1"
-                :class="[timeProps.item.completed ? 'bg-[#4A5069]' : 'bg-gray-400']"
+                :class="[timeProps.item.completed ? 'bg-[#222831]' : 'bg-gray-400']"
               />
             </template>
 
@@ -253,7 +253,7 @@ const events = ref([
 .container {
   display: flex;
   align-items: center;
-  border: 1px solid white;
+  /* border: 1px solid white; */
   border-radius: 10px;
   padding: 10px;
   gap: 20px;

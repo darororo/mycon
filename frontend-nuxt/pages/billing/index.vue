@@ -6,7 +6,7 @@
     <div>
       <ScrollPanel
         style="
-          height: 324px;
+          height: 330px;
           padding: 10px;
           border-radius: 10px;
           border: 1px solid grey;
