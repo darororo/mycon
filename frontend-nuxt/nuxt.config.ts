@@ -44,6 +44,7 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     '@primevue/nuxt-module',
     '@nuxtjs/leaflet',
+    '@pinia/nuxt',
   ],
 
   fonts: {
