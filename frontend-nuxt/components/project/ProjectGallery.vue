@@ -10,10 +10,10 @@
     :dt="card"
   >
     <template #content>
-      <div class="flex flex-col lg:flex-row">
+      <div class="flex flex-col lg:flex-row max-w-[980px]">
         <div class="border">
           <img
-            style="width: auto; height: 392px"
+            style="width: 90rem; height: auto"
             class="h-full rounded-md"
             :src="largeImage"
             alt="Main"
@@ -23,7 +23,7 @@
           <div class="flex flex-row gap-2 w-full h-[50%] max-h-[50%] justify-between">
             <img
               height="auto"
-              width="250px"
+              width="300px"
               v-for="image in smallImages.slice(0, smallImages.length / 2)"
               :key="image.id"
               class="rounded-md"
@@ -36,7 +36,7 @@
               v-for="image in smallImages.slice(smallImages.length / 2)"
               :key="image.id"
               height="auto"
-              width="250px"
+              width="300px"
               class="rounded-md"
               :src="image.img"
               alt="Thumbnail"
