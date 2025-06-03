@@ -13,14 +13,17 @@ export class Project {
   @Column()
   description: string;
 
+  @Column({ type: 'decimal', nullable: true })
+  price: number;
+
   @Column()
   location: string;
 
-  @Column()
-  long: number;
+  @Column({ type: 'decimal', nullable: true })
+  longtitude: number;
 
-  @Column()
-  lat: number;
+  @Column({ type: 'decimal', nullable: true })
+  latitude: number;
 
   @ManyToOne(() => User, (user) => user.projects)
   client: User;
