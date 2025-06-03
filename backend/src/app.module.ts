@@ -7,6 +7,7 @@ import { DataSource } from 'typeorm';
 import { ProjectsModule } from './projects/projects.module';
 import { ManagersModule } from './managers/managers.module';
 import { OwnersModule } from './owners/owners.module';
+import { WorkersModule } from './workers/workers.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { OwnersModule } from './owners/owners.module';
     ProjectsModule,
     ManagersModule,
     OwnersModule,
+    WorkersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

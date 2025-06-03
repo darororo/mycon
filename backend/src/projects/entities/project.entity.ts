@@ -1,6 +1,14 @@
 import { Manager } from 'src/managers/entities/manager.entity';
 import { User } from 'src/users/entities/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Worker } from 'src/workers/entities/worker.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Project {
@@ -30,4 +38,8 @@ export class Project {
 
   @ManyToOne(() => Manager, (manager) => manager.projectsAssigned)
   manager: Manager;
+
+  @ManyToMany(() => Worker, (worker) => worker.projects)
+  @JoinTable()
+  workers: Worker[];
 }
