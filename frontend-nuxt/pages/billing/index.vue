@@ -1,21 +1,3 @@
-<script setup lang="ts">
-import BillingTable from '~/components/table/BillingTable.vue'
-import BillingTimeline from '~/components/timeline/BillingTimeline.vue'
-
-const projectOverviewVisible = ref(false)
-
-const dialogStyle = {
-  height: '30rem',
-  width: '48rem',
-  background: '#fff',
-  color: 'black',
-}
-const dialogBreakpoints = {
-  '1199px': '75vw',
-  '575px': '90vw',
-}
-</script>
-
 <template>
   <div
     style="width: 100rem"
@@ -56,3 +38,21 @@ const dialogBreakpoints = {
     </Dialog>
   </div>
 </template>
+
+<script setup lang="ts">
+import BillingTable from '~/components/table/BillingTable.vue'
+import BillingTimeline from '~/components/timeline/BillingTimeline.vue'
+
+const projectOverviewVisible = ref(false)
+
+const dialogStyle = {
+  height: '30rem',
+  width: '48rem',
+  background: '#fff',
+  color: 'black',
+}
+const dialogBreakpoints = {
+  '1199px': '75vw',
+  '575px': '90vw',
+}
+</script>
