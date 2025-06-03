@@ -28,7 +28,7 @@
         header="Item Name"
         :pt="{
           headerCell: {
-            style: 'border-top-left-radius: 10px',
+            style: 'border-top-left-radius: 10px;',
           },
         }"
       >
@@ -158,6 +158,7 @@ const inventoryTable = {
         color: '#ccc',
         width: '2px',
       },
+      color: 'white',
     },
   },
   row: {

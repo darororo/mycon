@@ -20,7 +20,7 @@
     <hr style="margin: 12px 0; border-color: #ccc" />
     <div
       style="margin-bottom: 10px; gap: 10px"
-      class="flex flex-row gap-2 rounded-md border-2"
+      class="flex flex-row gap-2 rounded-md"
     >
       <DashboardExpenseCard />
       <div class="w-full max-w-[800px] h-auto">

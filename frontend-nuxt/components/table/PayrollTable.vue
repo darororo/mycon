@@ -83,6 +83,7 @@ const myTable = ref({
         color: '#ccc',
       },
       padding: '10px',
+      color: 'white',
     },
   },
   row: {
@@ -91,7 +92,7 @@ const myTable = ref({
   column: {
     title: {
       font: {
-        weight: '500',
+        weight: '600',
       },
     },
   },

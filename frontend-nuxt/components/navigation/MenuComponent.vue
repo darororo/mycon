@@ -200,7 +200,7 @@ const mainMenu = ref([
   },
   {
     label: 'Project',
-    icon: ['eos-icons:project', 'solar:alt-arrow-down-bold'],
+    icon: ['ant-design:project-filled', 'solar:alt-arrow-down-bold'],
     items: [
       {
         label: 'Create Project',
@@ -239,7 +239,7 @@ const mainMenu = ref([
       name: 'inventory',
     },
   },
-  { label: 'Billing', icon: 'medical-icon:i-billing', route: { name: 'billing' } },
+  { label: 'Billing', icon: 'stash:billing-info', route: { name: 'billing' } },
 ])
 
 const userMenu = ref([
@@ -303,6 +303,7 @@ const menu = {
   position: relative;
   /* right: 40px; */
   padding: 10px 20px;
+  color: white;
 }
 .user-menu {
   /* margin-top: 20px; */
