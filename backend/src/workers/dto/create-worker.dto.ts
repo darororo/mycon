@@ -1,4 +1,4 @@
-import { IsEmpty, IsEnum, IsNumber, IsString } from 'class-validator';
+import { IsEnum, IsNumber, IsString } from 'class-validator';
 import { WorkerRole } from '../enums/worker-role.enum';
 import { Gender } from 'src/common/enums/gender.enum';
 

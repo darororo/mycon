@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { UserRole } from '../enums/role.enum';
 import { Project } from 'src/projects/entities/project.entity';
+import { Gender } from 'src/common/enums/gender.enum';
 
 @Entity()
 export class User {
@@ -19,6 +20,9 @@ export class User {
 
   @Column()
   firstName: string;
+
+  @Column()
+  gender: Gender;
 
   @Column()
   lastName: string;
