@@ -37,6 +37,7 @@
             },
           }"
           label="Add Worker"
+          @click="createFormVisible = true"
         >
           <template #icon>
             <Icon
@@ -52,10 +53,44 @@
       <WorkerTable />
     </div>
   </div>
+
+  <Dialog
+    v-model:visible="createFormVisible"
+    modal
+    header="Create Worker"
+    :style="{ width: '800px', height: '600px' }"
+    :pt="{
+      content: {
+        style: `
+                  padding :0;
+              `,
+      },
+      header: {
+        style: 'border-bottom: 1px solid #ccc;',
+      },
+    }"
+    :dt="{
+      background: 'white',
+      color: 'black',
+      header: {
+        padding: '30px',
+      },
+      border: {
+        radius: '20px',
+      },
+    }"
+  >
+    <ScrollPanel style="height: 480px">
+      <CreateWorkerForm />
+    </ScrollPanel>
+  </Dialog>
 </template>
 
 <script setup>
 import WorkerTable from '~/components/table/DailyTaskTable.vue'
+import CreateWorkerForm from '~/components/management/form/CreateWorkerForm.vue'
+
+const createFormVisible = ref(false)
 const select = {
   background: 'white',
   border: {

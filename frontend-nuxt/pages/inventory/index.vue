@@ -37,6 +37,7 @@
             },
           }"
           label="Create Item"
+          @click="createFormVisible = true"
         >
           <template #icon>
             <Icon
@@ -52,10 +53,44 @@
       <InventoryTable />
     </div>
   </div>
+
+  <Dialog
+    v-model:visible="createFormVisible"
+    modal
+    header="Create Inventory"
+    :style="{ width: '800px', height: '600px' }"
+    :pt="{
+      content: {
+        style: `
+                  padding :0;
+              `,
+      },
+      header: {
+        style: 'border-bottom: 1px solid #ccc;',
+      },
+    }"
+    :dt="{
+      background: 'white',
+      color: 'black',
+      header: {
+        padding: '30px',
+      },
+      border: {
+        radius: '20px',
+      },
+    }"
+  >
+    <ScrollPanel style="height: 480px">
+      <CreateInvenForm />
+    </ScrollPanel>
+  </Dialog>
 </template>
 
 <script setup>
 import InventoryTable from '~/components/inventory/table/InventoryTable.vue'
+import CreateInvenForm from '~/components/inventory/form/CreateInvenForm.vue'
+
+const createFormVisible = ref(false)
 
 const select = {
   background: 'white',
