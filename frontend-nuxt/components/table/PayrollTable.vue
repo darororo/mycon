@@ -110,29 +110,4 @@ const myColumns = ref([
 ::v-deep(.p-datatable-column-title) {
   width: 90px;
 }
-
-.table-container::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-.table-container::-webkit-scrollbar-track {
-  background: #f0f0f0;
-  border-radius: 8px;
-}
-
-.table-container::-webkit-scrollbar-thumb {
-  background-color: #cbd5e1;
-  border-radius: 8px;
-  border: 2px solid #f0f0f0;
-}
-
-.table-container::-webkit-scrollbar-thumb:hover {
-  background-color: #94a3b8;
-}
-
-.table-container {
-  scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 #f0f0f0;
-}
 </style>

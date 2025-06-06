@@ -1,5 +1,4 @@
 <template>
-  <!-- Table Card -->
   <div class="table-container card">
     <DataTable
       :value="data"
@@ -18,7 +17,7 @@
       }"
       scrollable
       show-gridlines=""
-      scroll-height="600px"
+      scroll-height="700px"
       v-model:editingRows="editingRows"
       editMode="row"
       data-key="id"
@@ -139,26 +138,6 @@ const table = {
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
   font-weight: 600;
-}
-
-.table-container::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-.table-container::-webkit-scrollbar-track {
-  background: #f0f0f0;
-  border-radius: 8px;
-}
-
-.table-container::-webkit-scrollbar-thumb {
-  background-color: #cbd5e1;
-  border-radius: 8px;
-  border: 2px solid #f0f0f0;
-}
-
-.table-container::-webkit-scrollbar-thumb:hover {
-  background-color: #94a3b8;
 }
 
 .table-container {
