@@ -33,11 +33,15 @@
           class="tag"
           >Price</label
         >
-        <InputText
-          :dt="inputTextDt"
+        <InputNumber
+          v-model="value1"
+          inputId="currency-us"
+          mode="currency"
           id="price"
-          class="input"
-          autocomplete="off"
+          :dt="inputTextDt"
+          currency="USD"
+          locale="en-US"
+          fluid
         />
       </div>
     </div>
@@ -121,13 +125,24 @@ const inputTextDt = {
 </script>
 
 <style scoped>
+::v-deep(.p-inputtext) {
+  background-color: white;
+  color: black;
+  border-color: #ccc;
+}
+
+::v-deep(.p-inputtext):focus {
+  border-color: #ccc;
+}
+::v-deep(.p-inputtext):hover {
+  border-color: #ccc;
+}
 .form-wrapper {
-  padding: 30px;
-  padding-bottom: 10px;
+  padding: 32px 28px 18px 28px;
   font-family: 'Montserrat', sans-serif;
-  background: #f9f9fb;
   border-radius: 20px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .small-container {
