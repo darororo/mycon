@@ -47,19 +47,56 @@
             fluid
           />
         </div>
-        <div class="field">
+        <div class="small-fill">
           <label
             for="unit"
             class="tag"
             >Unit</label
           >
-          <InputText
-            v-model="unit"
-            :dt="inputTextDt"
-            id="unit"
-            class="input"
+          <Select
+            v-model="selectedUnit"
             autocomplete="off"
-            placeholder="e.g. pcs, kg"
+            :options="units"
+            optionLabel="name"
+            placeholder="Choose unit"
+            class="input"
+            :dt="{
+              overlay: {
+                background: 'white',
+                border: {
+                  color: '#007bff',
+                },
+              },
+              focus: {
+                border: {
+                  color: '#007bff',
+                },
+              },
+              hover: {
+                border: {
+                  color: '#007bff',
+                },
+              },
+              border: {
+                color: '#ccc',
+              },
+              color: 'black',
+              option: {
+                background: 'white',
+                color: 'black',
+                selected: {
+                  focus: {
+                    background: '#007bff',
+                    color: 'white',
+                  },
+                  background: '#007bff',
+                },
+                focus: {
+                  background: 'none',
+                  color: 'black',
+                },
+              },
+            }"
           />
         </div>
         <div class="field">
@@ -79,14 +116,6 @@
           />
         </div>
       </div>
-      <div class="button-row">
-        <Button
-          type="submit"
-          label="Confirm"
-          class="creative-button"
-          :dt="buttonDt"
-        />
-      </div>
     </form>
   </div>
 </template>
@@ -97,9 +126,14 @@ import { ref } from 'vue'
 const itemName = ref('')
 const category = ref('')
 const quantity = ref(null)
-const unit = ref('')
 const date = ref(null)
-
+const selectedUnit = ref()
+const units = ref([
+  { name: 'Piece', code: 'PCS' },
+  { name: 'Kilogram', code: 'KG' },
+  { name: 'Meter', code: 'M' },
+  { name: 'Litre', code: 'L' },
+])
 const inputTextDt = {
   focus: {
     border: { color: 'none' },
@@ -119,30 +153,21 @@ const datePickerDt = {
   },
   panel: { background: 'white', color: 'black' },
 }
-
-const buttonDt = {
-  primary: {
-    background: '#007bff',
-    border: { color: 'none' },
-    active: { background: '#0056b3', color: 'white', border: { color: 'none' } },
-    hover: { background: '#0056b3', color: 'white', border: { color: 'none' } },
-  },
-  focus: { ring: { width: 'none' } },
-}
-
-function onSubmit() {
-  // Handle form submission here
-  // e.g., emit an event or call an API
-}
 </script>
 
 <style scoped>
 .form-wrapper {
-  padding: 32px 28px 18px 28px;
+  padding: 32px 28px 32px 28px;
   font-family: 'Montserrat', sans-serif;
   border-radius: 20px;
   max-width: 700px;
   margin: 0 auto;
+}
+.small-fill,
+.big-fill {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 30%;
 }
 
 .fields-grid {
@@ -157,7 +182,7 @@ function onSubmit() {
 }
 
 .input {
-  padding: 10px 14px;
+  padding: 2px;
   border: 1.5px solid #ddd;
   border-radius: 8px;
   transition: border-color 0.3s;
@@ -168,8 +193,11 @@ function onSubmit() {
 ::v-deep(.p-inputtext) {
   background-color: white;
   color: black;
+  font-size: 15px;
+  padding: 10px;
   border-color: #ccc;
 }
+
 ::v-deep(.p-inputtext):focus,
 ::v-deep(.p-inputtext):hover {
   border-color: #007bff;
@@ -180,23 +208,5 @@ function onSubmit() {
   font-weight: 600;
   font-size: 14px;
   color: #333;
-}
-
-.button-row {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 36px;
-}
-
-.creative-button {
-  padding: 10px 28px;
-  font-size: 16px;
-  font-weight: 600;
-  color: white;
-  border-radius: 6px;
-  background-color: #007bff;
-  transition: background-color 0.2s;
-  cursor: pointer;
-  border: none;
 }
 </style>

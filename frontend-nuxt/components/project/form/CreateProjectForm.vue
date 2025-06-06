@@ -12,6 +12,7 @@
           id="project-name"
           class="input"
           autocomplete="off"
+          placeholder="Enter name"
         />
       </div>
       <div class="small-fill">
@@ -25,6 +26,7 @@
           id="owner-name"
           class="input"
           autocomplete="off"
+          placeholder="Enter name"
         />
       </div>
       <div class="small-fill">
@@ -42,6 +44,7 @@
           currency="USD"
           locale="en-US"
           fluid
+          placeholder="Enter hourly rate (e.g. 100)"
         />
       </div>
     </div>
@@ -62,6 +65,7 @@
           id="location"
           class="input-big"
           autocomplete="off"
+          placeholder="Enter location"
         />
       </div>
       <div class="big-fill">
@@ -75,45 +79,15 @@
           id="desc"
           class="input-big"
           autocomplete="off"
+          placeholder="Enter description"
         />
       </div>
-    </div>
-
-    <div class="button">
-      <Button
-        type="button"
-        label="Confirm"
-        class="creative-button"
-        :dt="{
-          primary: {
-            background: 'red',
-            border: { color: 'none' },
-            active: {
-              background: 'blue',
-              color: 'white',
-              border: { color: 'none' },
-            },
-            hover: {
-              background: 'blue',
-              color: 'white',
-              border: { color: 'none' },
-            },
-          },
-          focus: {
-            ring: { width: 'none' },
-          },
-        }"
-        @click="visible = false"
-      />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import UploadImage from './UploadImage.vue'
-
-const visible = ref(false)
 
 const inputTextDt = {
   focus: {
@@ -128,6 +102,7 @@ const inputTextDt = {
 ::v-deep(.p-inputtext) {
   background-color: white;
   color: black;
+  font-size: 15px;
   border-color: #ccc;
 }
 
@@ -137,6 +112,7 @@ const inputTextDt = {
 ::v-deep(.p-inputtext):hover {
   border-color: #ccc;
 }
+
 .form-wrapper {
   padding: 32px 28px 18px 28px;
   font-family: 'Montserrat', sans-serif;
@@ -176,36 +152,10 @@ const inputTextDt = {
   font-size: 15px;
 }
 
-.input-big {
-  width: 100%;
-}
-
-.input:focus,
-.input-big:focus {
-  border-color: grey;
-  outline: none;
-}
-
 .tag {
   margin-bottom: 6px;
   font-weight: 600;
   font-size: 14px;
   color: #333;
-}
-
-.button {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 30px;
-}
-.creative-button {
-  padding: 10px 24px;
-  font-size: 15px;
-  font-weight: 500;
-  color: white;
-  border-radius: 6px;
-  background-color: #007bff;
-  transition: background-color 0.2s ease;
-  cursor: pointer;
 }
 </style>
