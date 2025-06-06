@@ -1,4 +1,9 @@
-import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -12,6 +17,15 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
+    const emailExist = await this.userRepository
+      .createQueryBuilder('user')
+      .where({ ['email']: createUserDto.email })
+      .getExists();
+
+    if (emailExist) {
+      throw new HttpException('Email already taken', HttpStatus.BAD_REQUEST);
+    }
+
     return this.userRepository.save(createUserDto);
   }
 
