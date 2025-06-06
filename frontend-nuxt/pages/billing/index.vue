@@ -51,12 +51,13 @@
       class="test"
       header="Project Overview"
     >
-      <BillingPopupOverview />
+      <Overview />
     </Dialog>
   </div>
 </template>
 
 <script setup lang="ts">
+import Overview from '~/components/billing/popup/Overview.vue'
 import BillingTable from '~/components/table/BillingTable.vue'
 import BillingTimeline from '~/components/timeline/BillingTimeline.vue'
 
