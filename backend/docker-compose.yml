@@ -3,12 +3,11 @@ services:
   db-dev:
     image: postgres:17
     environment:
-      - POSTGRES_PUBLIC_PORT=5435
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=mycon_dev
     ports:
-      - '${POSTGRES_PUBLIC_PORT}:5432'
+      - '${DB_PORT}:5432'
     networks:
       - backend
 

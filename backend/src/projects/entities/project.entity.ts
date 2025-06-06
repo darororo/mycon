@@ -21,16 +21,16 @@ export class Project {
   @Column()
   description: string;
 
-  @Column({ type: 'decimal', nullable: true })
+  @Column({ type: 'decimal', default: 0 })
   price: number;
 
   @Column()
   location: string;
 
-  @Column({ type: 'decimal', nullable: true })
+  @Column({ type: 'decimal', default: 0 })
   longtitude: number;
 
-  @Column({ type: 'decimal', nullable: true })
+  @Column({ type: 'decimal', default: 0 })
   latitude: number;
 
   @ManyToOne(() => User, (user) => user.projects)
