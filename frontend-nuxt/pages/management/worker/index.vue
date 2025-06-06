@@ -1,94 +1,121 @@
 <template>
-  <div
-    style="width: 100rem"
-    class="max-w-[1500px]"
-  >
+  <div>
     <div
-      style="display: flex; flex-direction: row; justify-content: space-between; align-items: end"
+      style="width: 100rem"
+      class="max-w-[1500px]"
     >
-      <h2
-        style="
-          font-weight: 600;
-          font-size: 22px;
-          color: black;
-          font-family: 'Montserrat', sans-serif;
-        "
+      <div
+        style="display: flex; flex-direction: row; justify-content: space-between; align-items: end"
       >
-        Worker
-      </h2>
-      <div style="flex-direction: row; gap: 10px; display: flex">
-        <Select
-          v-model="selectedCity"
-          :options="cities"
-          optionLabel="name"
-          placeholder="Filter Worker"
-          :dt="select"
-          :pt="{
-            root: {
-              style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
-            },
-          }"
-        />
-        <Button
-          :dt="button"
-          :pt="{
-            root: {
-              style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
-            },
-          }"
-          label="Add Worker"
-          @click="createFormVisible = true"
+        <h2
+          style="
+            font-weight: 600;
+            font-size: 22px;
+            color: black;
+            font-family: 'Montserrat', sans-serif;
+          "
         >
-          <template #icon>
-            <Icon
-              style="font-size: 20px; background-color: white"
-              name="ic:round-plus"
-            />
-          </template>
-        </Button>
+          Worker
+        </h2>
+        <div style="flex-direction: row; gap: 10px; display: flex">
+          <Select
+            v-model="selectedCity"
+            :options="cities"
+            optionLabel="name"
+            placeholder="Filter Worker"
+            :dt="select"
+            :pt="{
+              root: {
+                style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
+              },
+            }"
+          />
+          <Button
+            :dt="button"
+            :pt="{
+              root: {
+                style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
+              },
+            }"
+            label="Add Worker"
+            @click="createFormVisible = true"
+          >
+            <template #icon>
+              <Icon
+                style="font-size: 20px; background-color: white"
+                name="ic:round-plus"
+              />
+            </template>
+          </Button>
+        </div>
+      </div>
+      <hr style="margin: 12px 0; border-color: #ccc" />
+      <div>
+        <WorkerTable />
       </div>
     </div>
-    <hr style="margin: 12px 0; border-color: #ccc" />
-    <div>
-      <WorkerTable />
-    </div>
-  </div>
 
-  <Dialog
-    v-model:visible="createFormVisible"
-    modal
-    header="Create Worker"
-    :style="{ width: '800px', height: '600px' }"
-    :pt="{
-      content: {
-        style: `
-                  padding :0;
-              `,
-      },
-      header: {
-        style: 'border-bottom: 1px solid #ccc;',
-      },
-    }"
-    :dt="{
-      background: 'white',
-      color: 'black',
-      header: {
-        padding: '30px',
-      },
-      border: {
-        radius: '20px',
-      },
-    }"
-  >
-    <ScrollPanel style="height: 480px">
+    <Dialog
+      v-model:visible="createFormVisible"
+      modal
+      header="Create Worker"
+      :style="{ width: '800px', height: '600px' }"
+      :pt="{
+        content: {
+          style: `
+                    padding :0;
+                `,
+        },
+        header: {
+          style: 'border-bottom: 1px solid #ccc;',
+        },
+      }"
+      :dt="{
+        background: 'white',
+        color: 'black',
+        header: {
+          padding: '30px',
+        },
+        border: {
+          radius: '20px',
+        },
+      }"
+    >
       <CreateWorkerForm />
-    </ScrollPanel>
-  </Dialog>
+      <div class="button">
+        <Button
+          type="button"
+          label="Confirm"
+          :dt="{
+            primary: {
+              background: 'red',
+              border: { color: 'none' },
+              active: {
+                background: 'blue',
+                color: 'white',
+                border: { color: 'none' },
+              },
+              hover: {
+                background: 'blue',
+                color: 'white',
+                border: { color: 'none' },
+              },
+            },
+            focus: {
+              ring: { width: 'none' },
+            },
+          }"
+          @click="createFormVisible = false"
+          class="creative-button"
+        />
+      </div>
+    </Dialog>
+  </div>
 </template>
 
 <script setup>
-import WorkerTable from '~/components/table/DailyTaskTable.vue'
 import CreateWorkerForm from '~/components/management/form/CreateWorkerForm.vue'
+import WorkerTable from '~/components/table/WorkerTable.vue'
 
 const createFormVisible = ref(false)
 const select = {
@@ -143,3 +170,22 @@ const button = {
   },
 }
 </script>
+
+<style scoped>
+.button {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 20px 0;
+}
+.creative-button {
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  border-radius: 6px;
+  width: 50%;
+  max-width: 700px;
+  background-color: #007bff;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+</style>

@@ -113,9 +113,34 @@
         },
       }"
     >
-      <ScrollPanel style="height: 480px">
-        <CreateProjectForm />
-      </ScrollPanel>
+      <CreateProjectForm />
+      <div class="button">
+        <Button
+          type="button"
+          label="Confirm"
+          :dt="{
+            primary: {
+              background: 'red',
+              border: { color: 'none' },
+              active: {
+                background: 'blue',
+                color: 'white',
+                border: { color: 'none' },
+              },
+              hover: {
+                background: 'blue',
+                color: 'white',
+                border: { color: 'none' },
+              },
+            },
+            focus: {
+              ring: { width: 'none' },
+            },
+          }"
+          @click="createFormVisible = false"
+          class="creative-button"
+        />
+      </div>
     </Dialog>
   </div>
 </template>
@@ -235,28 +260,24 @@ const projects = [
 </script>
 
 <style scoped>
-.table-container::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+.button {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 20px 0;
 }
-
-.table-container::-webkit-scrollbar-track {
-  background: #f0f0f0;
-  border-radius: 8px;
+.creative-button {
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  border-radius: 6px;
+  width: 50%;
+  max-width: 700px;
+  background-color: #007bff;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
 }
-
-.table-container::-webkit-scrollbar-thumb {
-  background-color: #cbd5e1;
-  border-radius: 8px;
-  border: 2px solid #f0f0f0;
-}
-
-.table-container::-webkit-scrollbar-thumb:hover {
-  background-color: #94a3b8;
-}
-
-.table-container {
-  scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 #f0f0f0;
+::v-deep(.p-inputtext):focus,
+::v-deep(.p-inputtext):hover {
+  border-color: #007bff;
 }
 </style>
