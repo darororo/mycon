@@ -31,8 +31,8 @@
       />
 
       <Column
-        field="worker"
-        header="Worker"
+        field="name"
+        header="User"
       >
         <template #editor="{ data, field }">
           <InputText
@@ -75,7 +75,28 @@
         header="Role"
       >
         <template #editor="{ data, field }">
-          <InputText v-model="data[field]" />
+          <Select
+            v-model="data[field]"
+            :options="roles"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Select a Role"
+            fluid
+          >
+            <template #option="slotProps">
+              <Tag
+                :value="slotProps.option.value"
+                :severity="getRoleLabel(slotProps.option.value)"
+              />
+            </template>
+          </Select>
+        </template>
+        <template #body="slotProps">
+          <Tag
+            :value="slotProps.data.role"
+            :class="getRoleLabel(slotProps.data.role)"
+            style="font-family: 'Montserrate', sans-serif"
+          />
         </template>
       </Column>
       <Column
@@ -97,7 +118,8 @@
 </template>
 
 <script setup>
-const { data } = await useFetch('https://6817864126a599ae7c3aa650.mockapi.io/api/api_dashboard_ip')
+
+const { data } = await useFetch('https://68454a66fc51878754dafd01.mockapi.io/users')
 
 console.log(data)
 
@@ -109,7 +131,13 @@ const onRowEditSave = event => {
 
 const genders = ref([
   { label: 'Male', value: 'Male' },
-  { label: 'Female', value: 'Female' },
+  { label: 'Female', value: 'Female' }, 
+]);
+
+const roles = ref([
+  { label: 'Admin', value: 'Admin' },
+  { label: 'Manager', value: 'Manager' },
+  { label: 'Client', value: 'Client' }  
 ]);
 
 const getGenderLabel = gender => {
@@ -119,6 +147,22 @@ const getGenderLabel = gender => {
 
     case 'Female':
       return 'tag-female'
+
+    default:
+      return 'tag default'
+  }
+}
+
+const getRoleLabel = role => {
+  switch (role) {
+    case 'Admin':
+      return 'tag-admin'
+
+    case 'Manager':
+      return 'tag-manager'
+
+    case 'Client':
+      return 'tag-client'
 
     default:
       return 'tag default'
@@ -169,6 +213,31 @@ const table = {
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
   font-weight: 600;
+}
+
+.table-container::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 8px;
+  border: 2px solid #f0f0f0;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
+}
+
+.table-container {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f0f0f0;
 }
 
 ::v-deep(.p-inputtext) {

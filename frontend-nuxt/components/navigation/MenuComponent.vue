@@ -194,6 +194,7 @@ const mainMenu = ref([
     icon: ['ix:user-management-settings-filled', 'solar:alt-arrow-down-bold'],
     visible: !isClient,
     items: [
+      { label: 'Users', icon: 'mdi:user', route: { name: 'management-user' } },
       { label: 'Workers', icon: 'mdi:worker', route: { name: 'management-worker' } },
       { label: 'Payrolls', icon: 'carbon:user-role', route: { name: 'management-payroll' } },
     ],

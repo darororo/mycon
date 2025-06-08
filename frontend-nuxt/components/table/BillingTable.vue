@@ -16,7 +16,7 @@
         },
       }"
       scrollable
-      show-gridlines=""
+      show-gridlines
       scroll-height="700px"
       v-model:editingRows="editingRows"
       editMode="row"
