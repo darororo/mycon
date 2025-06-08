@@ -4,16 +4,19 @@ import { Gender } from 'src/common/enums/gender.enum';
 
 export class CreateUserDto {
   @IsString()
-  firstName: string;
+  username: string;
 
   @IsString()
-  lastName: string;
+  firstName?: string;
+
+  @IsString()
+  lastName?: string;
 
   @IsEnum(Gender)
   gender: Gender;
 
   @IsEnum(UserRole)
-  role: UserRole;
+  role?: UserRole;
 
   @IsEmail()
   email: string;
