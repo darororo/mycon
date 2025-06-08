@@ -5,7 +5,7 @@
       class="input-icon"
     />
     <InputText
-      v-model="value"
+      v-model="userSignupDto.email"
       placeholder="Email"
       class="input-with-icon"
       :dt="{
@@ -30,11 +30,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import InputText from 'primevue/inputtext'
 import { Icon } from '@iconify/vue'
 
-const value = ref('')
+const { userSignupDto } = storeToRefs(useUserStore())
 </script>
 
 <style scoped>

@@ -31,7 +31,7 @@
             <PassInputField />
           </div>
 
-          <SignupButton />
+          <SignupButton @click="handleSubmit()" />
 
           <div class="divider">
             <div class="line" />
@@ -79,15 +79,39 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import EmailInputField from '~/components/auth/EmailInputField.vue'
 import PassInputField from '~/components/auth/PassInputField.vue'
 import SignupButton from '~/components/auth/SignupButton.vue'
 import UserInputField from '~/components/auth/UserInputField.vue'
 
+import type { UserSignup } from '~/interfaces/auth.interface'
+
 definePageMeta({
   layout: false,
 })
+
+const initialValues = ref({
+  username: 'abc',
+})
+
+const userStore = useUserStore()
+const { userSignupDto } = storeToRefs(userStore)
+
+const { data, error, execute } = useFetch('http://localhost:3100/users', {
+  method: 'POST',
+  body: userSignupDto,
+  immediate: false,
+  watch: false,
+})
+
+async function handleSubmit() {
+  await execute()
+  if (error) {
+    console.log(error.value?.response)
+  }
+  console.log(data.value)
+}
 
 const cardDt = {
   background: 'white',

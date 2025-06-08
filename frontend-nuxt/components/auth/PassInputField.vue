@@ -5,7 +5,7 @@
       class="input-icon"
     />
     <Password
-      v-model="value"
+      v-model="userSignupDto.password"
       placeholder="Password"
       class="input-with-icon"
       toggleMask
@@ -13,10 +13,9 @@
   </div>
 </template>
 <script setup>
-import { ref } from 'vue'
 import { Icon } from '@iconify/vue'
 
-const value = ref('')
+const { userSignupDto } = storeToRefs(useUserStore())
 </script>
 
 <style scoped>
