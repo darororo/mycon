@@ -13,17 +13,17 @@
 
           <div class="input-group">
             <label class="input-label">Full Name</label>
-            <UserInputField />
+            <UserInputField v-model="userSignupDto.username" />
           </div>
 
           <div class="input-group">
             <label class="input-label">Email</label>
-            <EmailInputField />
+            <EmailInputField v-model="userSignupDto.email" />
           </div>
 
           <div class="input-group">
             <label class="input-label">Password</label>
-            <PassInputField />
+            <PassInputField v-model="userSignupDto.password" />
           </div>
 
           <div class="input-group">
@@ -84,19 +84,28 @@ import EmailInputField from '~/components/auth/EmailInputField.vue'
 import PassInputField from '~/components/auth/PassInputField.vue'
 import SignupButton from '~/components/auth/SignupButton.vue'
 import UserInputField from '~/components/auth/UserInputField.vue'
-
 import type { UserSignup } from '~/interfaces/auth.interface'
 
 definePageMeta({
   layout: false,
 })
 
-const initialValues = ref({
-  username: 'abc',
+const userSignupDto = reactive<UserSignup>({
+  username: 'bruh',
+  email: 'bruh2',
+  firstName: 'john',
+  lastName: 'batista',
+  gender: 'male',
+  role: 'client',
+  password: '',
 })
 
-const userStore = useUserStore()
-const { userSignupDto } = storeToRefs(userStore)
+console.log(userSignupDto)
+console.log(userSignupDto.email)
+
+watch(userSignupDto, newValue => {
+  console.log(newValue)
+})
 
 const { data, error, execute } = useFetch('http://localhost:3100/users', {
   method: 'POST',

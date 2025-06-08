@@ -1,19 +1,9 @@
-import type { UserSignup } from '~/interfaces/auth.interface'
+import type { UserLogin, UserSignup } from '~/interfaces/auth.interface'
 import type { User } from '~/interfaces/user.interface'
 
 export const useUserStore = defineStore('user', () => {
   const user = ref<User | null>()
   const users = ref([])
-
-  const userSignupDto = ref<UserSignup>({
-    username: '',
-    email: '',
-    firstName: 'john',
-    lastName: 'batista',
-    gender: 'male',
-    role: 'client',
-    password: '',
-  })
 
   const baseUrl = `${process.env.API}/users`
 
@@ -33,5 +23,5 @@ export const useUserStore = defineStore('user', () => {
     console.log(user.value)
   }
 
-  return { user, users, userSignupDto, fetchUser }
+  return { user, users, fetchUser }
 })

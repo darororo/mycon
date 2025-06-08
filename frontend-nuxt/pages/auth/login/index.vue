@@ -13,12 +13,12 @@
 
           <div class="input-group">
             <label class="input-label">Email</label>
-            <EmailInputField />
+            <EmailInputField v-model="userLoginDto.email" />
           </div>
 
           <div class="input-group">
             <label class="input-label">Password</label>
-            <PassInputField />
+            <PassInputField v-model="userLoginDto.password" />
           </div>
 
           <div class="options">
@@ -104,10 +104,16 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import EmailInputField from '~/components/auth/EmailInputField.vue'
 import LoginButton from '~/components/auth/LoginButton.vue'
 import PassInputField from '~/components/auth/PassInputField.vue'
+import type { UserLogin } from '~/interfaces/auth.interface'
+
+const userLoginDto = reactive(<UserLogin>{
+  email: '',
+  password: '',
+})
 
 definePageMeta({
   layout: false,

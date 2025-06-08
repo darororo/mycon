@@ -16,7 +16,7 @@ export class CreateUserDto {
   gender: Gender;
 
   @IsEnum(UserRole)
-  role?: UserRole;
+  role: UserRole;
 
   @IsEmail()
   email: string;

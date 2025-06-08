@@ -5,7 +5,7 @@
       class="input-icon"
     />
     <InputText
-      v-model="userSignupDto.username"
+      v-model="value"
       placeholder="Your Name"
       class="input-with-icon"
       :dt="{
@@ -33,12 +33,7 @@
 import InputText from 'primevue/inputtext'
 import { Icon } from '@iconify/vue'
 
-const userStore = useUserStore()
-const { userSignupDto } = storeToRefs(userStore)
-
-watch(userStore.userSignupDto, n => {
-  console.log(n)
-})
+const value = defineModel<string>()
 </script>
 
 <style scoped>
