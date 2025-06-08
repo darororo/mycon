@@ -1,15 +1,15 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
-import { DataSource } from 'typeorm';
 import { ProjectsModule } from './projects/projects.module';
 import { ManagersModule } from './managers/managers.module';
 import { OwnersModule } from './owners/owners.module';
 import { WorkersModule } from './workers/workers.module';
 import { NestMinioModule } from 'nestjs-minio';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { HttpLoggerMiddleware } from './common/middlewares/http-logger.middleware';
 
 @Module({
   imports: [
@@ -49,6 +49,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
-  constructor(private dataSource: DataSource) {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(HttpLoggerMiddleware).forRoutes('*');
+  }
 }
