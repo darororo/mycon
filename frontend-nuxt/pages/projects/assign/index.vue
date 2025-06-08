@@ -36,22 +36,6 @@
                 },
               }"
             />
-            <Button
-              :dt="button"
-              :pt="{
-                root: {
-                  style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
-                },
-              }"
-              label="Create Role"
-            >
-              <template #icon>
-                <Icon
-                  style="font-size: 20px; background-color: white"
-                  name="ic:round-plus"
-                />
-              </template>
-            </Button>
           </div>
         </div>
         <hr style="margin: 12px 0; border-color: #ccc" />
@@ -74,19 +58,19 @@
             font-size: 16px;
             font-family: 'Montserrat', sans-serif;
           "
-          >Assign Manager
+          >Total Selection
           <span
             style="
-              padding: 8px;
+              padding: 8px 12px;
               background-color: #cf0f47;
               color: white;
-              border-radius: 100px;
-              font-size: 10px;
+              border-radius: 100%;
+              font-size: 12px;
               font-family: 'Montserrat', sans-serif;
             "
             >{{ managers.length }}</span
-          ></label
-        >
+          >
+        </label>
         <ScrollPanel
           style="
             position: sticky;
@@ -117,13 +101,15 @@ import ManagerCard from '~/components/project/ManagerCard.vue'
 const cards = [
   {
     id: 1,
-    username: 'Anna Yamada',
     urlImg: 'https://i.pinimg.com/736x/1d/71/4d/1d714db6e010802da8bd751835ca9819.jpg',
+    username: 'Yamada',
+    projects: ['Skyline Tower', 'Vila Nova', 'State Stone House'],
   },
   {
     id: 2,
-    username: 'Anna Yamada',
-    urlImg: 'https://i.pinimg.com/736x/1d/71/4d/1d714db6e010802da8bd751835ca9819.jpg',
+    urlImg: 'https://i.pinimg.com/736x/bf/2a/3a/bf2a3a1daaef400bb3a069990c074113.jpg',
+    username: 'Taiki',
+    projects: ['Osaka Hotel', 'Tokyo Restaurant', 'Glass Henven'],
   },
 ]
 
@@ -285,36 +271,6 @@ const select = {
     x: '18px',
     y: '10px',
     cards,
-  },
-}
-const button = {
-  primary: {
-    background: '#222831',
-    color: 'white',
-    border: {
-      color: 'none',
-    },
-    hover: {
-      background: '#222831',
-      color: 'white',
-      border: {
-        color: 'none',
-      },
-    },
-    active: {
-      background: '#222831',
-      color: 'white',
-      border: {
-        color: 'none',
-      },
-    },
-  },
-  border: {
-    radius: '12px',
-  },
-  padding: {
-    x: '20px',
-    y: '10px',
   },
 }
 </script>
