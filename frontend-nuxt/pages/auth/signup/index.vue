@@ -1,5 +1,6 @@
 <template>
   <div class="login-wrapper">
+    <Toast />
     <Card
       :dt="cardDt"
       class="glass-card"
@@ -85,10 +86,14 @@ import PassInputField from '~/components/auth/PassInputField.vue'
 import SignupButton from '~/components/auth/SignupButton.vue'
 import UserInputField from '~/components/auth/UserInputField.vue'
 import type { UserSignup } from '~/interfaces/auth.interface'
+import { useToast } from 'primevue/usetoast'
+import { Toast } from 'primevue'
 
 definePageMeta({
   layout: false,
 })
+
+const toast = useToast()
 
 const userSignupDto = reactive<UserSignup>({
   username: 'bruh',
@@ -107,7 +112,7 @@ watch(userSignupDto, newValue => {
   console.log(newValue)
 })
 
-const { data, error, execute } = useFetch('http://localhost:3100/users', {
+const { data, status, error, refresh, clear } = useFetch('http://localhost:3100/users', {
   method: 'POST',
   body: userSignupDto,
   immediate: false,
@@ -115,11 +120,24 @@ const { data, error, execute } = useFetch('http://localhost:3100/users', {
 })
 
 async function handleSubmit() {
-  await execute()
-  if (error) {
-    console.log(error.value?.response)
+  await refresh()
+  if (status.value === 'error') {
+    toast.add({
+      severity: 'error',
+      summary: 'Signup Failed',
+      detail: 'Incorrect inputs',
+      life: 3000,
+    })
+  } else {
+    toast.add({
+      severity: 'success',
+      summary: 'Signup Success',
+      detail: 'Your account has been registered',
+      life: 3000,
+    })
   }
-  console.log(data.value)
+
+  clear()
 }
 
 const cardDt = {
