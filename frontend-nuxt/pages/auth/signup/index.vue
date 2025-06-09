@@ -112,7 +112,7 @@ watch(userSignupDto, newValue => {
   console.log(newValue)
 })
 
-const { data, status, error, refresh, clear } = useFetch('http://localhost:3100/users', {
+const { data, status, error, execute, clear } = useFetch('http://localhost:3100/users', {
   method: 'POST',
   body: userSignupDto,
   immediate: false,
@@ -120,7 +120,7 @@ const { data, status, error, refresh, clear } = useFetch('http://localhost:3100/
 })
 
 async function handleSubmit() {
-  await refresh()
+  await execute()
   if (status.value === 'error') {
     toast.add({
       severity: 'error',

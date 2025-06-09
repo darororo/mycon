@@ -7,6 +7,9 @@ export class CreateProjectDto {
   @IsString()
   description: string;
 
+  @IsNumber()
+  price: number;
+
   @IsString()
   location: string;
 

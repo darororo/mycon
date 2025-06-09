@@ -10,16 +10,16 @@
           <div class="project-details">
             <div class="project-content">
               <div class="project-header">
-                <h1>{{ item.topic }}</h1>
+                <h1>{{ item.name }}</h1>
                 <Icon
                   class="more-option"
                   name="iwwa:option-horizontal"
                 />
               </div>
-              <p>{{ item.content }}</p>
+              <p>{{ item.description }}</p>
             </div>
             <div class="project-footer">
-              <label class="project-author">{{ item.username }}</label>
+              <label class="project-author">{{ item.owner }}</label>
               <label class="project-price">{{ item.price }}</label>
             </div>
           </div>

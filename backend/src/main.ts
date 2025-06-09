@@ -9,7 +9,7 @@ async function bootstrap() {
     origin: 'http://localhost:3000',
   });
 
-  app.useGlobalFilters(new HttpExceptionFilter());
+  // app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   await app.listen(process.env.PORT ?? 3100);
 }
