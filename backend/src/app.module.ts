@@ -10,6 +10,8 @@ import { WorkersModule } from './workers/workers.module';
 import { NestMinioModule } from 'nestjs-minio';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { HttpLoggerMiddleware } from './common/middlewares/http-logger.middleware';
+import { AuthModule } from './auth/auth.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -33,6 +35,11 @@ import { HttpLoggerMiddleware } from './common/middlewares/http-logger.middlewar
         };
       },
     }),
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '1d' },
+    }),
     NestMinioModule.register({
       endPoint: 'localhost',
       port: 9000,
@@ -45,6 +52,7 @@ import { HttpLoggerMiddleware } from './common/middlewares/http-logger.middlewar
     ManagersModule,
     OwnersModule,
     WorkersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
