@@ -12,6 +12,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { HttpLoggerMiddleware } from './common/middlewares/http-logger.middleware';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+import { UploadModule } from './upload/upload.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -47,15 +50,32 @@ import { JwtModule } from '@nestjs/jwt';
       accessKey: process.env.MINIO_ACCESS_KEY,
       secretKey: process.env.MINIO_SECRET_ACCESS_KEY,
     }),
+
+    ThrottlerModule.forRootAsync({
+      useFactory: (configService: ConfigService) => [
+        {
+          ttl: configService.getOrThrow<number>('UPLOAD_RATE_TTL'),
+          limit: configService.getOrThrow<number>('UPLOAD_RATE_LIMIT'),
+        },
+      ],
+      inject: [ConfigService],
+    }),
     UsersModule,
     ProjectsModule,
     ManagersModule,
     OwnersModule,
     WorkersModule,
     AuthModule,
+    UploadModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
