@@ -1,19 +1,14 @@
 import {
   Controller,
-  Get,
   Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UploadedFile,
   ParseFilePipe,
   FileTypeValidator,
   UseInterceptors,
   HttpStatus,
+  UploadedFiles,
 } from '@nestjs/common';
 import { UploadService } from './upload.service';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { Throttle } from '@nestjs/throttler';
 
 @Controller('upload')
@@ -22,21 +17,20 @@ export class UploadController {
 
   @Throttle({ default: { limit: 3, ttl: 600 } })
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FilesInterceptor('files'))
   async uploadImage(
-    @UploadedFile(
+    @UploadedFiles(
       new ParseFilePipe({
         validators: [new FileTypeValidator({ fileType: 'image/' })],
       }),
     )
-    file: Express.Multer.File,
+    files: Express.Multer.File[],
   ) {
-    const result = await this.uploadService.uploadImage(file);
+    await Promise.all(this.uploadService.uploadImages(files));
 
     return {
       status: HttpStatus.CREATED,
-      message: 'File uploaded succesfully',
-      etag: result.etag,
+      message: 'Files uploaded succesfully',
     };
   }
 }
