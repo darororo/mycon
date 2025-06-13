@@ -86,7 +86,7 @@
             <template #option="slotProps">
               <Tag
                 :value="slotProps.option.value"
-                :severity="getRoleLabel(slotProps.option.value)"
+                :class="getRoleLabel(slotProps.option.value)"
               />
             </template>
           </Select>
@@ -147,6 +147,12 @@ const getGenderLabel = gender => {
 
     case 'Female':
       return 'tag-female'
+
+    case 'male':
+      return 'tag-male-small'
+
+    case 'female':
+      return 'tag-female-small'
 
     default:
       return 'tag default'
@@ -243,5 +249,36 @@ const table = {
 ::v-deep(.p-inputtext) {
   padding: 6px 20px;
   font-size: 14px;
+}
+
+.tag-admin {
+  /* background-color: rgb(190, 255, 255);
+  color: rgb(0, 180, 180); */
+  background-color: rgb(255, 225, 225);
+  color: red;
+}
+
+.tag-manager {
+  /* background-color: rgb(255, 220, 155);
+  color: orange; */
+  background-color: rgb(225, 225, 255);
+  color: blue;
+}
+
+/* .tag-male {
+  background-color: rgb(190, 190, 255);
+  color: blue;
+}
+
+.tag-female {
+  background-color: rgb(255, 190, 190);
+  color: red;
+} */
+
+.tag-male, .tag-female, .tag-male-small, .tag-female-small {
+  background-color: white;
+  color: black;
+  font-weight: 400;
+  font-family: 'Montserrat', sans-serif;
 }
 </style>
