@@ -17,6 +17,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { CommentsModule } from './comments/comments.module';
 import { PostsModule } from './posts/posts.module';
+import { InventoryModule } from './inventory/inventory.module';
 
 @Module({
   imports: [
@@ -71,6 +72,7 @@ import { PostsModule } from './posts/posts.module';
     UploadModule,
     CommentsModule,
     PostsModule,
+    InventoryModule,
   ],
   controllers: [AppController],
   providers: [

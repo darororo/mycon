@@ -1,3 +1,4 @@
+import { Inventory } from 'src/inventory/entities/inventory.entity';
 import { Manager } from 'src/managers/entities/manager.entity';
 import { User } from 'src/users/entities/user.entity';
 import { Worker } from 'src/workers/entities/worker.entity';
@@ -7,6 +8,7 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -42,4 +44,7 @@ export class Project {
   @ManyToMany(() => Worker, (worker) => worker.projects)
   @JoinTable()
   workers: Worker[];
+
+  @OneToMany(() => Inventory, (inventory) => inventory.project)
+  inventory : Inventory[];  
 }
