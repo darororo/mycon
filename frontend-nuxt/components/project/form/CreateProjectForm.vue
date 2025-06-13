@@ -3,12 +3,25 @@
     <Toast
       :dt="{
         success: {
-          background: 'white',
-          detailColor: 'black',
+          background: '#e6f4ea',
+          detailColor: '#2e7d32',
+          border: {
+            color: '#a5d6a7',
+            width: '1px',
+            style: 'solid',
+          },
+          padding: '12px 16px',
+          shadow: '0 4px 10px rgba(0, 0, 0, 0.05)',
+          borderRadius: '8px',
+          font: {
+            weight: 500,
+            family: 'Montserrat, sans-serif',
+          },
         },
       }"
     />
     <Dialog
+      @hide="clearProjectInput()"
       v-model:visible="createFormVisible"
       modal
       header="Create Project"
@@ -34,121 +47,169 @@
         },
       }"
     >
-      <div class="form-wrapper">
-        <div class="small-container">
-          <div class="small-fill">
-            <label
-              for="project-name"
-              class="tag"
-              >Project Name</label
-            >
-            <InputText
-              :dt="inputTextDt"
-              v-model="projectDto.name"
-              id="project-name"
-              class="input"
-              autocomplete="off"
-              placeholder="Enter name"
-            />
+      <Form
+        v-slot="$form"
+        @submit="handleSubmit"
+        :initialValues="initialValues"
+        :resolver="resolver"
+        :validateOnValueUpdate="true"
+        :validateOnBlur="true"
+      >
+        <div class="form-wrapper">
+          <div class="small-container">
+            <div class="small-fill">
+              <label
+                for="project-name"
+                class="tag"
+                >Project Name</label
+              >
+              <InputText
+                name="name"
+                v-model="name"
+                id="projectDto"
+                class="input"
+                autocomplete="off"
+                placeholder="Project name"
+                :dt="inputTextDt"
+              />
+              <Message
+                v-if="$form.name?.invalid"
+                severity="error"
+                :dt="message"
+              >
+                {{ $form.name.error.message }}
+              </Message>
+            </div>
+            <div class="small-fill">
+              <label
+                for="client-name"
+                class="tag"
+                >Client Name</label
+              >
+              <InputText
+                name="client"
+                v-model="client"
+                :dt="inputTextDt"
+                id="owner-name"
+                class="input"
+                autocomplete="off"
+                placeholder="Client name"
+              />
+              <Message
+                v-if="$form.client?.invalid"
+                severity="error"
+                :dt="message"
+              >
+                {{ $form.client.error.message }}
+              </Message>
+            </div>
+            <div class="small-fill">
+              <label
+                for="price"
+                class="tag"
+                >Price</label
+              >
+              <InputNumber
+                name="price"
+                v-model="price"
+                inputId="currency-us"
+                mode="currency"
+                id="price"
+                currency="USD"
+                locale="en-US"
+                fluid
+                :dt="inputTextDt"
+              />
+              <Message
+                v-if="$form.price?.invalid"
+                severity="error"
+                :dt="message"
+              >
+                {{ $form.price.error.message }}
+              </Message>
+            </div>
           </div>
-          <div class="small-fill">
-            <label
-              for="owner-name"
-              class="tag"
-              >Owner</label
-            >
-            <InputText
-              :dt="inputTextDt"
-              id="owner-name"
-              class="input"
-              autocomplete="off"
-              placeholder="Enter name"
-            />
-          </div>
-          <div class="small-fill">
-            <label
-              for="price"
-              class="tag"
-              >Price</label
-            >
-            <InputNumber
-              v-model="projectDto.price"
-              inputId="currency-us"
-              mode="currency"
-              id="price"
-              :dt="inputTextDt"
-              currency="USD"
-              locale="en-US"
-              fluid
-              placeholder="Enter hourly rate (e.g. 100)"
-            />
-          </div>
-        </div>
 
-        <div style="margin-top: 24px">
-          <UploadImage />
-        </div>
+          <div style="margin-top: 24px">
+            <UploadImage />
+          </div>
 
-        <div class="big-container">
-          <div class="big-fill">
-            <label
-              for="location"
-              class="tag"
-              >Location</label
-            >
-            <InputText
-              :dt="inputTextDt"
-              v-model="projectDto.location"
-              id="location"
-              class="input-big"
-              autocomplete="off"
-              placeholder="Enter location"
-            />
+          <div class="big-container">
+            <div class="big-fill">
+              <label
+                for="location"
+                class="tag"
+                >Location</label
+              >
+              <InputText
+                name="location"
+                v-model="location"
+                id="location"
+                class="input-big"
+                autocomplete="off"
+                placeholder="Enter location"
+                :dt="inputTextDt"
+              />
+              <Message
+                v-if="$form.location?.invalid"
+                severity="error"
+                :dt="message"
+              >
+                {{ $form.location.error.message }}
+              </Message>
+            </div>
+            <div class="big-fill">
+              <label
+                for="desc"
+                class="tag"
+                >Description</label
+              >
+              <InputText
+                name="description"
+                v-model="description"
+                id="desc"
+                class="input-big"
+                autocomplete="off"
+                placeholder="Enter description"
+                :dt="inputTextDt"
+              />
+              <Message
+                v-if="$form.description?.invalid"
+                severity="error"
+                :dt="message"
+              >
+                {{ $form.description.error.message }}
+              </Message>
+            </div>
           </div>
-          <div class="big-fill">
-            <label
-              for="desc"
-              class="tag"
-              >Description</label
-            >
-            <InputText
-              :dt="inputTextDt"
-              v-model="projectDto.description"
-              id="desc"
-              class="input-big"
-              autocomplete="off"
-              placeholder="Enter description"
+          <div class="button">
+            <Button
+              type="submit"
+              label="Confirm"
+              :dt="{
+                primary: {
+                  background: 'red',
+                  border: { color: 'none' },
+                  active: {
+                    background: 'blue',
+                    color: 'white',
+                    border: { color: 'none' },
+                  },
+                  hover: {
+                    background: 'blue',
+                    color: 'white',
+                    border: { color: 'none' },
+                  },
+                },
+                focus: {
+                  ring: { width: 'none' },
+                },
+              }"
+              class="creative-button"
             />
           </div>
         </div>
-        <div class="button">
-          <Button
-            type="button"
-            label="Confirm"
-            :dt="{
-              primary: {
-                background: 'red',
-                border: { color: 'none' },
-                active: {
-                  background: 'blue',
-                  color: 'white',
-                  border: { color: 'none' },
-                },
-                hover: {
-                  background: 'blue',
-                  color: 'white',
-                  border: { color: 'none' },
-                },
-              },
-              focus: {
-                ring: { width: 'none' },
-              },
-            }"
-            @click="handleSubmit"
-            class="creative-button"
-          />
-        </div>
-      </div>
+      </Form>
     </Dialog>
   </div>
 </template>
@@ -162,12 +223,15 @@ const createFormVisible = defineModel<boolean>()
 
 const projectDto = reactive<CreateProjectDto>({
   name: '',
+  client: '',
   description: '',
   longtitude: 0,
   latitude: 0,
   location: '',
   price: 0,
 })
+
+const { name, client, description, location, longtitude, latitude, price } = toRefs(projectDto)
 
 const { data, error, status, clear, execute } = useFetch('http://localhost:3100/projects', {
   method: 'POST',
@@ -178,28 +242,80 @@ const { data, error, status, clear, execute } = useFetch('http://localhost:3100/
 
 const toast = useToast()
 
-async function handleSubmit() {
-  await execute()
-  if (status.value === 'error') {
-    toast.add({
-      severity: 'error',
-      summary: 'Project Failed to Create',
-      detail: error.value,
-      life: 3000,
-    })
-  } else {
-    toast.add({
-      severity: 'success',
-      summary: 'Created Successfully',
-      // detail: 'Your project has been created.',
-      detail: data.value,
-      life: 3000,
-    })
+const resolver = ({ values }) => {
+  const errors = <any>{}
 
-    createFormVisible.value = false
-
-    clear()
+  if (!values.name) {
+    errors.name = [{ message: 'Project name is required.' }]
+  } else if (values.name.length < 3) {
+    errors.name = [{ message: 'Project name must be at least 3 characters long.' }]
   }
+  if (!values.client) {
+    errors.client = [{ message: 'Client name is required.' }]
+  }
+  if (!values.price) {
+    errors.price = [{ message: 'Price is required.' }]
+  }
+  if (!values.location) {
+    errors.location = [{ message: 'Location is required.' }]
+  }
+  if (!values.description) {
+    errors.description = [{ message: 'Description is required.' }]
+  }
+  return {
+    errors,
+  }
+}
+const initialValues = ref<CreateProjectDto>({
+  name: '',
+  client: '',
+  description: '',
+  longtitude: 0,
+  latitude: 0,
+  location: '',
+  price: 0,
+})
+const handleSubmit = async ({ valid }) => {
+  if (valid) {
+    await execute()
+    if (status.value === 'error') {
+      toast.add({
+        severity: 'error',
+        summary: 'Project Failed to Create',
+        detail: error.value,
+        life: 3000,
+      })
+    } else {
+      toast.add({
+        severity: 'success',
+        summary: 'Creation completed successfully.',
+        // detail: 'Your project has been created.',
+        detail: data.value,
+        life: 3000,
+      })
+
+      createFormVisible.value = false
+
+      clear()
+    }
+  }
+}
+
+function clearProjectInput() {
+  name.value = ''
+  client.value = ''
+  location.value = ''
+  description.value = ''
+  price.value = 0
+}
+
+const message = {
+  text: {
+    font: {
+      size: '14px',
+      weight: 400,
+    },
+  },
 }
 
 const inputTextDt = {
@@ -207,37 +323,6 @@ const inputTextDt = {
     border: {
       color: 'none',
     },
-  },
-}
-
-const button = {
-  primary: {
-    background: '#222831',
-    color: 'white',
-    border: {
-      color: 'none',
-    },
-    hover: {
-      background: '#222831',
-      color: 'white',
-      border: {
-        color: 'none',
-      },
-    },
-    active: {
-      background: '#222831',
-      color: 'white',
-      border: {
-        color: 'none',
-      },
-    },
-  },
-  border: {
-    radius: '12px',
-  },
-  padding: {
-    x: '20px',
-    y: '10px',
   },
 }
 </script>

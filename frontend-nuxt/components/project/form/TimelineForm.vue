@@ -1,66 +1,222 @@
 <template>
-  <div class="timeline-container">
-    <form class="timeline-form">
-      <div class="timeline-inputs">
-        <div class="timeline-description">
-          <div
-            style="
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              gap: 14px;
-              margin: 8px 0;
-            "
-          >
-            <Avatar
-              image="https://i.pinimg.com/736x/07/80/84/078084a7b91020a8bfb2f90ea4a57d65.jpg"
-              style="height: auto; width: 46px"
-              shape="circle"
-            />
-            <div style="display: flex; flex-direction: column">
-              <label style="font-size: 14px; font-weight: 500">Chinatsu Senpai </label>
-              <span style="font-size: 13px; color: grey">Super Admin</span>
+  <div>
+    <Toast
+      :dt="{
+        success: {
+          background: '#e6f4ea',
+          detailColor: '#2e7d32',
+          border: {
+            color: '#a5d6a7',
+            width: '1px',
+            style: 'solid',
+          },
+          padding: '12px 16px',
+          shadow: '0 4px 10px rgba(0, 0, 0, 0.05)',
+          borderRadius: '8px',
+          font: {
+            weight: 500,
+            family: 'Montserrat, sans-serif',
+          },
+        },
+      }"
+    />
+    <Dialog
+      v-model:visible="createFormVisible"
+      modal
+      header="Create Timeline"
+      :style="{ width: '800px' }"
+      :pt="{
+        content: {
+          style: `
+                    padding :0;
+                `,
+        },
+        header: {
+          style: 'border-bottom: 1px solid #ccc;',
+        },
+      }"
+      :dt="{
+        background: 'white',
+        color: 'black',
+        header: {
+          padding: '30px',
+        },
+        border: {
+          radius: '20px',
+        },
+      }"
+      @hide="clearDescription"
+    >
+      <Form
+        v-slot="$form"
+        @submit="onFormSubmit"
+        :initialValues="initialValues"
+        :resolver="resolver"
+        :validateOnValueUpdate="false"
+        :validateOnBlur="true"
+        :validateOnMount="[]"
+      >
+        <div class="timeline-inputs">
+          <div class="timeline-description">
+            <div
+              style="
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 14px;
+                margin: 8px 0;
+              "
+            >
+              <Avatar
+                image="https://i.pinimg.com/736x/07/80/84/078084a7b91020a8bfb2f90ea4a57d65.jpg"
+                style="height: auto; width: 46px"
+                shape="circle"
+              />
+              <div style="display: flex; flex-direction: column">
+                <label style="font-size: 14px; font-weight: 500">Chinatsu Senpai </label>
+                <span style="font-size: 13px; color: grey">Super Admin</span>
+              </div>
             </div>
+            <InputText
+              name="description"
+              v-model="description"
+              type="text"
+              class="input"
+              placeholder="What happened today?"
+              id="description"
+              fluid
+              :dt="{
+                color: 'black',
+                focus: {
+                  borderColor: '#ccc',
+                },
+                hover: {
+                  borderColor: '#ccc',
+                },
+              }"
+            />
+            <Message
+              v-if="$form.description?.invalid"
+              severity="error"
+              :dt="{
+                text: {
+                  font: {
+                    size: '14px',
+                    weight: 400,
+                  },
+                },
+              }"
+            >
+              {{ $form.description.error.message }}
+            </Message>
           </div>
-          <InputText
-            v-model="description"
-            type="text"
-            class="input"
-            placeholder="What happened today?"
-            id="description"
-            :dt="{
-              color: 'black',
-              focus: {
-                borderColor: '#ccc',
-              },
-              hover: {
-                borderColor: '#ccc',
-              },
-            }"
+          <div>
+            <UploadImage />
+          </div>
+        </div>
+        <div class="button">
+          <Button
+            type="submit"
+            label="Confirm"
+            class="creative-button"
+            :dt="button"
           />
         </div>
-        <div>
-          <UploadImage />
-        </div>
-      </div>
-    </form>
+      </Form>
+    </Dialog>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import { useToast } from 'primevue/usetoast'
 import UploadImage from './UploadImage.vue'
+
+const toast = useToast()
+const createFormVisible = defineModel()
+const description = ref('')
+
+const initialValues = ref({
+  description: '',
+})
+const resolver = ({ values }) => {
+  const errors = {}
+
+  if (!values.description) {
+    errors.description = [{ message: 'Description is required.' }]
+  } else if (values.description.length < 3) {
+    errors.description = [{ message: 'Description must be at least 3 characters long.' }]
+  }
+  return {
+    errors,
+  }
+}
+
+const onFormSubmit = ({ valid }) => {
+  if (valid) {
+    toast.add({ severity: 'success', summary: 'Creation completed successfully.', life: 3000 })
+    createFormVisible.value = false
+    description.value = ''
+  }
+}
+
+function clearDescription() {
+  description.value = ''
+}
+
+const button = {
+  primary: {
+    focus: {
+      ring: { width: 'none' },
+    },
+    background: '#222831',
+    color: 'white',
+    border: {
+      color: 'none',
+    },
+    hover: {
+      background: '#222831',
+      color: 'white',
+      border: {
+        color: 'none',
+      },
+    },
+    active: {
+      background: '#222831',
+      color: 'white',
+      border: {
+        color: 'none',
+      },
+    },
+  },
+  border: {
+    radius: '12px',
+  },
+  padding: {
+    x: '20px',
+    y: '10px',
+  },
+}
 </script>
 
 <style scoped>
-.timeline-container {
+.button {
   display: flex;
-  flex-direction: column;
-  font-family: 'Montserrat', sans-serif;
-  border-radius: 18px;
-  padding: 10px 0;
-  max-width: 700px;
-  margin: 0 auto;
+  justify-content: center;
+  margin: 10px 0 20px 0;
 }
+.creative-button {
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  border-radius: 6px;
+  width: 50%;
+  max-width: 700px;
+  background-color: #007bff;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
 ::v-deep(.p-inputtext) {
   background-color: white;
   color: black;
@@ -68,14 +224,17 @@ import UploadImage from './UploadImage.vue'
 }
 ::v-deep(.p-inputtext):focus,
 ::v-deep(.p-inputtext):hover {
-  border-color: #007bff;
+  border-color: #ccc;
 }
-
+::v-deep(.p-inputtext:valid)::placeholder {
+  color: grey;
+}
 .timeline-inputs {
   display: flex;
   flex-direction: column;
   gap: 18px;
   flex: 1 1 60%;
+  padding: 0 30px;
 }
 
 .timeline-description {

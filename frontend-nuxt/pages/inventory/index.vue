@@ -53,61 +53,7 @@
       <InventoryTable />
     </div>
 
-    <Dialog
-      v-model:visible="createFormVisible"
-      modal
-      header="Create Inventory"
-      :style="{ width: '800px' }"
-      :pt="{
-        content: {
-          style: `
-                    padding :0;
-                `,
-        },
-        header: {
-          style: 'border-bottom: 1px solid #ccc;',
-        },
-      }"
-      :dt="{
-        background: 'white',
-        color: 'black',
-        header: {
-          padding: '30px',
-        },
-        border: {
-          radius: '20px',
-        },
-      }"
-    >
-      <CreateInvenForm />
-      <div class="button">
-        <Button
-          type="button"
-          label="Confirm"
-          :dt="{
-            primary: {
-              background: 'red',
-              border: { color: 'none' },
-              active: {
-                background: 'blue',
-                color: 'white',
-                border: { color: 'none' },
-              },
-              hover: {
-                background: 'blue',
-                color: 'white',
-                border: { color: 'none' },
-              },
-            },
-            focus: {
-              ring: { width: 'none' },
-            },
-          }"
-          @click="createFormVisible = false"
-          class="creative-button"
-        />
-      </div>
-    </Dialog>
+    <CreateInvenForm v-model="createFormVisible" />
   </div>
 </template>
 
@@ -169,22 +115,3 @@ const button = {
   },
 }
 </script>
-
-<style scoped>
-.button {
-  display: flex;
-  justify-content: center;
-  margin: 10px 0 20px 0;
-}
-.creative-button {
-  font-size: 16px;
-  font-weight: 500;
-  color: white;
-  border-radius: 6px;
-  width: 50%;
-  max-width: 700px;
-  background-color: #007bff;
-  transition: background-color 0.2s ease;
-  cursor: pointer;
-}
-</style>

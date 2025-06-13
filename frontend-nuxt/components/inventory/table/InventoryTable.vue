@@ -83,13 +83,6 @@
             showIcon
           />
         </template>
-        <!-- <template #editor="{ data, field }">
-          <Calendar
-            :modelValue="data[field]"
-            dateFormat="yy-mm-dd"
-            showIcon
-          />
-        </template> -->
       </Column>
       <Column
         field="status"
@@ -108,7 +101,7 @@
             <template #option="slotProps">
               <Tag
                 :value="slotProps.option.value"
-                :severity="getStatusLabel(slotProps.option.value)"
+                :class="getStatusLabel(slotProps.option.value)"
               />
             </template>
           </Select>

@@ -54,62 +54,7 @@
         <WorkerTable />
       </div>
     </div>
-
-    <Dialog
-      v-model:visible="createFormVisible"
-      modal
-      header="Create Worker"
-      :style="{ width: '800px', height: '600px' }"
-      :pt="{
-        content: {
-          style: `
-                    padding :0;
-                `,
-        },
-        header: {
-          style: 'border-bottom: 1px solid #ccc;',
-        },
-      }"
-      :dt="{
-        background: 'white',
-        color: 'black',
-        header: {
-          padding: '30px',
-        },
-        border: {
-          radius: '20px',
-        },
-      }"
-    >
-      <CreateWorkerForm />
-      <div class="button">
-        <Button
-          type="button"
-          label="Confirm"
-          :dt="{
-            primary: {
-              background: 'red',
-              border: { color: 'none' },
-              active: {
-                background: 'blue',
-                color: 'white',
-                border: { color: 'none' },
-              },
-              hover: {
-                background: 'blue',
-                color: 'white',
-                border: { color: 'none' },
-              },
-            },
-            focus: {
-              ring: { width: 'none' },
-            },
-          }"
-          @click="createFormVisible = false"
-          class="creative-button"
-        />
-      </div>
-    </Dialog>
+    <CreateWorkerForm v-model="createFormVisible" />
   </div>
 </template>
 

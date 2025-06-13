@@ -2,7 +2,7 @@
   <div>
     <Toast />
     <FileUpload
-      name="demo[]"
+      name="file"
       url="/api/upload"
       @upload="onTemplatedUpload($event)"
       :multiple="true"
