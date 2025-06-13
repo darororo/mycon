@@ -15,6 +15,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { UploadModule } from './upload/upload.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -67,6 +68,7 @@ import { APP_GUARD } from '@nestjs/core';
     WorkersModule,
     AuthModule,
     UploadModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [
