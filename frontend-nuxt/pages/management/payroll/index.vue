@@ -47,17 +47,37 @@
             },
           }"
         />
+        <Button
+          :dt="button"
+          :pt="{
+            root: {
+              style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
+            },
+          }"
+          label="Take Attendance"
+          @click="createFormVisible = true"
+        >
+          <template #icon>
+            <Icon
+              style="font-size: 20px; background-color: white"
+              name="material-symbols:link"
+            />
+          </template>
+        </Button>
+        <LinkGenerator v-model="createFormVisible" />
       </div>
     </div>
     <hr style="margin: 12px 0; border-color: #ccc" />
-
     <PayrollTable />
   </div>
 </template>
 
 <script setup>
+import LinkGenerator from '~/components/management/form/LinkGeneratorForm.vue'
 import WorkerNumberCard from '~/components/project/card/WorkerNumberCard.vue'
 import PayrollTable from '~/components/table/PayrollTable.vue'
+const createFormVisible = ref(false)
+
 const select = {
   background: 'white',
   border: {
@@ -76,6 +96,36 @@ const select = {
   },
   padding: {
     x: '18px',
+    y: '10px',
+  },
+}
+const button = {
+  primary: {
+    background: 'linear-gradient(to right, #3b82f6, #6366f1)',
+    color: 'white',
+    border: {
+      color: 'none',
+    },
+    hover: {
+      background: 'linear-gradient(to right, #3b82f6, #6366f1)',
+      color: 'white',
+      border: {
+        color: 'none',
+      },
+    },
+    active: {
+      background: 'linear-gradient(to right, #3b82f6, #6366f1)',
+      color: 'white',
+      border: {
+        color: 'none',
+      },
+    },
+  },
+  border: {
+    radius: '12px',
+  },
+  padding: {
+    x: '20px',
     y: '10px',
   },
 }
