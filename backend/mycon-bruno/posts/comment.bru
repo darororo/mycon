@@ -1,0 +1,17 @@
+meta {
+  name:  comment
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/posts
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "description": "hello post"
+  }
+}
