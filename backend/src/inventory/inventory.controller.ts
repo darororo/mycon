@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { 
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UsePipes,
+  ValidationPipe,
+  ParseIntPipe
+} from '@nestjs/common';
 import { InventoryService } from './inventory.service';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
 import { UpdateInventoryDto } from './dto/update-inventory.dto';
@@ -8,8 +19,9 @@ export class InventoryController {
   constructor(private readonly inventoryService: InventoryService) {}
 
   @Post()
-  create(@Body() createInventoryDto: CreateInventoryDto) {
-    return this.inventoryService.create(createInventoryDto);
+  @UsePipes(new ValidationPipe({ whitelist: true }))
+  create(@Body() body: CreateInventoryDto) {
+    return this.inventoryService.create(body);
   }
 
   @Get()
@@ -17,18 +29,21 @@ export class InventoryController {
     return this.inventoryService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.inventoryService.findOne(+id);
+  @Get('/:id')
+  findOne(@Param('id') id: number) {
+    return this.inventoryService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateInventoryDto: UpdateInventoryDto) {
-    return this.inventoryService.update(+id, updateInventoryDto);
+  @Patch('/:id')
+  update(
+    @Body() body: { itemname: string; category: string; quantity: number; unit: boolean },
+    @Param('id', ParseIntPipe) id:number
+  ) {
+    return this.inventoryService.update(id, body);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.inventoryService.remove(+id);
+  @Delete('/:id')
+  remove(@Param('id', ParseIntPipe) id:number ) {
+    return this.inventoryService.remove(id);
   }
 }

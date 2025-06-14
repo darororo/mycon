@@ -8,6 +8,7 @@ import { Project } from 'src/projects/entities/project.entity';
 @Module({
   controllers: [InventoryController],
   providers: [InventoryService],
-  imports: [TypeOrmModule.forFeature ([Inventory, Project])]
+  imports: [TypeOrmModule.forFeature ([Inventory, Project])],
+  exports: [TypeOrmModule],
 })
 export class InventoryModule {}
