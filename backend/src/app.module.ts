@@ -16,6 +16,7 @@ import { UploadModule } from './upload/upload.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { CommentsModule } from './comments/comments.module';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [
@@ -69,6 +70,7 @@ import { CommentsModule } from './comments/comments.module';
     AuthModule,
     UploadModule,
     CommentsModule,
+    PostsModule,
   ],
   controllers: [AppController],
   providers: [
