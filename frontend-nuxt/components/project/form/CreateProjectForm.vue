@@ -15,7 +15,21 @@
           borderRadius: '8px',
           font: {
             weight: 500,
-            family: 'Montserrat, sans-serif',
+          },
+        },
+        error: {
+          background: '#fdecea',
+          detailColor: '#b00020',
+          border: {
+            color: '#f44336',
+            width: '1px',
+            style: 'solid',
+          },
+          padding: '12px 16px',
+          shadow: '0 4px 10px rgba(244, 67, 54, 0.3)',
+          borderRadius: '8px',
+          font: {
+            weight: 600,
           },
         },
       }"

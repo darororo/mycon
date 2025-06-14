@@ -15,7 +15,6 @@
           borderRadius: '8px',
           font: {
             weight: 500,
-            family: 'Montserrat, sans-serif',
           },
         },
       }"
@@ -341,7 +340,12 @@ const resolver = ({ values }) => {
 
 const onFormSubmit = ({ valid }) => {
   if (valid) {
-    toast.add({ severity: 'success', summary: 'Creation completed successfully.', life: 3000 })
+    toast.add({
+      severity: 'success',
+      summary: 'Worker Created.',
+      detail: `Successfully added user ${username.value}`,
+      life: 3000,
+    })
     createFormVisible.value = false
     username.value = ''
     role.value = ''

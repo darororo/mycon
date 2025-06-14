@@ -177,7 +177,7 @@ const handleSubmit = async ({ valid }) => {
     if (status.value === 'error') {
       toast.add({
         severity: 'error',
-        summary: 'Project Failed to Create',
+        summary: 'Post failed to Create',
         detail: error.value,
         life: 3000,
       })
@@ -189,7 +189,7 @@ const handleSubmit = async ({ valid }) => {
 
       toast.add({
         severity: 'success',
-        summary: 'Creation completed successfully.',
+        summary: 'Post created successfully.',
         // detail: 'Your project has been created.',
         detail: data.value,
         life: 3000,

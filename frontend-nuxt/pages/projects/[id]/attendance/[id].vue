@@ -15,7 +15,6 @@
           borderRadius: '8px',
           font: {
             weight: 500,
-            family: 'Montserrat, sans-serif',
           },
         },
         error: {
@@ -31,7 +30,6 @@
           borderRadius: '8px',
           font: {
             weight: 600,
-            family: 'Montserrat, sans-serif',
           },
         },
         warn: {
@@ -47,7 +45,6 @@
           borderRadius: '8px',
           font: {
             weight: 600,
-            family: 'Montserrat, sans-serif',
           },
         },
       }"
@@ -84,12 +81,10 @@
       >
         <template #editor="{ data, field }">
           <div style="display: flex; flex-direction: column">
-            <!-- Show non-editable field as plain text -->
             <span v-if="!isEditableField(field)">
               {{ data[field] }}
             </span>
 
-            <!-- Editable field (hours only) -->
             <InputNumber
               v-else
               v-model="data[field]"
@@ -97,12 +92,11 @@
               :class="{ 'p-invalid': errors[data.id]?.[field] }"
             />
 
-            <!-- Inline error using Message -->
             <Message
               v-if="errors[data.id]?.[field]"
               severity="error"
-              size="small"
               variant="simple"
+              :dt="message"
             >
               {{ errors[data.id][field] }}
             </Message>
@@ -146,18 +140,7 @@ const onCellEditComplete = event => {
   const { data, newValue, field } = event
 
   if (field === 'hours') {
-    if (!newValue || isNaN(newValue) || newValue <= 0) {
-      if (!errors.value[data.id]) errors.value[data.id] = {}
-      errors.value[data.id][field] = 'Please enter a valid number of hours.'
-      event.preventDefault()
-
-      toast.add({
-        severity: 'error',
-        summary: 'Invalid Input',
-        detail: errors.value[data.id][field],
-        life: 3000,
-      })
-    } else if (newValue > 16) {
+    if (newValue > 16) {
       if (!errors.value[data.id]) errors.value[data.id] = {}
       errors.value[data.id][field] = 'Hours cannot be more than 16.'
       event.preventDefault()
@@ -175,7 +158,7 @@ const onCellEditComplete = event => {
       toast.add({
         severity: 'success',
         summary: 'Updated Successfully',
-        detail: `Hours updated to ${newValue}`,
+        detail: `Today's work hours set to ${newValue}`,
         life: 2000,
       })
     }
@@ -194,6 +177,15 @@ const fetchUsers = async () => {
 }
 
 onMounted(fetchUsers)
+
+const message = {
+  text: {
+    font: {
+      Size: '14px',
+      weight: 400,
+    },
+  },
+}
 </script>
 
 <style scoped>
