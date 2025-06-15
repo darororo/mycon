@@ -13,6 +13,13 @@ export default defineNuxtConfig({
       redirect: '/dashboard',
     },
   },
+
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.API_HOST,
+    },
+  },
+
   // alias: {
   //   "~": "/",
   //   "@": "/<srcDir>",
