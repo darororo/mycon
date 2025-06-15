@@ -49,7 +49,7 @@
     >
       <Form
         v-slot="$form"
-        @submit="onFormSubmit"
+        @submit="handleSubmit"
         :initialValues="initialValues"
         :resolver="resolver"
         :validateOnValueUpdate="false"
@@ -111,7 +111,10 @@
             </Message>
           </div>
           <div>
-            <UploadImage />
+            <UploadImage
+              @on-file-selected="loadImages"
+              @on-file-removed="removeImage"
+            />
           </div>
         </div>
         <div class="button">
@@ -128,13 +131,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import { useToast } from 'primevue/usetoast'
 import UploadImage from './UploadImage.vue'
+import { usePublicRuntimeConfig } from '@/composables/usePublicRuntimeConfig'
+import { useImageUploader } from '@/composables/useImageUploader'
 
 const toast = useToast()
 const createFormVisible = defineModel()
+const { apiBase } = usePublicRuntimeConfig()
+
 const description = ref('')
+
+const { images, loadImages, removeImage, uploadImages } = useImageUploader()
 
 const initialValues = ref({
   description: '',
@@ -152,11 +160,45 @@ const resolver = ({ values }) => {
   }
 }
 
-const onFormSubmit = ({ valid }) => {
+const postDto = ref({
+  description: description,
+})
+
+const { data, status, clear, execute, error } = useFetch(`${apiBase}/posts`, {
+  method: 'POST',
+  body: postDto.value,
+  watch: false,
+  immediate: false,
+})
+
+const handleSubmit = async ({ valid }) => {
   if (valid) {
-    toast.add({ severity: 'success', summary: 'Creation completed successfully.', life: 3000 })
-    createFormVisible.value = false
-    description.value = ''
+    await execute()
+    if (status.value === 'error') {
+      toast.add({
+        severity: 'error',
+        summary: 'Project Failed to Create',
+        detail: error.value,
+        life: 3000,
+      })
+    } else {
+      if (images.value.length > 0) {
+        await uploadImages()
+        // await execute()
+      }
+
+      toast.add({
+        severity: 'success',
+        summary: 'Creation completed successfully.',
+        // detail: 'Your project has been created.',
+        detail: data.value,
+        life: 3000,
+      })
+
+      createFormVisible.value = false
+
+      clear()
+    }
   }
 }
 

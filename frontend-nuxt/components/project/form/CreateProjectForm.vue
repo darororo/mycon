@@ -222,6 +222,8 @@ import type { CreateProjectDto } from '~/interfaces/project.interface'
 import UploadImage from './UploadImage.vue'
 import { Toast } from 'primevue'
 
+import { useImageUploader } from '@/composables/useImageUploader'
+
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 
