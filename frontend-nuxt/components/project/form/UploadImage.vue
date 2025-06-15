@@ -2,12 +2,12 @@
   <div>
     <Toast />
     <FileUpload
-      name="file"
-      url="/api/upload"
+      name="files"
+      :url="`${apiBase}/upload`"
       @upload="onTemplatedUpload($event)"
       :multiple="true"
       accept="image/*"
-      :maxFileSize="1000000"
+      :maxFileSize="10000 * 1024"
       @select="onSelectedFiles"
       :dt="{
         background: 'white',
@@ -16,7 +16,7 @@
         },
       }"
     >
-      <template #header="{ chooseCallback, uploadCallback, files }">
+      <template #header="{ chooseCallback }">
         <div class="flex flex-wrap justify-between items-center flex-1 gap-4">
           <div class="flex gap-2">
             <Button
@@ -33,36 +33,7 @@
                 />
               </template>
             </Button>
-            <Button
-              @click="uploadEvent(uploadCallback)"
-              rounded
-              outlined
-              :disabled="!files || files.length === 0"
-              style="border-color: #64dd17; display: flex; align-items: center"
-            >
-              <template #icon>
-                <Icon
-                  style="font-size: 18px; color: #64dd17"
-                  name="fontisto:cloud-up"
-                />
-              </template>
-            </Button>
           </div>
-          <ProgressBar
-            :value="totalSizePercent"
-            :showValue="false"
-            :pt="{
-              root: {
-                style: 'border: 1px solid #ccc',
-              },
-            }"
-            :dt="{
-              background: 'white',
-            }"
-            class="md:w-20rem h-1 w-full md:ml-auto"
-          >
-            <span class="whitespace-nowrap">{{ totalSize }}B / 1Mb</span>
-          </ProgressBar>
         </div>
       </template>
       <template #content="{ files, removeFileCallback }">
@@ -124,7 +95,7 @@
                   severity="warn"
                 />
                 <Button
-                  @click="onRemoveTemplatingFile(file, removeFileCallback, index)"
+                  @click="onRemoveTemplatingFile(index)"
                   outlined
                   rounded
                   severity="danger"
@@ -176,29 +147,22 @@ import { ref } from 'vue'
 import { usePrimeVue } from 'primevue/config'
 import { useToast } from 'primevue/usetoast'
 
+const runtimeConfig = useRuntimeConfig()
+const apiBase = runtimeConfig.public.apiBase
+const emit = defineEmits(['on-file-selected', 'on-file-removed'])
+
 const $primevue = usePrimeVue()
 const toast = useToast()
 
-const totalSize = ref(0)
-const totalSizePercent = ref(0)
 const files = ref([])
 
-const onRemoveTemplatingFile = (file, removeFileCallback, index) => {
-  removeFileCallback(index)
-  totalSize.value -= parseInt(formatSize(file.size))
-  totalSizePercent.value = totalSize.value / 10
+const onRemoveTemplatingFile = index => {
+  emit('on-file-removed', index)
 }
 
 const onSelectedFiles = event => {
   files.value = event.files
-  files.value.forEach(file => {
-    totalSize.value += parseInt(formatSize(file.size))
-  })
-}
-
-const uploadEvent = callback => {
-  totalSizePercent.value = totalSize.value / 10
-  callback()
+  emit('on-file-selected', files.value)
 }
 
 const onTemplatedUpload = () => {

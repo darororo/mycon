@@ -131,7 +131,10 @@
           </div>
 
           <div style="margin-top: 24px">
-            <UploadImage />
+            <UploadImage
+              @on-file-selected="loadImages"
+              @on-file-removed="removeImage"
+            />
           </div>
 
           <div class="big-container">
@@ -219,6 +222,9 @@ import type { CreateProjectDto } from '~/interfaces/project.interface'
 import UploadImage from './UploadImage.vue'
 import { Toast } from 'primevue'
 
+const runtimeConfig = useRuntimeConfig()
+const apiBase = runtimeConfig.public.apiBase
+
 const createFormVisible = defineModel<boolean>()
 
 const projectDto = reactive<CreateProjectDto>({
@@ -233,7 +239,7 @@ const projectDto = reactive<CreateProjectDto>({
 
 const { name, client, description, location, longtitude, latitude, price } = toRefs(projectDto)
 
-const { data, error, status, clear, execute } = useFetch('http://localhost:3100/projects', {
+const { data, error, status, clear, execute } = useFetch(`${apiBase}/projects`, {
   method: 'POST',
   body: projectDto,
   watch: false,
@@ -275,6 +281,31 @@ const initialValues = ref<CreateProjectDto>({
   location: '',
   price: 0,
 })
+
+const images = ref([])
+
+const loadImages = selectedImages => {
+  images.value = selectedImages
+  console.log('after add')
+  console.log(images.value)
+}
+
+const removeImage = index => {
+  images.value.splice(index, 1)
+  console.log('after remove')
+  console.log(images.value)
+}
+
+const uploadImages = () => {
+  const formData = new FormData()
+  formData.append('files', images.value)
+
+  return useFetch(`${apiBase}/upload`, {
+    method: 'POST',
+    body: formData,
+  })
+}
+
 const handleSubmit = async ({ valid }) => {
   if (valid) {
     await execute()
@@ -286,6 +317,11 @@ const handleSubmit = async ({ valid }) => {
         life: 3000,
       })
     } else {
+      if (images.value.length > 0) {
+        const { execute } = uploadImages()
+        await execute()
+      }
+
       toast.add({
         severity: 'success',
         summary: 'Creation completed successfully.',

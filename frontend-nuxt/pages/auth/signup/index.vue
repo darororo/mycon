@@ -93,6 +93,9 @@ definePageMeta({
   layout: false,
 })
 
+const runtimeConfig = useRuntimeConfig()
+const apiBase = runtimeConfig.public.apiBase
+
 const toast = useToast()
 
 const userSignupDto = reactive<UserSignup>({
@@ -112,7 +115,7 @@ watch(userSignupDto, newValue => {
   console.log(newValue)
 })
 
-const { data, status, error, execute, clear } = useFetch('http://localhost:3100/users', {
+const { data, status, error, execute, clear } = useFetch(`${apiBase}/users`, {
   method: 'POST',
   body: userSignupDto,
   immediate: false,
