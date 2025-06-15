@@ -282,29 +282,7 @@ const initialValues = ref<CreateProjectDto>({
   price: 0,
 })
 
-const images = ref([])
-
-const loadImages = selectedImages => {
-  images.value = selectedImages
-  console.log('after add')
-  console.log(images.value)
-}
-
-const removeImage = index => {
-  images.value.splice(index, 1)
-  console.log('after remove')
-  console.log(images.value)
-}
-
-const uploadImages = () => {
-  const formData = new FormData()
-  formData.append('files', images.value)
-
-  return useFetch(`${apiBase}/upload`, {
-    method: 'POST',
-    body: formData,
-  })
-}
+const { images, loadImages, removeImage, uploadImages } = useImageUploader()
 
 const handleSubmit = async ({ valid }) => {
   if (valid) {
@@ -318,8 +296,8 @@ const handleSubmit = async ({ valid }) => {
       })
     } else {
       if (images.value.length > 0) {
-        const { execute } = uploadImages()
-        await execute()
+        await uploadImages()
+        // await execute()
       }
 
       toast.add({
