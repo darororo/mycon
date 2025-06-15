@@ -1,5 +1,6 @@
 import { Project } from "src/projects/entities/project.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { QuantityUnit } from "../enum/unit.enum";
 
 @Entity()
 export class Inventory {
@@ -15,11 +16,8 @@ export class Inventory {
     @Column()
     quantity: Number;
 
-    @Column()
-    unit: Boolean;
-
-    @Column({type: 'datetime', default: ()=> 'CURRENT_TIMESTAMP' })
-    date: Date;
+    @Column({default: QuantityUnit.Piece})
+    unit: QuantityUnit;
 
     @ManyToOne(() => Project, project => project.inventory, {onDelete: 'CASCADE'})
     project: Project
