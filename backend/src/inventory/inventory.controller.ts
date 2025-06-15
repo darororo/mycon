@@ -19,9 +19,8 @@ export class InventoryController {
   constructor(private readonly inventoryService: InventoryService) {}
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
-  create(@Body() body: CreateInventoryDto) {
-    return this.inventoryService.create(body);
+  create(@Body() createInventoryDto: CreateInventoryDto) {
+    return this.inventoryService.create(createInventoryDto);
   }
 
   @Get()
@@ -29,21 +28,18 @@ export class InventoryController {
     return this.inventoryService.findAll();
   }
 
-  @Get('/:id')
+  @Get(':id')
   findOne(@Param('id') id: number) {
-    return this.inventoryService.findOne(id);
+    return this.inventoryService.findOne(+id);
   }
 
-  @Patch('/:id')
-  update(
-    @Body() body: { itemname: string; category: string; quantity: number; unit: boolean },
-    @Param('id', ParseIntPipe) id:number
-  ) {
-    return this.inventoryService.update(id, body);
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateInventoryDto: UpdateInventoryDto) {
+    return this.inventoryService.update(+id, updateInventoryDto);
   }
 
-  @Delete('/:id')
-  remove(@Param('id', ParseIntPipe) id:number ) {
-    return this.inventoryService.remove(id);
+  @Delete(':id')
+  remove(@Param('id', ParseIntPipe) id:string ) {
+    return this.inventoryService.remove(+id);
   }
 }
