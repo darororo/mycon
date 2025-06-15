@@ -9,5 +9,6 @@ import { APP_GUARD } from '@nestjs/core';
   imports: [],
   controllers: [UploadController],
   providers: [UploadService],
+  exports: [UploadService],
 })
 export class UploadModule {}

@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Client } from 'minio';
+import { UploadedObjectInfo } from 'minio/dist/main/internal/type';
 import { InjectMinio } from 'nestjs-minio';
 import * as sharp from 'sharp';
 
@@ -20,7 +21,9 @@ export class UploadService {
     return this.minioClient.putObject('mycon', file.originalname, file.buffer);
   }
 
-  uploadImages(files: Express.Multer.File[]) {
+  uploadImages(files: Express.Multer.File[], options: { prefix?: string }) {
+    const { prefix } = options;
+
     if (!files) {
       throw new NotFoundException();
     }
@@ -30,23 +33,30 @@ export class UploadService {
 
     for (let i = 0; i < files.length; i++) {
       const smallImg = this.resizeImageToSmall(files[i].buffer);
-      const smallImgPath = 'small/' + files[i].originalname;
+
+      let smallImgPath = 'small/' + files[i].originalname;
+
+      if (prefix) {
+        smallImgPath = prefix + smallImgPath;
+      }
 
       smallImageList.push(smallImg);
       smallImagePathList.push(smallImgPath);
     }
 
-    const uploadResults: Promise<any>[] = [];
+    const oriResult: Promise<any>[] = [];
+    const smallResult: Promise<any>[] = [];
 
     for (let i = 0; i < files.length; i++) {
-      uploadResults.push(
-        this.minioClient.putObject(
-          'mycon',
-          files[i].originalname,
-          files[i].buffer,
-        ),
+      let path = `original/${files[i].originalname}`;
+      if (prefix) {
+        path = prefix + path;
+      }
+
+      oriResult.push(
+        this.minioClient.putObject('mycon', path, files[i].buffer),
       );
-      uploadResults.push(
+      smallResult.push(
         this.minioClient.putObject(
           'mycon',
           smallImagePathList[i],
@@ -55,7 +65,7 @@ export class UploadService {
       );
     }
 
-    return uploadResults;
+    return { original: oriResult, small: smallResult };
   }
 
   resizeImageToSmall(imgBuffer: Buffer) {

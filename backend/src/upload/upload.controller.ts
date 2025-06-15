@@ -26,11 +26,17 @@ export class UploadController {
     )
     files: Express.Multer.File[],
   ) {
-    await Promise.all(this.uploadService.uploadImages(files));
+    const { original, small } = this.uploadService.uploadImages(files, {
+      prefix: 'misc',
+    });
+
+    const oriUploadInfo = await Promise.all([...original]);
+    const smallUploadInfo = await Promise.all([...small]);
 
     return {
       status: HttpStatus.CREATED,
       message: 'Files uploaded succesfully',
+      data: { original: oriUploadInfo, small: smallUploadInfo },
     };
   }
 }
