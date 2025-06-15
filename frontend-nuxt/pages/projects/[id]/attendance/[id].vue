@@ -1,109 +1,228 @@
 <template>
-  <div class="card">
-    <Toast
-      :dt="{
-        success: {
-          background: '#e6f4ea',
-          detailColor: '#2e7d32',
-          border: {
-            color: '#a5d6a7',
-            width: '1px',
-            style: 'solid',
-          },
-          padding: '12px 16px',
-          shadow: '0 4px 10px rgba(0, 0, 0, 0.05)',
-          borderRadius: '8px',
-          font: {
-            weight: 500,
-          },
-        },
-        error: {
-          background: '#fdecea',
-          detailColor: '#b00020',
-          border: {
-            color: '#f44336',
-            width: '1px',
-            style: 'solid',
-          },
-          padding: '12px 16px',
-          shadow: '0 4px 10px rgba(244, 67, 54, 0.3)',
-          borderRadius: '8px',
-          font: {
-            weight: 600,
-          },
-        },
-        warn: {
-          background: '#fff4e5',
-          detailColor: '#9f6000',
-          border: {
-            color: '#ff9800',
-            width: '1px',
-            style: 'solid',
-          },
-          padding: '12px 16px',
-          shadow: '0 4px 10px rgba(255, 152, 0, 0.3)',
-          borderRadius: '8px',
-          font: {
-            weight: 600,
-          },
-        },
-      }"
-    />
+  <div class="max-w-[1500px] w-full py-4">
+    <h2 class="font-semibold text-[22px] text-black font-[Montserrat]">Project Name</h2>
+    <hr class="my-3 border-[#ccc]" />
 
-    <DataTable
-      :value="users"
-      editMode="cell"
-      :pt="{
-        table: { style: 'min-width: 50rem' },
-        column: {
-          bodycell: ({ state }) => ({
-            class: [{ '!py-0': state['d_editing'] }],
-          }),
-        },
-      }"
-      @cell-edit-complete="onCellEditComplete"
-    >
-      <Column
-        header="No."
-        style="width: 10%"
+    <div class="flex flex-wrap gap-4 justify-between items-center my-4">
+      <!-- Date Card -->
+      <Card
+        style="
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          max-width: 280px;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          background: #f9f9f9;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        "
+        :dt="{
+          body: {
+            padding: '12px 16px',
+          },
+        }"
       >
-        <template #body="{ index }">
-          {{ index + 1 }}
-        </template>
-      </Column>
-
-      <Column
-        v-for="col of columns"
-        :key="col.field"
-        :field="col.field"
-        :header="col.header"
-        style="width: 30%"
-      >
-        <template #editor="{ data, field }">
-          <div style="display: flex; flex-direction: column">
-            <span v-if="!isEditableField(field)">
-              {{ data[field] }}
-            </span>
-
-            <InputNumber
-              v-else
-              v-model="data[field]"
-              autofocus
-              :class="{ 'p-invalid': errors[data.id]?.[field] }"
-            />
-
-            <Message
-              v-if="errors[data.id]?.[field]"
-              severity="error"
-              variant="simple"
-              :dt="message"
-            >
-              {{ errors[data.id][field] }}
-            </Message>
+        <template #content>
+          <div
+            class="flex items-center justify-between gap-2 w-full font-[Montserrat] text-[14px] text-[#333]"
+          >
+            <div class="flex items-center gap-4">
+              <Icon
+                name="formkit:date"
+                style="font-size: 20px; color: #555"
+              />
+              <div class="flex gap-1 relative top-[1.5px] font-normal">
+                <span>Current date:</span>
+                <span
+                  ><strong>{{ formattedDate }}</strong></span
+                >
+              </div>
+            </div>
           </div>
         </template>
-      </Column>
-    </DataTable>
+      </Card>
+
+      <!-- Project Select -->
+      <Select
+        v-model="selectedCity"
+        :options="cities"
+        optionLabel="name"
+        placeholder="Project Name"
+        :dt="select"
+        :pt="{
+          root: {
+            style:
+              'font-weight: 500; font-size: 14px; font-family: Montserrat, sans-serif; min-width: 220px;',
+          },
+        }"
+      />
+    </div>
+    <div class="table-container">
+      <Toast
+        :dt="{
+          success: {
+            background: '#e6f4ea',
+            detailColor: '#2e7d32',
+            border: {
+              color: '#a5d6a7',
+              width: '1px',
+              style: 'solid',
+            },
+            padding: '12px 16px',
+            shadow: '0 4px 10px rgba(0, 0, 0, 0.05)',
+            borderRadius: '8px',
+            font: {
+              weight: 500,
+            },
+          },
+          error: {
+            background: '#fdecea',
+            detailColor: '#b00020',
+            border: {
+              color: '#f44336',
+              width: '1px',
+              style: 'solid',
+            },
+            padding: '12px 16px',
+            shadow: '0 4px 10px rgba(244, 67, 54, 0.3)',
+            borderRadius: '8px',
+            font: {
+              weight: 600,
+            },
+          },
+          warn: {
+            background: '#fff4e5',
+            detailColor: '#9f6000',
+            border: {
+              color: '#ff9800',
+              width: '1px',
+              style: 'solid',
+            },
+            padding: '12px 16px',
+            shadow: '0 4px 10px rgba(255, 152, 0, 0.3)',
+            borderRadius: '8px',
+            font: {
+              weight: 600,
+            },
+          },
+        }"
+      />
+
+      <DataTable
+        :value="users"
+        scrollable
+        editMode="cell"
+        scroll-height="720px"
+        :pt="{
+          table: {
+            style: `
+        min-width: 80rem;
+      `,
+          },
+          tableContainer: {
+            style: `
+        max-height: 100vh;
+        font-family: 'Montserrat', sans-serif;
+        border: 1px solid #e0e0e0;
+        font-size: 14px;
+      `,
+          },
+          header: {
+            style: `
+        position: sticky;
+        top: 0;
+        color: white;
+        font-weight: 600;
+        padding: 12px 20px;
+        z-index: 1;
+      `,
+          },
+          column: {
+            headercell: {
+              style: `
+          color: white;
+          padding: 12px 20px;
+          font-weight: 600;
+        `,
+            },
+            bodycell: ({ state }) => ({
+              style: `
+          padding: 16px 20px;
+          border-bottom: 1px solid #f0f0f0;
+          transition: background-color 0.2s;
+        `,
+              class: [{ '!py-0': state['d_editing'] }],
+            }),
+          },
+          row: {
+            style: `transition: background-color 0.2s;`,
+          },
+        }"
+        :dt="tableDt"
+        @cell-edit-complete="onCellEditComplete"
+      >
+        <Column
+          header="No."
+          style="width: 10%"
+          :pt="{
+            headerCell: {
+              style: 'border-top-left-radius: 8px; background-color: #3674B5;',
+            },
+          }"
+        >
+          <template #body="{ index }">
+            {{ index + 1 }}
+          </template>
+        </Column>
+
+        <Column
+          v-for="col of columns"
+          :key="col.field"
+          :field="col.field"
+          :header="col.header"
+          style="width: 30%"
+          :pt="{
+            headerCell: {
+              style:
+                col.field === 'name'
+                  ? 'background-color: #3A4750; color: white;'
+                  : col.field === 'role'
+                    ? 'background-color: #3A4750; color: white;'
+                    : col.field === 'hours'
+                      ? 'background-color: #3A4750; color: white;'
+                      : '',
+            },
+          }"
+        >
+          <template #body="{ data, field }">
+            <div style="display: flex; flex-direction: column">
+              <span v-if="!isEditableField(field)">
+                {{ data[field] }}
+              </span>
+
+              <InputNumber
+                v-else
+                v-model="data[field]"
+                autofocus
+                :class="{ 'p-invalid': errors[data.id]?.[field] }"
+                placeholder="Enter hours worked (max 16)"
+              />
+
+              <Message
+                v-if="errors[data.id]?.[field]"
+                severity="error"
+                variant="simple"
+                :dt="message"
+              >
+                {{ errors[data.id][field] }}
+              </Message>
+            </div>
+          </template>
+        </Column>
+      </DataTable>
+    </div>
   </div>
 </template>
 
@@ -116,31 +235,46 @@ import Message from 'primevue/message'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
 
-// Table columns
 const columns = ref([
   { field: 'name', header: 'Name' },
   { field: 'role', header: 'Role' },
   { field: 'hours', header: 'Hours' },
 ])
 
-// Table data
 const users = ref([])
-
-// Error object (per user per field)
 const errors = ref({})
-
-// Toast for notifications
 const toast = useToast()
-
-// Only hours are editable
 const isEditableField = field => field === 'hours'
 
-// Cell edit validation
 const onCellEditComplete = event => {
   const { data, newValue, field } = event
 
   if (field === 'hours') {
-    if (newValue > 16) {
+    const value = newValue === '' ? null : newValue
+
+    if (value === null || value === undefined || isNaN(value)) {
+      if (!errors.value[data.id]) errors.value[data.id] = {}
+      errors.value[data.id][field] = 'Hours is required.'
+      event.preventDefault()
+
+      toast.add({
+        severity: 'error',
+        summary: 'Missing Value',
+        detail: errors.value[data.id][field],
+        life: 3000,
+      })
+    } else if (value < 0) {
+      if (!errors.value[data.id]) errors.value[data.id] = {}
+      errors.value[data.id][field] = 'Hours must be greater than 0.'
+      event.preventDefault()
+
+      toast.add({
+        severity: 'error',
+        summary: 'Invalid Input',
+        detail: errors.value[data.id][field],
+        life: 3000,
+      })
+    } else if (value > 16) {
       if (!errors.value[data.id]) errors.value[data.id] = {}
       errors.value[data.id][field] = 'Hours cannot be more than 16.'
       event.preventDefault()
@@ -152,13 +286,14 @@ const onCellEditComplete = event => {
         life: 3000,
       })
     } else {
+      // Valid input
       delete errors.value[data.id]?.[field]
-      data[field] = newValue
+      data[field] = value
 
       toast.add({
         severity: 'success',
         summary: 'Updated Successfully',
-        detail: `Today's work hours set to ${newValue}`,
+        detail: `Today's work hours set to ${value}`,
         life: 2000,
       })
     }
@@ -176,6 +311,14 @@ const fetchUsers = async () => {
   }))
 }
 
+const today = new Date()
+const formattedDate = ref(
+  today.toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  })
+)
 onMounted(fetchUsers)
 
 const message = {
@@ -183,6 +326,55 @@ const message = {
     font: {
       Size: '14px',
       weight: 400,
+    },
+  },
+}
+
+const select = {
+  background: 'white',
+  border: {
+    color: '#ccc',
+    radius: '12px',
+  },
+  hover: {
+    border: {
+      color: '#ccc',
+    },
+  },
+  focus: {
+    border: {
+      color: '#ccc',
+    },
+  },
+  padding: {
+    x: '18px',
+    y: '10px',
+  },
+}
+
+const tableDt = {
+  header: {
+    cell: {
+      padding: '10px 20px 10px 20px',
+      background: '#008080',
+      border: {
+        color: '#ccc',
+        width: '2px',
+      },
+      color: 'white',
+    },
+  },
+  row: {
+    background: 'white',
+    color: 'black',
+    font: 'Montserrate',
+  },
+  body: {
+    cell: {
+      border: {
+        color: '#ccc',
+      },
+      padding: '4px 20px',
     },
   },
 }
@@ -194,5 +386,38 @@ const message = {
   font-size: 14px;
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
+}
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+  max-width: auto;
+  border: 1px solid #ccc;
+  border-radius: 10px 10px 0 0;
+}
+::v-deep(.p-inputnumber-input) {
+  background-color: white;
+  color: black;
+  font-size: 14px;
+  border: 1px solid #ccc;
+}
+::v-deep(.p-inputnumber-input):focus {
+  border-color: #ccc;
+}
+.top-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 16px 0;
+}
+
+.card-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 </style>
