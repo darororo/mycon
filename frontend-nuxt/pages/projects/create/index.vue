@@ -153,7 +153,8 @@ const { data: projects } = await useFetch('http://localhost:3100/projects')
 const projectsDummy = [
   {
     id: 1,
-    imageUrl: 'https://i.pinimg.com/736x/51/7e/36/517e36687e36838ee1b03145d8f8a28c.jpg',
+    imageUrl:
+      'http://localhost:9001/api/v1/download-shared-object/aHR0cDovLzEyNy4wLjAuMTo5MDAwL215Y29uL3NtYWxsL2dpbnRhbWEuanBlZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPTNEWkVSRDk3Sk00NEtPMVRaUlFYJTJGMjAyNTA2MTUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNjE1VDA3NDQ1MFomWC1BbXotRXhwaXJlcz00MzIwMCZYLUFtei1TZWN1cml0eS1Ub2tlbj1leUpoYkdjaU9pSklVelV4TWlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKaFkyTmxjM05MWlhraU9pSXpSRnBGVWtRNU4wcE5ORFJMVHpGVVdsSlJXQ0lzSW1WNGNDSTZNVGMxTURBeE5qQTBNaXdpY0dGeVpXNTBJam9pWVdSdGFXNGlmUS5SS0dSMGNmWV9DM0pGYzh1MEkwZ0phOXl0eWVZN1ZhbGRXWmlGOEw4N3k0cERscnVwWVZOQnVDNHlOR1JsU1FvamFIaE1KVGRyVFR2Q2M2Yy0yMkFLUSZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmdmVyc2lvbklkPW51bGwmWC1BbXotU2lnbmF0dXJlPWZiNGJlOWY0YTRkZjZjNDI5MjcwMjMxYzY3Mzc5NjkxMGE1MDEyNmQyNzYxYTk0NDQ5MzQyZmUzMDUzMThhZDI',
     name: 'GlassHaven',
     description:
       'GlassHaven is a contemporary masterpiece designed to dissolve the barrier between interior and exterior living. Constructed primarily from reinforced tempered glass, steel beams, and sustainable concrete, the home appears to float amid a natural lakeside setting. The entire structure is bathed in natural daylight.',
@@ -162,7 +163,7 @@ const projectsDummy = [
   },
   {
     id: 2,
-    imageUrl: 'https://i.pinimg.com/736x/69/5e/f9/695ef9fbc4d3a02f57c2507684c3025f.jpg',
+    imageUrl: 'http://localhost:9000/mycon/posts/small/GabeNewell.jpg',
     name: 'The Zenit House',
     description:
       'Rising above the city skyline, The Zenith House is a modern high-rise villa that redefines luxury. This 4-story steel-and-glass smart home boasts expansive views of the skyline, automated living systems, and a rooftop infinity pool. Every room is a fusion of technology.',

@@ -17,6 +17,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: process.env.API_HOST,
+      fileStorage: process.env.STORAGE_ENDPOINT,
     },
   },
 

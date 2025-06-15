@@ -27,10 +27,15 @@ export function useImageUploader() {
     })
   }
 
+  const clearImageData = () => {
+    images.value = []
+  }
+
   return {
     images,
     loadImages,
     removeImage,
     uploadImages,
+    clearImageData,
   }
 }

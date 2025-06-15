@@ -142,7 +142,7 @@ const { apiBase } = usePublicRuntimeConfig()
 
 const description = ref('')
 
-const { images, loadImages, removeImage, uploadImages } = useImageUploader()
+const { images, loadImages, removeImage, uploadImages, clearImageData } = useImageUploader()
 
 const initialValues = ref({
   description: '',
@@ -164,14 +164,22 @@ const postDto = ref({
   description: description,
 })
 
+const formData = ref(new FormData())
+
 const { data, status, clear, execute, error } = useFetch(`${apiBase}/posts`, {
   method: 'POST',
-  body: postDto.value,
+  body: formData,
   watch: false,
   immediate: false,
 })
 
 const handleSubmit = async ({ valid }) => {
+  images.value.forEach(image => {
+    formData.value.append('files', image) // If your backend expects array: use 'files[]'
+  })
+
+  formData.value.append('jsonData', JSON.stringify(postDto.value))
+
   if (valid) {
     await execute()
     if (status.value === 'error') {
@@ -182,10 +190,10 @@ const handleSubmit = async ({ valid }) => {
         life: 3000,
       })
     } else {
-      if (images.value.length > 0) {
-        await uploadImages()
-        // await execute()
-      }
+      // if (images.value.length > 0) {
+      //   // await uploadImages()
+      //   // await execute()
+      // }
 
       toast.add({
         severity: 'success',
@@ -196,8 +204,9 @@ const handleSubmit = async ({ valid }) => {
       })
 
       createFormVisible.value = false
-
       clear()
+      clearImageData()
+      formData.value = new FormData()
     }
   }
 }

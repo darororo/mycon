@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia'
 
 export const usePostStore = defineStore('post', () => {
-  const posts = ref([
+  const posts = ref([])
+
+  const postsDummy = ref([
     {
       userName: 'Yem Daro',
       userRole: 'Client',
@@ -36,5 +38,5 @@ export const usePostStore = defineStore('post', () => {
 
   const comments = ref([])
 
-  return { posts, comments }
+  return { posts, postsDummy, comments }
 })

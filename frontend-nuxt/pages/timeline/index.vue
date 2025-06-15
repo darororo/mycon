@@ -58,9 +58,10 @@
         <hr style="margin: 12px 0; border-color: #ccc" />
 
         <div class="grid grid-cols-1 gap-4">
+          <h1>{{ error }}</h1>
           <div
             v-for="post in posts"
-            :key="post"
+            :key="post.id"
             class="flex flex-row justify-center w-full h-full"
           >
             <div class="min-w-[360px] max-w-[540px] max-h-[1000px]">
@@ -85,9 +86,21 @@ import { ref } from 'vue'
 import TimelineForm from '~/components/project/form/TimelineForm.vue'
 import SideWorkflow from '~/components/workflow/SideWorkflow.vue'
 
+const { apiBase } = usePublicRuntimeConfig()
+
 const createFormVisible = ref(false)
-const postStore = usePostStore()
-const posts = postStore.posts
+const { posts } = storeToRefs(usePostStore())
+// const { posts, postsDummy } = postStore
+
+const { data, error, execute } = useFetch(`${apiBase}/posts`, {
+  method: 'GET',
+})
+
+onMounted(async () => {
+  await execute()
+  posts.value = data.value
+  console.log(posts.value)
+})
 
 const select = {
   background: 'white',

@@ -5,26 +5,32 @@
         <div class="post-header">
           <div class="user-info">
             <img
-              :src="post.avatarUrl"
+              :src="'https://i.pinimg.com/736x/83/6c/a5/836ca5b55fd7af5f4870bfa931b8a082.jpg'"
               alt="profile"
               class="user-avatar"
             />
             <div class="user-details">
-              <span class="user-name">{{ post.userName }}</span>
-              <span class="use-role">{{ post.userRole }}</span>
+              <span class="user-name">{{ post.id + ' JOHN' }}</span>
+              <span class="use-role">{{ 'Superman' }}</span>
             </div>
           </div>
           <div class="more-action">
             <OptionIcon />
-            <span class="post-time">{{ post.postTime }}</span>
+            <span class="post-time">{{ post.createdAt || 'HELP' }}</span>
           </div>
         </div>
       </template>
 
       <template #content>
-        <p class="post-status">{{ post.postStatus }}</p>
-        <img
-          :src="post.postImageUrl"
+        <p class="post-status">{{ post.description }}</p>
+        <NuxtImg
+          width="400"
+          height="400"
+          v-if="post.photos[0]"
+          :src="
+            thumbnailUrl ||
+            'https://i.pinimg.com/736x/83/6c/a5/836ca5b55fd7af5f4870bfa931b8a082.jpg'
+          "
           alt="post-image"
           class="post-image"
         />
@@ -120,11 +126,23 @@
 </template>
 
 <script setup>
+const { post } = defineProps(['post'])
+
+const { fileStorage, apiBase } = usePublicRuntimeConfig()
+
+const thumbnailUrl = computed(() => {
+  if (post.photos[0]) {
+    return `${fileStorage}/${post.photos[0].thumbnail}`
+  }
+
+  return ''
+})
+
 const isLiked = ref(false)
 
 const postStore = usePostStore()
 
-const post = postStore.posts[0]
+// const post = postStore.posts[0]
 const comments = postStore.comments
 
 const commentInput = ref('')
@@ -191,7 +209,7 @@ const commentSubmitBtnPt = {
 
 .post-card {
   height: auto;
-  width: auto;
+  width: 500px;
   background-color: white;
   box-shadow:
     rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
@@ -260,11 +278,13 @@ const commentSubmitBtnPt = {
   margin-bottom: 10px;
 }
 
-.post-image {
+/* .post-image {
   height: auto;
   width: auto;
+  min-width: 300px;
+  align-self: center;
   border-radius: 4px;
-}
+} */
 
 hr {
   border-width: 1px;
