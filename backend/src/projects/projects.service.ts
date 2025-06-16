@@ -56,7 +56,7 @@ export class ProjectsService {
   }
 
   async findAll(): Promise<Project[]> {
-    return this.projectRepository.find();
+    return this.projectRepository.find({ relations: { photos: true } });
   }
 
   async findOne(id: number) {

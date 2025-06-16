@@ -49,6 +49,6 @@ export class Project {
   @OneToMany(() => Inventory, (inventory) => inventory.project)
   inventory: Inventory[];
 
-  @ManyToOne(() => ProjectPhoto, (photo) => photo.project)
+  @OneToMany(() => ProjectPhoto, (photo) => photo.project)
   photos: ProjectPhoto[];
 }

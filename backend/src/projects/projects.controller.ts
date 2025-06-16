@@ -15,7 +15,7 @@ import {
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { ParseJsonPipe } from 'src/common/pipes/parse-json.pipe';
 
 @Controller('projects')
@@ -23,11 +23,11 @@ export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('files'))
+  @UseInterceptors(FilesInterceptor('files'))
   create(
     @UploadedFiles(
       new ParseFilePipe({
-        validators: [new FileTypeValidator({ fileType: '/image' })],
+        validators: [new FileTypeValidator({ fileType: 'image/' })],
         fileIsRequired: false,
       }),
     )
@@ -39,6 +39,7 @@ export class ProjectsController {
     )
     createProjectDto: CreateProjectDto,
   ) {
+    console.log(files);
     return this.projectsService.create(createProjectDto, files);
   }
 
