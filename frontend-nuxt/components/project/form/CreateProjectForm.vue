@@ -238,9 +238,6 @@ import { Toast } from 'primevue'
 
 import { useImageUploader } from '@/composables/useImageUploader'
 
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
-
 const createFormVisible = defineModel<boolean>()
 
 const projectDto = reactive<CreateProjectDto>({
@@ -294,9 +291,9 @@ const initialValues = ref<CreateProjectDto>({
 const { images, loadImages, removeImage, uploadImages, clearImageData } = useImageUploader()
 
 const formData = ref(new FormData())
-const { data, error, status, clear, execute } = useFetch(`${apiBase}/projects`, {
+const { data, error, status, clear, execute } = useFetch(`/api/projects`, {
   method: 'POST',
-  body: formData.value,
+  body: projectDto,
   watch: false,
   immediate: false,
 })

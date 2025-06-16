@@ -87,13 +87,11 @@ import PostCard from '~/components/post/PostCard.vue'
 import TimelineForm from '~/components/project/form/TimelineForm.vue'
 import SideWorkflow from '~/components/workflow/SideWorkflow.vue'
 
-const { apiBase } = usePublicRuntimeConfig()
-
 const createFormVisible = ref(false)
 const { posts } = storeToRefs(usePostStore())
 // const { posts, postsDummy } = postStore
 
-const { data, error, execute } = useFetch(`${apiBase}/posts`, {
+const { data, error, execute } = useFetch('/api/posts', {
   method: 'GET',
 })
 

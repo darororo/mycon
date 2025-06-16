@@ -29,16 +29,16 @@
             :key="photo.id"
             width="400"
             height="400"
-            :src="thumbnailUrl(photo)"
+            :src="`/api/storage/${photo.thumbnail}`"
             alt="post-image"
             class="post-image"
             preview
           >
             <template #original="slotProps">
-              <NuxtImg
+              <Image
                 width="800"
                 height="800"
-                :src="originalUrl(photo.url)"
+                :src="`/api/storage/${photo.url}`"
                 alt="preview"
                 :style="slotProps.style"
                 @click="slotProps.onClick"
@@ -144,15 +144,15 @@ const OldDate = post.createdAt
 const NewDate = new Date(OldDate).toDateString()
 const { post } = defineProps(['post'])
 
-const { fileStorage, apiBase } = usePublicRuntimeConfig()
+// const { fileStorage, apiBase } = usePublicRuntimeConfig()
 
-const thumbnailUrl = photo => {
-  return photo?.thumbnail ? `${fileStorage}/${photo.thumbnail}` : ''
-}
+// const thumbnailUrl = photo => {
+//   return photo?.thumbnail ? `${fileStorage}/${photo.thumbnail}` : ''
+// }
 
-const originalUrl = imgPath => {
-  return `${fileStorage}/${imgPath}`
-}
+// const originalUrl = imgPath => {
+//   return `${fileStorage}/${imgPath}`
+// }
 
 const isLiked = ref(false)
 

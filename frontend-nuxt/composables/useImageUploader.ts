@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 
 export function useImageUploader() {
-  const { apiBase } = usePublicRuntimeConfig()
+  // const { apiBase } = usePublicRuntimeConfig()
   const images = ref<File[]>([])
 
   const loadImages = (selectedImages: File[]) => {
@@ -21,7 +21,7 @@ export function useImageUploader() {
       formData.append('files', image) // If your backend expects array: use 'files[]'
     })
 
-    return $fetch(`${apiBase}/upload`, {
+    return $fetch(`/storage/upload`, {
       method: 'POST',
       body: formData,
     })

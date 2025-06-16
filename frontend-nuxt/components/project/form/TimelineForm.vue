@@ -133,12 +133,10 @@
 <script setup>
 import { useToast } from 'primevue/usetoast'
 import UploadImage from './UploadImage.vue'
-import { usePublicRuntimeConfig } from '@/composables/usePublicRuntimeConfig'
 import { useImageUploader } from '@/composables/useImageUploader'
 
 const toast = useToast()
 const createFormVisible = defineModel()
-const { apiBase } = usePublicRuntimeConfig()
 
 const description = ref('')
 
@@ -166,7 +164,7 @@ const postDto = ref({
 
 const formData = ref(new FormData())
 
-const { data, status, clear, execute, error } = useFetch(`${apiBase}/posts`, {
+const { data, status, clear, execute, error } = useFetch(`/api/posts`, {
   method: 'POST',
   body: formData,
   watch: false,
