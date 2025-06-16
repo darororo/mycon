@@ -3,8 +3,19 @@
     <Card>
       <template #content>
         <div class="card-wrapper">
-          <img
-            :src="item.imageUrl"
+          <Image
+            v-if="item.photos.length > 0"
+            width="240"
+            height="240"
+            :src="`/api/storage/${item.photos[0].thumbnail}`"
+            class="project-image h-full max-h-[300px]"
+          />
+
+          <NuxtImg
+            v-else
+            width="240"
+            height="240"
+            src="https://picsum.photos/200/200?grayscale"
             class="project-image"
           />
           <div class="project-details">
@@ -20,7 +31,7 @@
             </div>
             <div class="project-footer">
               <label class="project-author">{{ item.owner }}</label>
-              <label class="project-price">{{ item.price }}</label>
+              <label class="project-price">{{ USDollar.format(item.price) }}</label>
             </div>
           </div>
         </div>
@@ -34,6 +45,11 @@ defineProps({
   item: {
     type: Object,
   },
+})
+
+let USDollar = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
 })
 </script>
 
@@ -51,10 +67,10 @@ defineProps({
 }
 
 .project-image {
-  width: 16rem;
+  /* width: 16rem; */
   object-fit: cover;
   border-radius: 10px;
-  height: 100%;
+  /* height: 100%; */
 
   /* prevent dragging of ghost imag */
   -webkit-user-drag: none;

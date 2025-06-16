@@ -314,10 +314,10 @@ const handleSubmit = async ({ valid }) => {
         life: 3000,
       })
     } else {
-      if (images.value.length > 0) {
-        await uploadImages()
-        // await execute()
-      }
+      // if (images.value.length > 0) {
+      //   await uploadImages()
+      //   // await execute()
+      // }
 
       toast.add({
         severity: 'success',
@@ -328,11 +328,11 @@ const handleSubmit = async ({ valid }) => {
       })
 
       createFormVisible.value = false
-
-      clear()
-      clearImageData()
-      formData.value = new FormData()
     }
+
+    clear()
+    clearImageData()
+    formData.value = new FormData()
   }
 }
 
