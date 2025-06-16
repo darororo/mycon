@@ -11,6 +11,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { ProjectPhoto } from './project-photo.entity';
 
 @Entity()
 export class Project {
@@ -46,5 +47,8 @@ export class Project {
   workers: Worker[];
 
   @OneToMany(() => Inventory, (inventory) => inventory.project)
-  inventory : Inventory[];  
+  inventory: Inventory[];
+
+  @ManyToOne(() => ProjectPhoto, (photo) => photo.project)
+  photos: ProjectPhoto[];
 }

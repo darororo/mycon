@@ -255,13 +255,6 @@ const projectDto = reactive<CreateProjectDto>({
 
 const { name, client, description, location, longtitude, latitude, price } = toRefs(projectDto)
 
-const { data, error, status, clear, execute } = useFetch(`${apiBase}/projects`, {
-  method: 'POST',
-  body: projectDto,
-  watch: false,
-  immediate: false,
-})
-
 const toast = useToast()
 
 const resolver = ({ values }) => {
@@ -298,9 +291,22 @@ const initialValues = ref<CreateProjectDto>({
   price: 0,
 })
 
-const { images, loadImages, removeImage, uploadImages } = useImageUploader()
+const { images, loadImages, removeImage, uploadImages, clearImageData } = useImageUploader()
 
+const formData = ref(new FormData())
+const { data, error, status, clear, execute } = useFetch(`${apiBase}/projects`, {
+  method: 'POST',
+  body: formData.value,
+  watch: false,
+  immediate: false,
+})
 const handleSubmit = async ({ valid }) => {
+  images.value.forEach(image => {
+    formData.value.append('files', image) // If your backend expects array: use 'files[]'
+  })
+
+  formData.value.append('jsonData', JSON.stringify(projectDto))
+
   if (valid) {
     await execute()
     if (status.value === 'error') {
@@ -327,6 +333,8 @@ const handleSubmit = async ({ valid }) => {
       createFormVisible.value = false
 
       clear()
+      clearImageData()
+      formData.value = new FormData()
     }
   }
 }
