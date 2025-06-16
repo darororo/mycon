@@ -16,24 +16,36 @@
           </div>
           <div class="more-action">
             <OptionIcon />
-            <span class="post-time">{{ post.createdAt || 'HELP' }}</span>
+            <span class="post-time">{{ NewDate || 'HELP' }}</span>
           </div>
         </div>
       </template>
 
       <template #content>
         <p class="post-status">{{ post.description }}</p>
-        <NuxtImg
-          width="400"
-          height="400"
-          v-if="post.photos[0]"
-          :src="
-            thumbnailUrl ||
-            'https://i.pinimg.com/736x/83/6c/a5/836ca5b55fd7af5f4870bfa931b8a082.jpg'
-          "
-          alt="post-image"
-          class="post-image"
-        />
+        <div class="image-container">
+          <Image
+            v-for="(photo, index) in post.photos"
+            :key="photo.id"
+            width="400"
+            height="400"
+            :src="thumbnailUrl(photo)"
+            alt="post-image"
+            class="post-image"
+            preview
+          >
+            <template #original="slotProps">
+              <NuxtImg
+                width="800"
+                height="800"
+                :src="originalUrl(photo.url)"
+                alt="preview"
+                :style="slotProps.style"
+                @click="slotProps.onClick"
+              />
+            </template>
+          </Image>
+        </div>
       </template>
 
       <template #footer>
@@ -126,17 +138,21 @@
 </template>
 
 <script setup>
+import { Image } from 'primevue'
+
+const OldDate = post.createdAt
+const NewDate = new Date(OldDate).toDateString()
 const { post } = defineProps(['post'])
 
 const { fileStorage, apiBase } = usePublicRuntimeConfig()
 
-const thumbnailUrl = computed(() => {
-  if (post.photos[0]) {
-    return `${fileStorage}/${post.photos[0].thumbnail}`
-  }
+const thumbnailUrl = photo => {
+  return photo?.thumbnail ? `${fileStorage}/${photo.thumbnail}` : ''
+}
 
-  return ''
-})
+const originalUrl = imgPath => {
+  return `${fileStorage}/${imgPath}`
+}
 
 const isLiked = ref(false)
 
@@ -329,4 +345,19 @@ hr {
   color: blue;
   transition: color 0.3 ease;
 }
+
+.image-container {
+  display: grid;
+  gap: 4px;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  /* max-height: 400px; */
+}
+
+/* .image-container span:nth-child(3) {
+  grid-column: span 2;
+  grid-row: span 1;
+  width: 100%;
+  height: auto;
+} */
 </style>
