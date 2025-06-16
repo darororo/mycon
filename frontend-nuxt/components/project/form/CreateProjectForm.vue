@@ -293,7 +293,7 @@ const { images, loadImages, removeImage, uploadImages, clearImageData } = useIma
 const formData = ref(new FormData())
 const { data, error, status, clear, execute } = useFetch(`/api/projects`, {
   method: 'POST',
-  body: projectDto,
+  body: formData,
   watch: false,
   immediate: false,
 })
