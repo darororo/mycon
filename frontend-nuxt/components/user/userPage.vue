@@ -18,24 +18,75 @@
         border-radius: 12px;
       "
     >
-      <Avatar
-        image="https://i.pinimg.com/736x/6b/6e/c4/6b6ec4a4725708ef8e300480bf3557c0.jpg"
-        shape="circle"
-        style="height: 100px; width: auto"
-      />
+      <div>
+        <Avatar
+          v-if="avatarUrl"
+          :image="avatarUrl"
+          shape="circle"
+          style="height: 100px; width: 100px"
+        />
+        <div
+          v-else
+          style="
+            height: 100px;
+            width: 100px;
+            border-radius: 50%;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #999;
+            font-family: 'Montserrat', sans-serif;
+          "
+        >
+          No Avatar
+        </div>
+      </div>
 
       <div style="display: flex; flex-direction: row; gap: 18px">
-        <Toast />
-
+        <Toast
+          :dt="{
+            success: {
+              background: '#e6f4ea',
+              detailColor: '#2e7d32',
+              border: {
+                color: '#a5d6a7',
+                width: '1px',
+                style: 'solid',
+              },
+              padding: '12px 16px',
+              shadow: '0 4px 10px rgba(0, 0, 0, 0.05)',
+              borderRadius: '8px',
+              font: {
+                weight: 500,
+              },
+            },
+            warn: {
+              background: '#fff4e5',
+              detailColor: '#9f6000',
+              border: {
+                color: '#ff9800',
+                width: '1px',
+                style: 'solid',
+              },
+              padding: '12px 16px',
+              shadow: '0 4px 10px rgba(255, 152, 0, 0.3)',
+              borderRadius: '8px',
+              font: {
+                weight: 600,
+              },
+            },
+          }"
+        />
         <FileUpload
           ref="fileupload"
           mode="basic"
           name="demo[]"
-          url="/api/upload"
           accept="image/*"
-          :maxFileSize="1000000"
           :auto="true"
-          @upload="onUpload"
+          @select="onUpload"
           style="display: none"
         />
 
@@ -58,7 +109,7 @@
             background-color: #da6c6c;
             color: white;
           "
-          @click="upload"
+          @click="deleteAvatar"
           severity="secondary"
         >
           <Icon
@@ -69,24 +120,26 @@
         </Button>
       </div>
     </div>
+
+    <!-- Form Fields -->
     <div
       style="background-color: none; padding: 20px; display: flex; justify-content: space-between"
     >
       <FloatLabel>
         <InputText
           class="input-text"
-          id="over_label"
+          id="first_name"
           :dt="inputDT"
         />
-        <label for="over_label">First Name</label>
+        <label for="fist_name">First Name</label>
       </FloatLabel>
       <FloatLabel>
         <InputText
           class="input-text"
-          id="over_label"
+          id="last_name"
           :dt="inputDT"
         />
-        <label for="over_label">Last Name</label>
+        <label for="last_name">Last Name</label>
       </FloatLabel>
     </div>
     <div
@@ -95,15 +148,15 @@
       <FloatLabel>
         <InputText
           class="input-text"
-          id="over_label"
+          id="email"
           :dt="inputDT"
         />
-        <label for="over_label">Email</label>
+        <label for="email">Email</label>
       </FloatLabel>
       <FloatLabel>
         <InputMask
           class="input-text"
-          id="over_label"
+          id="phone"
           mask="999-99-9999"
         />
         <label for="over_label">Phone</label>
@@ -111,10 +164,12 @@
     </div>
     <div style="display: flex; padding: 20px; flex-direction: row; gap: 20px">
       <div class="check-box small">
-        <Checkbox
-          v-model="size"
+        <RadioButton
+          v-model="gender"
+          input-id="gender_male"
           name="gender"
-          value="Normal"
+          value="Male"
+          :dt="radioBtnDT"
         />
         <label
           for="gender_male"
@@ -123,10 +178,12 @@
         >
       </div>
       <div class="check-box">
-        <Checkbox
-          v-model="size"
-          name="Normal"
+        <RadioButton
+          v-model="gender"
+          input-id="gender_female"
+          name="gender"
           value="Female"
+          :dt="radioBtnDT"
         />
         <label
           for="gender_female"
@@ -135,31 +192,32 @@
         >
       </div>
     </div>
+
     <div
       style="background-color: none; padding: 20px; display: flex; justify-content: space-between"
     >
       <FloatLabel>
         <InputText
           class="input-text"
-          id="over_label"
+          id="tax_id"
           :dt="inputDT"
         />
-        <label for="over_label">Tax Identification</label>
+        <label for="tax_id">Tax Identification</label>
       </FloatLabel>
       <FloatLabel>
         <InputText
           class="input-text"
-          id="over_label"
+          id="role"
           :dt="inputDT"
         />
-        <label for="over_label">Role</label>
+        <label for="role">Role</label>
       </FloatLabel>
     </div>
     <div style="padding: 20px">
       <FloatLabel>
         <InputText
           class="input-text-address"
-          id="over_label"
+          id="address"
           :dt="inputDT"
         />
         <label for="over_label">Residential Addresss</label>
@@ -177,24 +235,33 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useToast } from 'primevue/usetoast'
-import Checkbox from 'primevue/checkbox'
 
 const toast = useToast()
 const fileupload = ref()
+const avatarUrl = ref('')
+const gender = ref('')
 
-// button upload
 const triggerUpload = () => {
   fileupload.value.choose()
 }
 
-const upload = () => {
-  fileupload.value.upload()
+const onUpload = (event: any) => {
+  const file = event.files[0]
+  const reader = new FileReader()
+  reader.onload = e => {
+    avatarUrl.value = e.target?.result as string
+    toast.add({ severity: 'success', summary: 'Success', detail: 'Image updated', life: 3000 })
+  }
+  if (file) {
+    reader.readAsDataURL(file)
+  }
 }
 
-const onUpload = () => {
-  toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 })
+const deleteAvatar = () => {
+  avatarUrl.value = ''
+  toast.add({ severity: 'warn', summary: 'Deleted', detail: 'Avatar Removed', life: 3000 })
 }
-// allow selecting multiple value
+
 const size = ref<string[]>([])
 
 const inputDT = {
@@ -205,6 +272,18 @@ const inputDT = {
   focus: {
     border: {
       color: 'grey',
+    },
+  },
+}
+
+const radioBtnDT = {
+  checked: {
+    border: {
+      color: '#4da8da',
+    },
+    background: '#4da8da',
+    hover: {
+      background: '#4da8da',
     },
   },
 }
@@ -283,16 +362,5 @@ const inputDT = {
 .label-check-box {
   color: black;
   font-size: 13px;
-}
-::v-deep(.p-checkbox-box) {
-  width: 18px;
-  height: 18px;
-  border-radius: 100%;
-  background-color: red;
-  border: none;
-}
-
-::v-deep(.p-checkbox-icon) {
-  font-size: 10px;
 }
 </style>
