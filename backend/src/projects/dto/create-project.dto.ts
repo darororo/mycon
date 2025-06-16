@@ -18,4 +18,7 @@ export class CreateProjectDto {
 
   @IsNumber()
   latitude: number;
+
+  @IsNumber()
+  userId: number;
 }

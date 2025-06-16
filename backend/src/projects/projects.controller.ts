@@ -54,8 +54,24 @@ export class ProjectsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto) {
-    return this.projectsService.update(+id, updateProjectDto);
+  @UseInterceptors(FilesInterceptor('files'))
+  update(
+    @UploadedFiles(
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: 'image/' })],
+        fileIsRequired: false,
+      }),
+    )
+    files: Express.Multer.File[],
+    @Param('id') id,
+    @Body(
+      'jsonData',
+      new ParseJsonPipe(),
+      new ValidationPipe({ whitelist: true }),
+    )
+    updateProjectDto: UpdateProjectDto,
+  ) {
+    return this.projectsService.update(id, updateProjectDto);
   }
 
   @Delete(':id')

@@ -6,7 +6,7 @@ meta {
 
 post {
   url: {{baseUrl}}/projects
-  body: json
+  body: multipartForm
   auth: inherit
 }
 
@@ -17,6 +17,23 @@ body:json {
     "location": "CAMBODIA",
     "longtitude": 168,
     "latitude": 360,
-    "price": 2400
+    "price": 2400,
+    "userId": 1
   }
+}
+
+body:multipart-form {
+  jsonData: '''
+    {
+      "name": "project 01",
+      "description": "hello world",
+      "location": "CAMBODIA",
+      "longtitude": 168,
+      "latitude": 360,
+      "price": 2400,
+      "userId": 1
+    }
+    
+  '''
+  files: @file(/home/daro/chiyo_star_wars.jpg|/home/daro/fish.jpg)
 }

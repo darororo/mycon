@@ -5,9 +5,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Project } from './entities/project.entity';
 import { ProjectPhoto } from './entities/project-photo.entity';
 import { UploadModule } from 'src/upload/upload.module';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Project, ProjectPhoto]), UploadModule],
+  imports: [
+    TypeOrmModule.forFeature([Project, ProjectPhoto]),
+    UploadModule,
+    UsersModule,
+  ],
   controllers: [ProjectsController],
   providers: [ProjectsService],
 })

@@ -5,8 +5,8 @@ meta {
 }
 
 patch {
-  url: {{baseUrl}}/projects/2
-  body: json
+  url: {{baseUrl}}/projects/5
+  body: multipartForm
   auth: inherit
 }
 
@@ -19,4 +19,17 @@ body:json {
     "latitude": 360,
     "price": 2400
   }
+}
+
+body:multipart-form {
+  jsonData: '''
+    {
+      "name": "project 01",
+      "description": "hello world",
+      "location": "VIETNAM",
+      "longtitude": 168,
+      "latitude": 360,
+      "price": 2400
+    }
+  '''
 }

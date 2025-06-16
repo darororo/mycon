@@ -11,6 +11,7 @@ import { Project } from './entities/project.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProjectPhoto } from './entities/project-photo.entity';
 import { UploadService } from 'src/upload/upload.service';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class ProjectsService {
@@ -20,13 +21,19 @@ export class ProjectsService {
     @InjectRepository(ProjectPhoto)
     private readonly photoRepo: Repository<ProjectPhoto>,
     private readonly uploadService: UploadService,
+    private readonly userService: UsersService,
   ) {}
 
   async create(
     createProjectDto: CreateProjectDto,
     files: Express.Multer.File[],
   ) {
-    const project = this.projectRepository.create(createProjectDto);
+    const { userId, ...projectData } = createProjectDto;
+
+    const user = await this.userService.findOne(userId);
+
+    const project = this.projectRepository.create(projectData);
+    project.client = user;
 
     if (files) {
       const pathPrefix = 'projects/';
@@ -56,7 +63,9 @@ export class ProjectsService {
   }
 
   async findAll(): Promise<Project[]> {
-    return this.projectRepository.find({ relations: { photos: true } });
+    return this.projectRepository.find({
+      relations: { photos: true, client: true },
+    });
   }
 
   async findOne(id: number) {
