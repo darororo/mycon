@@ -102,7 +102,7 @@
         },
       }"
     >
-      <PostPopupCommentSection />
+      <PostPopupCommentSection :post="post" />
 
       <template #footer>
         <div style="width: 100%; display: flex; gap: 10px; align-items: center; margin-top: 10px">
@@ -215,23 +215,16 @@ const commentSubmitBtnPt = {
 </script>
 
 <style scoped>
-.p-card-body {
-  padding: 0;
-}
-
-:deep(.p-card-body) {
-  padding: 10px 20px 0 20px;
+::v-deep(.p-card-body) {
+  padding: 10px 10px 2px;
 }
 
 .post-card {
   height: auto;
   width: 500px;
   background-color: white;
-  box-shadow:
-    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   border-radius: 10px;
-  border: solid 0.5px;
+  border: solid 1px;
   border-color: rgba(153, 153, 153, 0.4);
 }
 
@@ -312,7 +305,7 @@ hr {
 .post-active {
   display: flex;
   justify-content: space-around;
-  padding: 2px 0 2px 0;
+  padding: 8px 0 0;
 }
 
 .p-button {

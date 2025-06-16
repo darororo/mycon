@@ -83,6 +83,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import PostCard from '~/components/post/PostCard.vue'
 import TimelineForm from '~/components/project/form/TimelineForm.vue'
 import SideWorkflow from '~/components/workflow/SideWorkflow.vue'
 
