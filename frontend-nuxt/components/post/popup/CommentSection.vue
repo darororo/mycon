@@ -21,12 +21,12 @@
     <p style="font-size: 13px; color: black; font-weight: 400; margin: 10px 0">
       {{ post.description || 'empty' }}
     </p>
-    <div class="image-container">
+    <div :class="[post.photos.length > 1 ? 'image-container-grid' : 'image-container-default']">
+      <!-- <div style="display: flex; justify-content: center; gap: 8px"> -->
       <Image
         v-for="(photo, index) in post.photos"
         :key="photo.id"
-        width="100%"
-        height="100%"
+        width="400px"
         :src="thumbnailUrl(photo)"
         alt="post-image"
         class="post-image"
@@ -44,6 +44,7 @@
         </template>
       </Image>
     </div>
+    <!-- </div> -->
     <hr style="border-color: #ccc; margin: 0" />
     <div style="display: flex; justify-content: space-around">
       <Button
@@ -154,10 +155,17 @@ const comments = postStore.comments
 .post-image:hover {
   transform: scale(1.02);
 }
-.image-container {
+.image-container-grid {
   display: grid;
   gap: 8px;
   grid-template-columns: auto auto;
   grid-template-rows: auto auto;
+  margin-bottom: 10px;
+}
+
+.image-container-default {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 </style>

@@ -27,8 +27,7 @@
           <Image
             v-for="(photo, index) in post.photos"
             :key="photo.id"
-            width="400"
-            height="400"
+            width="500"
             :src="`/api/storage/${photo.thumbnail}`"
             alt="post-image"
             class="post-image"
@@ -102,7 +101,7 @@
         },
       }"
     >
-      <PostPopupCommentSection :post="post" />
+      <CommentSection :post="post" />
 
       <template #footer>
         <div style="width: 100%; display: flex; gap: 10px; align-items: center; margin-top: 10px">
@@ -139,6 +138,7 @@
 
 <script setup>
 import { Image } from 'primevue'
+import CommentSection from './popup/CommentSection.vue'
 
 const OldDate = post.createdAt
 const NewDate = new Date(OldDate).toDateString()

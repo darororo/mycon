@@ -4,17 +4,18 @@
     <FileUpload
       name="files"
       :url="`${apiBase}/upload`"
-      @upload="onTemplatedUpload($event)"
       :multiple="true"
       accept="image/*"
+      fileLimit="8"
       :maxFileSize="10000 * 1024"
-      @select="onSelectedFiles"
       :dt="{
         background: 'white',
         border: {
           color: '#ccc',
         },
       }"
+      @upload="onTemplatedUpload($event)"
+      @select="onSelectedFiles"
     >
       <template #header="{ chooseCallback }">
         <div class="flex flex-wrap justify-between items-center flex-1 gap-4">
@@ -161,6 +162,9 @@ const onRemoveTemplatingFile = index => {
 }
 
 const onSelectedFiles = event => {
+  if (files.value.length + event.files.length > 8) {
+    return
+  }
   files.value = event.files
   emit('on-file-selected', files.value)
 }

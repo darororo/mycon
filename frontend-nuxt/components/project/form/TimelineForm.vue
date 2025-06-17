@@ -45,7 +45,7 @@
           radius: '20px',
         },
       }"
-      @hide="clearDescription"
+      @hide="clearFormData"
     >
       <Form
         v-slot="$form"
@@ -209,8 +209,9 @@ const handleSubmit = async ({ valid }) => {
   }
 }
 
-function clearDescription() {
+function clearFormData() {
   description.value = ''
+  formData.value = new FormData()
 }
 
 const button = {

@@ -101,6 +101,9 @@
                 >Client Name</label
               >
               <Select
+                :options="clients"
+                option-label="username"
+                option-value="id"
                 name="client"
                 v-model="clientId"
                 id="owner-name"
@@ -272,6 +275,8 @@ const projectDto = reactive<CreateProjectDto>({
   location: '',
   price: 0,
 })
+
+const { data: clients } = await useFetch('/api/users')
 
 const clientId = ref('')
 const { name, description, location, longtitude, latitude, price } = toRefs(projectDto)

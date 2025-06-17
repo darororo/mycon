@@ -3,21 +3,23 @@
     <Card>
       <template #content>
         <div class="card-wrapper">
-          <Image
-            v-if="item.photos.length > 0"
-            width="240"
-            height="240"
-            :src="`/api/storage/${item.photos[0].thumbnail}`"
-            class="project-image h-full max-h-[300px]"
-          />
-
-          <NuxtImg
-            v-else
-            width="240"
-            height="240"
-            src="https://picsum.photos/200/200?grayscale"
-            class="project-image"
-          />
+          <NuxtLink
+            :to="{ path: `${item.id}` }"
+            no-rel
+          >
+            <Image
+              v-if="item.photos.length > 0"
+              width="360"
+              :src="`/api/storage/${item.photos[0].thumbnail}`"
+              image-style="border-radius: 10px"
+            />
+            <img
+              v-else
+              width="360"
+              src="/assets/default-project.jpg"
+              class="project-image"
+            />
+          </NuxtLink>
           <div class="project-details">
             <div class="project-content">
               <div class="project-header">
@@ -69,12 +71,8 @@ let USDollar = new Intl.NumberFormat('en-US', {
 }
 
 .project-image {
-  /* width: 16rem; */
   object-fit: cover;
   border-radius: 10px;
-  /* height: 100%; */
-
-  /* prevent dragging of ghost imag */
   -webkit-user-drag: none;
   -khtml-user-drag: none;
   -moz-user-drag: none;
