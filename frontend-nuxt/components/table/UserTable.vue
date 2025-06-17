@@ -31,8 +31,30 @@
       />
 
       <Column
-        field="name"
-        header="User"
+        field="username"
+        header="Username"
+      >
+        <template #editor="{ data, field }">
+          <InputText
+            v-model="data[field]"
+            fluid
+          />
+        </template>
+      </Column>
+      <Column
+        field="firstName"
+        header="First Name"
+      >
+        <template #editor="{ data, field }">
+          <InputText
+            v-model="data[field]"
+            fluid
+          />
+        </template>
+      </Column>
+      <Column
+        field="lastName"
+        header="Last Name"
       >
         <template #editor="{ data, field }">
           <InputText
@@ -64,7 +86,7 @@
         </template>
         <template #body="slotProps">
           <Tag
-            :value="slotProps.data.gender"
+            :value="capitalizeFirstLetter(slotProps.data.gender)"
             :class="getGenderLabel(slotProps.data.gender)"
           />
         </template>
@@ -92,7 +114,7 @@
         </template>
         <template #body="slotProps">
           <Tag
-            :value="slotProps.data.role"
+            :value="capitalizeFirstLetter(slotProps.data.role)"
             :class="getRoleLabel(slotProps.data.role)"
           />
         </template>
@@ -108,7 +130,17 @@
 </template>
 
 <script setup>
-const { data } = await useFetch('https://68454a66fc51878754dafd01.mockapi.io/users')
+const { users } = storeToRefs(useUserStore())
+const { data, error, execute } = useFetch('/api/users', {
+  method: 'GET',
+})
+
+onMounted(async () => {
+  await execute()
+
+  users.value = data.value
+  console.log(users.value)
+})
 
 console.log(data)
 
@@ -131,10 +163,10 @@ const roles = ref([
 
 const getGenderLabel = gender => {
   switch (gender) {
-    case 'Male':
+    case 'male':
       return 'tag-male'
 
-    case 'Female':
+    case 'female':
       return 'tag-female'
 
     default:
@@ -144,18 +176,22 @@ const getGenderLabel = gender => {
 
 const getRoleLabel = role => {
   switch (role) {
-    case 'Admin':
+    case 'owner':
       return 'tag-admin'
 
-    case 'Manager':
+    case 'manager':
       return 'tag-manager'
 
-    case 'Client':
+    case 'client':
       return 'tag-client'
 
     default:
       return 'tag default'
   }
+}
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
 const table = {
@@ -219,10 +255,10 @@ const table = {
   color: blue;
 }
 
-::v-deep(.p-tag) {
+/* ::v-deep(.p-tag) {
   background-color: #c8e6c9;
   color: #388e3c;
   font-size: 14px;
   font-weight: 500;
-}
+} */
 </style>

@@ -67,7 +67,7 @@
                 >
                 <InputText
                   name="itemName"
-                  v-model="itemName"
+                  v-model="name"
                   :dt="inputTextDt"
                   id="item-name"
                   class="input"
@@ -139,7 +139,6 @@
                   v-model="unit"
                   autocomplete="off"
                   :options="units"
-                  optionLabel="name"
                   placeholder="Choose unit"
                   class="input"
                   :dt="{
@@ -251,40 +250,45 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useToast } from 'primevue/usetoast'
+import type { CreateInventoryDto } from '~/interfaces/inventory.interface'
 
 const toast = useToast()
-const itemName = ref('')
-const category = ref('')
-const unit = ref('')
-const quantity = ref(null)
-const date = ref(null)
+
 const createFormVisible = defineModel()
 
-const units = ref([
-  { name: 'Piece', code: 'PCS' },
-  { name: 'Kilogram', code: 'KG' },
-  { name: 'Meter', code: 'M' },
-  { name: 'Litre', code: 'L' },
-])
-
-const initialValues = ref({
-  itemName: '',
+const inventoryDto = reactive<CreateInventoryDto>({
+  name: '',
   category: '',
-  quantity: '',
+  quantity: 0,
   unit: '',
-  date: '',
+})
+
+const { name, category, quantity, unit } = toRefs(inventoryDto)
+
+const initialValues = ref<CreateInventoryDto>({
+  name: '',
+  category: '',
+  quantity: 0,
+  unit: '',
+})
+
+const { data, error, status, clear, execute } = useFetch(`/api/inventory`, {
+  method: 'POST',
+  body: inventoryDto,
+  watch: false,
+  immediate: false,
 })
 
 const resolver = ({ values }) => {
   const errors = {}
 
-  if (!values.itemName) {
-    errors.itemName = [{ message: 'Item name is required.' }]
-  } else if (values.itemName.length < 3) {
-    errors.itemName = [{ message: 'Item name must be at least 3 characters long.' }]
+  if (!values.name) {
+    errors.name = [{ message: 'Item name is required.' }]
+  } else if (values.name.length < 3) {
+    errors.name = [{ message: 'Item name must be at least 3 characters long.' }]
   }
   if (!values.category) {
     errors.category = [{ message: 'Category name is required.' }]
@@ -297,38 +301,47 @@ const resolver = ({ values }) => {
   if (!values.unit) {
     errors.unit = [{ message: 'Unit is required.' }]
   }
-  if (!values.date) {
-    errors.date = [{ message: 'Date is required.' }]
-  }
   return {
     errors,
   }
 }
 
-const onFormSubmit = ({ valid }) => {
+const { inventory } = storeToRefs(useInventoryStore())
+
+const onFormSubmit = async ({ valid }) => {
   if (valid) {
-    toast.add({
-      severity: 'success',
-      summary: 'Item Created',
-      detail: 'Your inventory item was successfully added.',
-      life: 3000,
-    })
+    await execute()
+    if (status.value === 'error') {
+      toast.add({
+        severity: 'error',
+        summary: 'Inventory failed to create.',
+        detail: error.value,
+        life: 3000,
+      })
+    } else {
+      toast.add({
+        severity: 'success',
+        summary: 'Item Created Succesfully',
+        // detail: 'Your inventory item was successfully added.',
+        detail: data.value,
+        life: 3000,
+      })
+
+      if (data.value) inventory.value.push(data.value)
+    }
     createFormVisible.value = false
-    itemName.value = ''
-    category.value = ''
-    quantity.value = ''
-    unit.value = ''
-    date.value = ''
+    clear()
   }
 }
 
 function clearForm() {
-  itemName.value = ''
+  name.value = ''
   category.value = ''
-  quantity.value = ''
+  quantity.value = 0
   unit.value = ''
-  date.value = ''
 }
+
+const units = ref(['Piece', 'Kilogram', 'Meter', 'Liter'])
 
 const message = {
   text: {
