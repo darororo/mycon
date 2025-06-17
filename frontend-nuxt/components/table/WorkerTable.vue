@@ -17,7 +17,7 @@
         },
       }"
       scrollable
-      show-gridlines=""
+      show-gridlines
       scroll-height="600px"
       v-model:editingRows="editingRows"
       editMode="row"
@@ -27,8 +27,41 @@
       <Column
         field="id"
         header="ID"
-        :pt="{}"
       />
+
+      <Column
+        field="profile"
+        header="Profile"
+      >
+        <template #body="slotProps">
+          <NuxtImg
+            :src="slotProps.data.profile || 'https://picsum.photos/id/237/200/300'"
+            :custom="true"
+            alt="Profile"
+            style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover"
+            v-slot="{ isLoaded, src, imgAttrs }"
+          >
+            <img
+              v-if="isLoaded"
+              v-bind="imgAttrs"
+              :src="src"
+            />
+            <img
+              v-else
+              height="30"
+              width="30"
+              src="../../assets/loading.gif"
+            />
+          </NuxtImg>
+        </template>
+
+        <template #editor="{ data, field }">
+          <InputText
+            v-model="data[field]"
+            placeholder="Image URL"
+          />
+        </template>
+      </Column>
 
       <Column
         field="worker"
@@ -41,6 +74,7 @@
           />
         </template>
       </Column>
+
       <Column
         field="gender"
         header="Gender"
@@ -66,10 +100,11 @@
           <Tag
             :value="slotProps.data.gender"
             :class="getGenderLabel(slotProps.data.gender)"
-            style="font-family: 'Montserrate', sans-serif"
+            style="font-family: 'Montserrat', sans-serif"
           />
         </template>
       </Column>
+
       <Column
         field="role"
         header="Role"
@@ -78,14 +113,35 @@
           <InputText v-model="data[field]" />
         </template>
       </Column>
+
       <Column
         field="project"
         header="Project"
       >
         <template #editor="{ data, field }">
-          <InputText v-model="data[field]" />
+          <MultiSelect
+            v-model="data[field]"
+            display="chip"
+            :options="projects"
+            optionLabel="name"
+            optionValue="code"
+            filter
+            placeholder="Select projects"
+            :maxSelectedLabels="3"
+            class="w-full md:w-50"
+          />
+        </template>
+        <template #body="slotProps">
+          <div class="flex flex-wrap gap-2">
+            <Tag
+              v-for="code in slotProps.data.project"
+              :key="code"
+              :value="getCityName(code)"
+            />
+          </div>
         </template>
       </Column>
+
       <Column
         header="Action"
         :rowEditor="true"
@@ -99,31 +155,54 @@
 <script setup>
 const { data } = await useFetch('https://6817864126a599ae7c3aa650.mockapi.io/api/api_dashboard_ip')
 
-console.log(data)
-
 const editingRows = ref([])
-const onRowEditSave = event => {
-  const { newData, index } = event
-  data.value[index] = newData
-}
+
+const projects = ref([
+  { name: 'Skyline Heaven', code: 'SH' },
+  { name: 'Glasses Blue', code: 'GB' },
+  { name: 'Orange Sweet', code: 'OS' },
+  { name: 'Modern Dream', code: 'MD' },
+])
 
 const genders = ref([
   { label: 'Male', value: 'Male' },
   { label: 'Female', value: 'Female' },
-]);
+])
 
 const getGenderLabel = gender => {
   switch (gender) {
     case 'Male':
       return 'tag-male'
-
     case 'Female':
       return 'tag-female'
-
     default:
-      return 'tag default'
+      return 'tag-default'
   }
 }
+
+const getCityName = code => {
+  const city = projects.value.find(c => c.code === code)
+  return city ? city.name : code
+}
+
+const onRowEditSave = event => {
+  const { newData, index } = event
+  data.value[index] = newData
+}
+
+// 🛠 Normalize "project" field so it's always an array
+data.value = data.value.map(item => {
+  return {
+    ...item,
+    project: Array.isArray(item.project)
+      ? item.project
+      : typeof item.project === 'string' && item.project.includes(',')
+        ? item.project.split(',').map(p => p.trim())
+        : item.project
+          ? [item.project]
+          : [],
+  }
+})
 
 const table = {
   header: {
@@ -174,5 +253,11 @@ const table = {
 ::v-deep(.p-inputtext) {
   padding: 6px 20px;
   font-size: 14px;
+}
+
+::v-deep(.p-tag) {
+  background-color: #c8e6c9;
+  color: #388e3c;
+  font-weight: 500;
 }
 </style>

@@ -66,7 +66,6 @@
           <Tag
             :value="slotProps.data.gender"
             :class="getGenderLabel(slotProps.data.gender)"
-            style="font-family: 'Montserrate', sans-serif"
           />
         </template>
       </Column>
@@ -95,16 +94,7 @@
           <Tag
             :value="slotProps.data.role"
             :class="getRoleLabel(slotProps.data.role)"
-            style="font-family: 'Montserrate', sans-serif"
           />
-        </template>
-      </Column>
-      <Column
-        field="project"
-        header="Project"
-      >
-        <template #editor="{ data, field }">
-          <InputText v-model="data[field]" />
         </template>
       </Column>
       <Column
@@ -118,7 +108,6 @@
 </template>
 
 <script setup>
-
 const { data } = await useFetch('https://68454a66fc51878754dafd01.mockapi.io/users')
 
 console.log(data)
@@ -131,14 +120,14 @@ const onRowEditSave = event => {
 
 const genders = ref([
   { label: 'Male', value: 'Male' },
-  { label: 'Female', value: 'Female' }, 
-]);
+  { label: 'Female', value: 'Female' },
+])
 
 const roles = ref([
   { label: 'Admin', value: 'Admin' },
   { label: 'Manager', value: 'Manager' },
-  { label: 'Client', value: 'Client' }  
-]);
+  { label: 'Client', value: 'Client' },
+])
 
 const getGenderLabel = gender => {
   switch (gender) {
@@ -147,12 +136,6 @@ const getGenderLabel = gender => {
 
     case 'Female':
       return 'tag-female'
-
-    case 'male':
-      return 'tag-male-small'
-
-    case 'female':
-      return 'tag-female-small'
 
     default:
       return 'tag default'
@@ -221,64 +204,25 @@ const table = {
   font-weight: 600;
 }
 
-.table-container::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-.table-container::-webkit-scrollbar-track {
-  background: #f0f0f0;
-  border-radius: 8px;
-}
-
-.table-container::-webkit-scrollbar-thumb {
-  background-color: #cbd5e1;
-  border-radius: 8px;
-  border: 2px solid #f0f0f0;
-}
-
-.table-container::-webkit-scrollbar-thumb:hover {
-  background-color: #94a3b8;
-}
-
-.table-container {
-  scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 #f0f0f0;
-}
-
 ::v-deep(.p-inputtext) {
   padding: 6px 20px;
   font-size: 14px;
 }
 
 .tag-admin {
-  /* background-color: rgb(190, 255, 255);
-  color: rgb(0, 180, 180); */
   background-color: rgb(255, 225, 225);
   color: red;
 }
 
 .tag-manager {
-  /* background-color: rgb(255, 220, 155);
-  color: orange; */
   background-color: rgb(225, 225, 255);
   color: blue;
 }
 
-/* .tag-male {
-  background-color: rgb(190, 190, 255);
-  color: blue;
-}
-
-.tag-female {
-  background-color: rgb(255, 190, 190);
-  color: red;
-} */
-
-.tag-male, .tag-female, .tag-male-small, .tag-female-small {
-  background-color: white;
-  color: black;
-  font-weight: 400;
-  font-family: 'Montserrat', sans-serif;
+::v-deep(.p-tag) {
+  background-color: #c8e6c9;
+  color: #388e3c;
+  font-size: 14px;
+  font-weight: 500;
 }
 </style>

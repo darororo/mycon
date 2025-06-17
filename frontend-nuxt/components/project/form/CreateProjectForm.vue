@@ -100,14 +100,31 @@
                 class="tag"
                 >Client Name</label
               >
-              <InputText
+              <Select
                 name="client"
                 v-model="clientId"
-                :dt="inputTextDt"
                 id="owner-name"
-                class="input"
                 autocomplete="off"
                 placeholder="Client name"
+                class="w-full md:w-80"
+                style="font-size: 14px"
+                :dt="{
+                  background: 'white',
+                  color: 'black',
+                  border: {
+                    color: '#ccc',
+                  },
+                  hover: {
+                    border: {
+                      color: '#ccc',
+                    },
+                  },
+                  focus: {
+                    border: {
+                      color: '#ccc',
+                    },
+                  },
+                }"
               />
               <Message
                 v-if="$form.client?.invalid"
@@ -235,10 +252,16 @@
 import type { CreateProjectDto } from '~/interfaces/project.interface'
 import UploadImage from './UploadImage.vue'
 import { Toast } from 'primevue'
-
 import { useImageUploader } from '@/composables/useImageUploader'
 
 const createFormVisible = defineModel<boolean>()
+
+const projects = ref([
+  { name: 'James Knight', code: 'JK' },
+  { name: 'Grace Bell', code: 'GB' },
+  { name: 'Olivia Smith', code: 'OS' },
+  { name: 'Michael Dawson', code: 'MD' },
+])
 
 const projectDto = reactive<CreateProjectDto>({
   name: '',
@@ -316,11 +339,6 @@ const handleSubmit = async ({ valid }) => {
         life: 3000,
       })
     } else {
-      // if (images.value.length > 0) {
-      //   await uploadImages()
-      //   // await execute()
-      // }
-
       toast.add({
         severity: 'success',
         summary: 'Creation completed successfully.',
