@@ -1,6 +1,6 @@
 export interface CreateProjectDto {
   name: string
-  client: string
+  clientId?: number
   description: string
   longtitude: number
   latitude: number

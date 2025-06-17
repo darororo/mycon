@@ -20,5 +20,5 @@ export class CreateProjectDto {
   latitude: number;
 
   @IsNumber()
-  userId: number;
+  clientId: number;
 }

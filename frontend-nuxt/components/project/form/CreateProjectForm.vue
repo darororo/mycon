@@ -102,7 +102,7 @@
               >
               <InputText
                 name="client"
-                v-model="client"
+                v-model="clientId"
                 :dt="inputTextDt"
                 id="owner-name"
                 class="input"
@@ -242,7 +242,7 @@ const createFormVisible = defineModel<boolean>()
 
 const projectDto = reactive<CreateProjectDto>({
   name: '',
-  client: '',
+  clientId: undefined,
   description: '',
   longtitude: 0,
   latitude: 0,
@@ -250,7 +250,8 @@ const projectDto = reactive<CreateProjectDto>({
   price: 0,
 })
 
-const { name, client, description, location, longtitude, latitude, price } = toRefs(projectDto)
+const clientId = ref('')
+const { name, description, location, longtitude, latitude, price } = toRefs(projectDto)
 
 const toast = useToast()
 
@@ -262,8 +263,8 @@ const resolver = ({ values }) => {
   } else if (values.name.length < 3) {
     errors.name = [{ message: 'Project name must be at least 3 characters long.' }]
   }
-  if (!values.client) {
-    errors.client = [{ message: 'Client name is required.' }]
+  if (!values.clientId) {
+    errors.clientId = [{ message: 'Client name is required.' }]
   }
   if (!values.price) {
     errors.price = [{ message: 'Price is required.' }]
@@ -280,7 +281,7 @@ const resolver = ({ values }) => {
 }
 const initialValues = ref<CreateProjectDto>({
   name: '',
-  client: '',
+  clientId: undefined,
   description: '',
   longtitude: 0,
   latitude: 0,
@@ -302,6 +303,7 @@ const handleSubmit = async ({ valid }) => {
     formData.value.append('files', image) // If your backend expects array: use 'files[]'
   })
 
+  projectDto.clientId = parseInt(clientId.value)
   formData.value.append('jsonData', JSON.stringify(projectDto))
 
   if (valid) {
@@ -338,7 +340,7 @@ const handleSubmit = async ({ valid }) => {
 
 function clearProjectInput() {
   name.value = ''
-  client.value = ''
+  clientId.value = ''
   location.value = ''
   description.value = ''
   price.value = 0

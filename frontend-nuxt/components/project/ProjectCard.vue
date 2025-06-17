@@ -30,7 +30,9 @@
               <p>{{ item.description }}</p>
             </div>
             <div class="project-footer">
-              <label class="project-author">{{ item.owner }}</label>
+              <label class="project-author">{{
+                item.client ? item.client.firstName + ' ' + item.client.lastName : 'Anon'
+              }}</label>
               <label class="project-price">{{ USDollar.format(item.price) }}</label>
             </div>
           </div>

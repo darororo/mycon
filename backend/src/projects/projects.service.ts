@@ -28,12 +28,12 @@ export class ProjectsService {
     createProjectDto: CreateProjectDto,
     files: Express.Multer.File[],
   ) {
-    const { userId, ...projectData } = createProjectDto;
+    const { clientId, ...projectData } = createProjectDto;
 
-    const user = await this.userService.findOne(userId);
+    const client = await this.userService.findOne(clientId);
 
     const project = this.projectRepository.create(projectData);
-    project.client = user;
+    project.client = client;
 
     if (files) {
       const pathPrefix = 'projects/';
