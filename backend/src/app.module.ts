@@ -18,7 +18,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { CommentsModule } from './comments/comments.module';
 import { PostsModule } from './posts/posts.module';
 import { InventoryModule } from './inventory/inventory.module';
-
+import { SeedModule } from './seed/seed.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -73,6 +73,7 @@ import { InventoryModule } from './inventory/inventory.module';
     CommentsModule,
     PostsModule,
     InventoryModule,
+    SeedModule,
   ],
   controllers: [AppController],
   providers: [
