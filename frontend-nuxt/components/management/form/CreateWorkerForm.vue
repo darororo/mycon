@@ -116,44 +116,8 @@
                 :options="genders"
                 optionLabel="name"
                 placeholder="Select gender"
-                class="input"
-                :dt="{
-                  overlay: {
-                    background: 'white',
-                    border: {
-                      color: '#ccc',
-                    },
-                  },
-                  focus: {
-                    border: {
-                      color: '#ccc',
-                    },
-                  },
-                  hover: {
-                    border: {
-                      color: '#ccc',
-                    },
-                  },
-                  border: {
-                    color: '#ccc',
-                  },
-                  color: 'black',
-                  option: {
-                    background: 'white',
-                    color: 'black',
-                    selected: {
-                      focus: {
-                        background: '#ccc',
-                        color: 'white',
-                      },
-                      background: '#ccc',
-                    },
-                    focus: {
-                      background: 'none',
-                      color: 'black',
-                    },
-                  },
-                }"
+                class="input select"
+                :dt="selectDt"
               />
               <Message
                 v-if="$form.gender?.invalid"
@@ -176,14 +140,15 @@
                 class="tag"
                 >Role</label
               >
-              <InputText
+              <Select
                 name="role"
                 v-model="role"
-                :dt="inputTextDt"
-                id="role"
-                class="input"
                 autocomplete="off"
-                placeholder="Enter role"
+                :options="roles"
+                optionLabel="name"
+                placeholder="Select role"
+                class="input select"
+                :dt="selectDt"
               />
               <Message
                 v-if="$form.role?.invalid"
@@ -270,6 +235,11 @@ const gender = ref('')
 const hourlyRate = ref('')
 const createFormVisible = defineModel()
 
+const roles = ref([
+  { name: 'Normal', code: 'N' },
+  { name: 'Senior', code: 'S' },
+])
+
 const initialValues = ref({
   firstname: '',
   lastname: '',
@@ -351,18 +321,56 @@ const inputTextDt = {
     },
   },
 }
-const datePickerDt = {
-  header: { background: 'white', color: 'black' },
-  week: { day: { color: 'black' } },
-  select: {
-    month: { color: 'black' },
-    year: { color: 'black' },
+// const datePickerDt = {
+//   header: { background: 'white', color: 'black' },
+//   week: { day: { color: 'black' } },
+//   select: {
+//     month: { color: 'black' },
+//     year: { color: 'black' },
+//   },
+//   date: {
+//     color: 'black',
+//     selected: { background: '#333', color: 'white' },
+//   },
+//   panel: { background: 'white', color: 'black' },
+// }
+
+const selectDt = {
+  overlay: {
+    background: 'white',
+    border: {
+      color: '#ccc',
+    },
   },
-  date: {
+  focus: {
+    border: {
+      color: '#ccc',
+    },
+  },
+  hover: {
+    border: {
+      color: '#ccc',
+    },
+  },
+  border: {
+    color: '#ccc',
+  },
+  color: 'black',
+  option: {
+    background: 'white',
     color: 'black',
-    selected: { background: '#333', color: 'white' },
+    selected: {
+      focus: {
+        background: '#ccc',
+        color: 'white',
+      },
+      background: '#ccc',
+    },
+    focus: {
+      background: 'none',
+      color: 'black',
+    },
   },
-  panel: { background: 'white', color: 'black' },
 }
 </script>
 
@@ -431,5 +439,11 @@ const datePickerDt = {
   font-weight: 600;
   font-size: 14px;
   color: #333;
+}
+
+.select {
+  display: flex;
+  align-items: center;
+  height: 44px;
 }
 </style>
