@@ -212,6 +212,6 @@ defineProps({
   transform: rotate(90deg);
   border: 1px solid rgb(204, 204, 204);
   border-radius: 10px;
-  left: 36px;
+  left: 58px;
 }
 </style>

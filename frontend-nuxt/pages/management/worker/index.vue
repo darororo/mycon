@@ -59,9 +59,11 @@
 </template>
 
 <script setup>
+import { useRoute } from 'vue-router'
 import CreateWorkerForm from '~/components/management/form/CreateWorkerForm.vue'
 import WorkerTable from '~/components/table/WorkerTable.vue'
 
+const route = useRoute()
 const createFormVisible = ref(false)
 const select = {
   background: 'white',
