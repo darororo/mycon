@@ -59,48 +59,48 @@
           <div class="small-container">
             <div class="small-fill">
               <label
-                for="firstname"
+                for="firstName"
                 class="tag"
                 >First Name</label
               >
               <InputText
-                name="firstname"
-                v-model="firstname"
-                id="firstname"
+                name="firstName"
+                v-model="firstName"
+                id="firstName"
                 class="input"
                 autocomplete="off"
                 placeholder="Enter First Name"
                 :dt="inputTextDt"
               />
               <Message
-                v-if="$form.firstname?.invalid"
+                v-if="$form.firstName?.invalid"
                 severity="error"
                 :dt="message"
               >
-                {{ $form.firstname.error.message }}
+                {{ $form.firstName.error.message }}
               </Message>
             </div>
             <div class="small-fill">
               <label
-                for="lastname"
+                for="lastName"
                 class="tag"
                 >Last Name</label
               >
               <InputText
-                name="lastname"
-                v-model="firstname"
-                id="lastname"
+                name="lastName"
+                v-model="lastName"
+                id="lastName"
                 class="input"
                 autocomplete="off"
-                placeholder="Enter First Last"
+                placeholder="Enter Last Last"
                 :dt="inputTextDt"
               />
               <Message
-                v-if="$form.lastname?.invalid"
+                v-if="$form.lastName?.invalid"
                 severity="error"
                 :dt="message"
               >
-                {{ $form.lastname.error.message }}
+                {{ $form.lastName.error.message }}
               </Message>
             </div>
             <div class="small-fill">
@@ -114,7 +114,6 @@
                 v-model="gender"
                 autocomplete="off"
                 :options="genders"
-                optionLabel="name"
                 placeholder="Select gender"
                 class="input select"
                 :dt="selectDt"
@@ -145,7 +144,6 @@
                 v-model="role"
                 autocomplete="off"
                 :options="roles"
-                optionLabel="name"
                 placeholder="Select role"
                 class="input select"
                 :dt="selectDt"
@@ -160,17 +158,17 @@
             </div>
             <div class="small-fill">
               <label
-                for="hourly-rate"
+                for="daily-rate"
                 class="tag"
-                >Hourly Rate</label
+                >Daily Rate</label
               >
               <InputNumber
-                name="hourlyRate"
-                v-model="hourlyRate"
-                placeholder="Enter hourly rate"
+                name="dailyRate"
+                v-model="dailyRate"
+                placeholder="Enter daily rate"
                 class="input"
                 autocomplete="off"
-                id="hourly-rate"
+                id="daily-rate"
                 :dt="inputTextDt"
                 inputId="currency-us"
                 mode="currency"
@@ -178,11 +176,11 @@
                 locale="en-US"
                 fluid
               /><Message
-                v-if="$form.hourlyRate?.invalid"
+                v-if="$form.dailyRate?.invalid"
                 severity="error"
                 :dt="message"
               >
-                {{ $form.hourlyRate.error.message }}
+                {{ $form.dailyRate.error.message }}
               </Message>
             </div>
           </div>
@@ -222,44 +220,38 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useToast } from 'primevue/usetoast'
 import UploadImage from '~/components/project/form/UploadImage.vue'
+import type { WorkerDto } from '~/interfaces/worker.interface'
 
 const toast = useToast()
-const firstname = ref('')
-const lastname = ref('')
-const role = ref('')
-const gender = ref('')
-const hourlyRate = ref('')
 const createFormVisible = defineModel()
 
-const roles = ref([
-  { name: 'Normal', code: 'N' },
-  { name: 'Senior', code: 'S' },
-])
+const roles = ref(['Normal', 'Senior'])
+const genders = ref(['Male', 'Female'])
 
 const initialValues = ref({
-  firstname: '',
-  lastname: '',
+  firstName: '',
+  lastName: '',
   gender: '',
   role: '',
-  hourlyRate: '',
+  dailyRate: 0,
 })
 
 const resolver = ({ values }) => {
   const errors = {}
 
-  if (!values.firstname) {
-    errors.firstname = [{ message: 'firstname is required.' }]
-  } else if (values.firstname.length < 3) {
-    errors.firstname = [{ message: 'firstname must be at least 3 characters long.' }]
+  if (!values.firstName) {
+    errors.firstName = [{ message: 'First name is required.' }]
+  } else if (values.firstName.length < 3) {
+    errors.firstName = [{ message: 'First name must be at least 3 characters long.' }]
   }
-  if (!values.lastname) {
-    errors.lastname = [{ message: 'lastname is required.' }]
-  } else if (values.lastname.length < 3) {
-    errors.lastname = [{ message: 'lastname must be at least 3 characters long.' }]
+  if (!values.lastName) {
+    errors.lastName = [{ message: 'Last name is required.' }]
+  } else if (values.lastName.length < 3) {
+    errors.lastName = [{ message: 'Last name must be at least 3 characters long.' }]
   }
   if (!values.role) {
     errors.role = [{ message: 'Role is required.' }]
@@ -269,37 +261,69 @@ const resolver = ({ values }) => {
   if (!values.gender) {
     errors.gender = [{ message: 'Gender is required.' }]
   }
-  if (!values.hourlyRate) {
-    errors.hourlyRate = [{ message: 'Hourly rate is required.' }]
-  } else if (parseFloat(values.hourlyRate) < 100) {
-    errors.hourlyRate = [{ message: 'Hourly rate must be at least $100.' }]
+  if (!values.dailyRate) {
+    errors.dailyRate = [{ message: 'Hourly rate is required.' }]
+  } else if (parseFloat(values.dailyRate) < 100) {
+    errors.dailyRate = [{ message: 'Hourly rate must be at least $100.' }]
   }
   return {
     errors,
   }
 }
 
-const onFormSubmit = ({ valid }) => {
+const workerDto = reactive<WorkerDto>({
+  firstName: '',
+  lastName: '',
+  gender: '',
+  dailyRate: 0,
+  role: '',
+})
+
+const { firstName, lastName, gender, dailyRate, role } = toRefs(workerDto)
+const { execute, clear, data, error, status } = useFetch('/api/workers', {
+  method: 'POST',
+  body: workerDto,
+  immediate: false,
+  watch: false,
+})
+
+const { workers } = storeToRefs(useWorkerStore())
+
+const onFormSubmit = async ({ valid }) => {
   if (valid) {
-    toast.add({
-      severity: 'success',
-      summary: 'Worker Created.',
-      detail: `Successfully added worker ${firstname.value}`,
-      life: 3000,
-    })
+    await execute()
+
+    if (status.value === 'error') {
+      toast.add({
+        severity: 'error',
+        summary: 'Project Failed to Create',
+        detail: error.value,
+        life: 3000,
+      })
+    } else {
+      toast.add({
+        severity: 'success',
+        summary: 'Creation completed successfully.',
+        // detail: 'Your project has been created.',
+        detail: data.value,
+        life: 3000,
+      })
+
+      if (data.value) workers.value.push(data.value)
+    }
+
     createFormVisible.value = false
-    firstname.value = ''
-    role.value = ''
-    gender.value = ''
-    hourlyRate.value = ''
+    clear()
+    clearForm()
   }
 }
+
 function clearForm() {
-  firstname.value = ''
-  lastname.value = ''
+  firstName.value = ''
+  lastName.value = ''
   gender.value = ''
   role.value = ''
-  hourlyRate.value = ''
+  dailyRate.value = 0
 }
 
 const message = {
@@ -310,10 +334,7 @@ const message = {
     },
   },
 }
-const genders = ref([
-  { name: 'Male', code: 'M' },
-  { name: 'Female', code: 'F' },
-])
+
 const inputTextDt = {
   focus: {
     border: {

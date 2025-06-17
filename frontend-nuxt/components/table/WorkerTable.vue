@@ -2,7 +2,7 @@
   <!-- Table Card -->
   <div class="table-container card">
     <DataTable
-      :value="data"
+      :value="workers"
       table-style="min-width: 100%;"
       :dt="table"
       :pt="{
@@ -64,8 +64,20 @@
       </Column>
 
       <Column
-        field="worker"
-        header="Worker"
+        field="firstName"
+        header="First Name"
+      >
+        <template #editor="{ data, field }">
+          <InputText
+            v-model="data[field]"
+            fluid
+          />
+        </template>
+      </Column>
+
+      <Column
+        field="lastName"
+        header="Last Name"
       >
         <template #editor="{ data, field }">
           <InputText
@@ -153,7 +165,17 @@
 </template>
 
 <script setup>
-const { data } = await useFetch('https://6817864126a599ae7c3aa650.mockapi.io/api/api_dashboard_ip')
+const { workers } = storeToRefs(useWorkerStore())
+const { data, error, execute } = useFetch('/api/workers', {
+  method: 'GET',
+})
+
+onMounted(async () => {
+  await execute()
+
+  workers.value = data.value
+  console.log(workers.value)
+})
 
 const editingRows = ref([])
 
@@ -191,18 +213,18 @@ const onRowEditSave = event => {
 }
 
 // 🛠 Normalize "project" field so it's always an array
-data.value = data.value.map(item => {
-  return {
-    ...item,
-    project: Array.isArray(item.project)
-      ? item.project
-      : typeof item.project === 'string' && item.project.includes(',')
-        ? item.project.split(',').map(p => p.trim())
-        : item.project
-          ? [item.project]
-          : [],
-  }
-})
+// data.value = data.value.map(item => {
+//   return {
+//     ...item,
+//     project: Array.isArray(item.project)
+//       ? item.project
+//       : typeof item.project === 'string' && item.project.includes(',')
+//         ? item.project.split(',').map(p => p.trim())
+//         : item.project
+//           ? [item.project]
+//           : [],
+//   }
+// })
 
 const table = {
   header: {
