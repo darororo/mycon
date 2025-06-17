@@ -59,25 +59,48 @@
           <div class="small-container">
             <div class="small-fill">
               <label
-                for="username"
+                for="firstname"
                 class="tag"
-                >Username</label
+                >First Name</label
               >
               <InputText
-                name="username"
-                v-model="username"
-                id="username"
+                name="firstname"
+                v-model="firstname"
+                id="firstname"
                 class="input"
                 autocomplete="off"
-                placeholder="Enter username"
+                placeholder="Enter First Name"
                 :dt="inputTextDt"
               />
               <Message
-                v-if="$form.username?.invalid"
+                v-if="$form.firstname?.invalid"
                 severity="error"
                 :dt="message"
               >
-                {{ $form.username.error.message }}
+                {{ $form.firstname.error.message }}
+              </Message>
+            </div>
+            <div class="small-fill">
+              <label
+                for="lastname"
+                class="tag"
+                >Last Name</label
+              >
+              <InputText
+                name="lastname"
+                v-model="firstname"
+                id="lastname"
+                class="input"
+                autocomplete="off"
+                placeholder="Enter First Last"
+                :dt="inputTextDt"
+              />
+              <Message
+                v-if="$form.lastname?.invalid"
+                severity="error"
+                :dt="message"
+              >
+                {{ $form.lastname.error.message }}
               </Message>
             </div>
             <div class="small-fill">
@@ -172,29 +195,6 @@
             </div>
             <div class="small-fill">
               <label
-                for="project-field"
-                class="tag"
-                >Project Field</label
-              >
-              <InputText
-                name="projectName"
-                v-model="projectName"
-                :dt="inputTextDt"
-                id="project-field"
-                class="input"
-                autocomplete="off"
-                placeholder="Enter project name"
-              />
-              <Message
-                v-if="$form.projectName?.invalid"
-                severity="error"
-                :dt="message"
-              >
-                {{ $form.projectName.error.message }}
-              </Message>
-            </div>
-            <div class="small-fill">
-              <label
                 for="hourly-rate"
                 class="tag"
                 >Hourly Rate</label
@@ -218,30 +218,6 @@
                 :dt="message"
               >
                 {{ $form.hourlyRate.error.message }}
-              </Message>
-            </div>
-            <div class="small-fill">
-              <label
-                for="date"
-                class="tag"
-                >Date</label
-              >
-              <DatePicker
-                name="date"
-                v-model="date"
-                id="date"
-                placeholder="Select date"
-                showIcon
-                iconDisplay="input"
-                style="width: 100%"
-                :dt="datePickerDt"
-              />
-              <Message
-                v-if="$form.date?.invalid"
-                severity="error"
-                :dt="message"
-              >
-                {{ $form.date.error.message }}
               </Message>
             </div>
           </div>
@@ -287,30 +263,33 @@ import { useToast } from 'primevue/usetoast'
 import UploadImage from '~/components/project/form/UploadImage.vue'
 
 const toast = useToast()
-const username = ref('')
+const firstname = ref('')
+const lastname = ref('')
 const role = ref('')
 const gender = ref('')
-const projectName = ref('')
 const hourlyRate = ref('')
-const date = ref('')
 const createFormVisible = defineModel()
 
 const initialValues = ref({
-  username: '',
+  firstname: '',
+  lastname: '',
   gender: '',
   role: '',
-  projectName: '',
   hourlyRate: '',
-  date: '',
 })
 
 const resolver = ({ values }) => {
   const errors = {}
 
-  if (!values.username) {
-    errors.username = [{ message: 'Username is required.' }]
-  } else if (values.username.length < 3) {
-    errors.username = [{ message: 'Username must be at least 3 characters long.' }]
+  if (!values.firstname) {
+    errors.firstname = [{ message: 'firstname is required.' }]
+  } else if (values.firstname.length < 3) {
+    errors.firstname = [{ message: 'firstname must be at least 3 characters long.' }]
+  }
+  if (!values.lastname) {
+    errors.lastname = [{ message: 'lastname is required.' }]
+  } else if (values.lastname.length < 3) {
+    errors.lastname = [{ message: 'lastname must be at least 3 characters long.' }]
   }
   if (!values.role) {
     errors.role = [{ message: 'Role is required.' }]
@@ -320,18 +299,10 @@ const resolver = ({ values }) => {
   if (!values.gender) {
     errors.gender = [{ message: 'Gender is required.' }]
   }
-  if (!values.projectName) {
-    errors.projectName = [{ message: 'Project name is required.' }]
-  } else if (values.projectName.length < 3) {
-    errors.projectName = [{ message: 'Project name must be at least 3 characterers long.' }]
-  }
   if (!values.hourlyRate) {
     errors.hourlyRate = [{ message: 'Hourly rate is required.' }]
   } else if (parseFloat(values.hourlyRate) < 100) {
     errors.hourlyRate = [{ message: 'Hourly rate must be at least $100.' }]
-  }
-  if (!values.date) {
-    errors.date = [{ message: 'Date rate is required.' }]
   }
   return {
     errors,
@@ -343,25 +314,22 @@ const onFormSubmit = ({ valid }) => {
     toast.add({
       severity: 'success',
       summary: 'Worker Created.',
-      detail: `Successfully added user ${username.value}`,
+      detail: `Successfully added worker ${firstname.value}`,
       life: 3000,
     })
     createFormVisible.value = false
-    username.value = ''
+    firstname.value = ''
     role.value = ''
     gender.value = ''
-    projectName.value = ''
     hourlyRate.value = ''
-    date.value = ''
   }
 }
 function clearForm() {
-  username.value = ''
+  firstname.value = ''
+  lastname.value = ''
   gender.value = ''
   role.value = ''
-  projectName.value = ''
   hourlyRate.value = ''
-  date.value = ''
 }
 
 const message = {
@@ -375,7 +343,6 @@ const message = {
 const genders = ref([
   { name: 'Male', code: 'M' },
   { name: 'Female', code: 'F' },
-  { name: 'Other', code: 'O' },
 ])
 const inputTextDt = {
   focus: {
