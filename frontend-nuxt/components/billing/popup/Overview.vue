@@ -9,7 +9,7 @@
     <div class="timeline-section">
       <label class="section-title">Project Status:</label>
       <div class="status-card">
-        <Timeline
+        <BillingTimeline
           :value="status"
           class="custom-timeline"
           :dt="timelineDt"
@@ -50,7 +50,7 @@
               />
             </div>
           </template>
-        </Timeline>
+        </BillingTimeline>
       </div>
     </div>
   </div>
@@ -144,8 +144,9 @@
   >
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
+import type BillingTimeline from '~/components/timeline/BillingTimeline.vue'
 
 const { data } = await useFetch('http://683aca6443bb370a8673bfa5.mockapi.io/popup')
 

@@ -124,20 +124,20 @@ const select = {
 }
 const button = {
   primary: {
-    background: '#222831',
+    background: '#203a43',
     color: 'white',
     border: {
       color: 'none',
     },
     hover: {
-      background: '#222831',
+      background: '#203a43',
       color: 'white',
       border: {
         color: 'none',
       },
     },
     active: {
-      background: '#222831',
+      background: '#203a43',
       color: 'white',
       border: {
         color: 'none',

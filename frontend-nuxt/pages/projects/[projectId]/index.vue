@@ -1,5 +1,8 @@
 <template>
-  <div class="card max-w-[1280px]">
+  <div
+    class="card max-w-[1280px]"
+    style="margin: 0 0 16px"
+  >
     <Tabs
       :dt="tabs"
       value="0"
@@ -32,9 +35,7 @@
           </div>
         </TabPanel>
         <TabPanel value="0">
-          <ProjectGallery />
-          <ProjectOveriewHeader />
-          <ProjectOverviewContent />
+          <OverviewSection :project="project" />
         </TabPanel>
       </TabPanels>
     </Tabs>
@@ -43,8 +44,13 @@
 
 <script setup>
 import { ref } from 'vue'
-import ProjectGallery from '~/components/project/ProjectGallery.vue'
+import OverviewSection from '~/components/project/OverviewSection.vue'
 import TimelineCard from '~/components/project/timeline/TimelineCard.vue'
+
+const routes = useRoute()
+
+const { data: project } = await useFetch(`/api/projects/${routes.params.projectId}`)
+
 const tabs = {
   tabpanel: {
     background: 'transparent',
@@ -70,7 +76,7 @@ const tabs = {
       border: {
         color: '#ccc',
       },
-      background: '#222831',
+      background: '#203a43',
     },
     border: {
       color: '#ccc',

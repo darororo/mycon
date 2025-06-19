@@ -4,21 +4,21 @@
       <template #header>
         <div class="header-container">
           <div class="header-sec">
-            <label class="project-name">{{ projectName }}</label>
+            <label class="project-name">{{ project.name }}</label>
             <div class="status-badge">
               <span>{{ status }}</span>
             </div>
           </div>
-          <label class="price">$40000</label>
+          <label class="price">{{ formatUSD.format(project.price) }}</label>
         </div>
       </template>
 
       <div class="footer-sec">
         <label class="location">
-          <span>{{ location }}</span>
+          <span>{{ project.location }}</span>
         </label>
         <label class="user">
-          {{ userName }} <span>{{ role }}</span>
+          {{ project.client.firstName + ' ' + project.client.lastName }} <span> Client </span>
         </label>
       </div>
 
@@ -43,6 +43,7 @@ const panel = {
 }
 
 defineProps({
+  project: { type: Object },
   projectName: {
     type: String,
     default: 'Skyline Tower Construction',

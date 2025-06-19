@@ -86,13 +86,13 @@
         </div>
       </ScrollPanel>
     </div>
-
     <CreateProjectForm v-model="createFormVisible" />
   </div>
 </template>
 
 <script setup>
 import CreateProjectForm from '~/components/project/form/CreateProjectForm.vue'
+import ProjectCard from '~/components/project/ProjectCard.vue'
 
 const createFormVisible = ref(false)
 
@@ -131,20 +131,20 @@ const select = {
 }
 const button = {
   primary: {
-    background: '#222831',
+    background: '#203a43',
     color: 'white',
     border: {
       color: 'none',
     },
     hover: {
-      background: '#222831',
+      background: '#203a43',
       color: 'white',
       border: {
         color: 'none',
       },
     },
     active: {
-      background: '#222831',
+      background: '#203a43',
       color: 'white',
       border: {
         color: 'none',

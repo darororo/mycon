@@ -10,9 +10,7 @@
           padding: 10px;
           border-radius: 10px;
           border: 1px solid grey;
-          background: #485563;
-          background: -webkit-linear-gradient(to right, #29323c, #485563);
-          background: linear-gradient(to right, #29323c, #485563);
+          background: #203a43;
           margin-bottom: 20px;
         "
       >

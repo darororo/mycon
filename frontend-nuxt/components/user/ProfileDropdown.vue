@@ -171,7 +171,7 @@ const actions = [
 }
 
 .blue-screen {
-  background-color: #333;
+  background-color: #203a43;
   border-radius: 20px;
 }
 
