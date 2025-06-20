@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia'
+import type { IComment } from '~/interfaces/comment.interface'
+import type { TimelinePost } from '~/interfaces/timeline-post.interface'
 
 export const usePostStore = defineStore('post', () => {
-  const posts = ref([])
+  const posts = ref<TimelinePost[]>([])
 
   const postsDummy = ref([
     {
@@ -36,7 +38,7 @@ export const usePostStore = defineStore('post', () => {
     },
   ])
 
-  const comments = ref([])
+  const comments = ref<IComment[]>([])
 
   return { posts, postsDummy, comments }
 })

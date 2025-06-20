@@ -145,22 +145,12 @@ const OldDate = post.createdAt
 const NewDate = new Date(OldDate).toDateString()
 const { post } = defineProps(['post'])
 
-// const { fileStorage, apiBase } = usePublicRuntimeConfig()
-
-// const thumbnailUrl = photo => {
-//   return photo?.thumbnail ? `${fileStorage}/${photo.thumbnail}` : ''
-// }
-
-// const originalUrl = imgPath => {
-//   return `${fileStorage}/${imgPath}`
-// }
-
 const isLiked = ref(false)
 
-const postStore = usePostStore()
+const { comments } = storeToRefs(usePostStore())
 
 // const post = postStore.posts[0]
-const comments = postStore.comments
+// const comments = postStore.comments
 
 const commentInput = ref('')
 
@@ -204,7 +194,11 @@ const handleSubmitComment = async () => {
       detail: data.value,
       life: 3000,
     })
+    comments.value = data.value.post.comments
   }
+
+  // console.log(comments.value)
+  // console.log(data.value.post.comments)
 
   clear()
   commentInput.value = ''

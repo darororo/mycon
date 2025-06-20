@@ -27,19 +27,18 @@
         v-for="(photo, index) in post.photos"
         :key="photo.id"
         width="400px"
-        :src="thumbnailUrl(photo)"
+        :src="`/api/storage/${photo.thumbnail}`"
         alt="post-image"
         class="post-image"
         preview
       >
         <template #original="slotProps">
-          <NuxtImg
+          <Image
             width="800"
             height="800"
-            :src="originalUrl(photo.url)"
+            :src="`/api/storage/${photo.url}`"
             alt="preview"
             :style="slotProps.style"
-            @click="slotProps.onClick"
           />
         </template>
       </Image>
@@ -81,28 +80,16 @@
 </template>
 
 <script setup lang="ts">
-import type { TimnelinePost } from '@/interfaces/timeline-post.interface.ts'
+import type { TimelinePost } from '@/interfaces/timeline-post.interface.ts'
 
-const { post } = defineProps<{ post: TimnelinePost }>()
-
-const { fileStorage, apiBase } = usePublicRuntimeConfig()
-
-const thumbnailUrl = photo => {
-  return photo?.thumbnail ? `${fileStorage}/${photo.thumbnail}` : ''
-}
-
-const originalUrl = imgPath => {
-  return `${fileStorage}/${imgPath}`
-}
+const { post } = defineProps<{ post: TimelinePost }>()
+const { comments } = storeToRefs(usePostStore())
 
 const isLiked = ref(false)
 
 const toggleLike = () => {
   isLiked.value = !isLiked.value
 }
-
-const postStore = usePostStore()
-const comments = postStore.comments
 </script>
 
 <style scoped>
