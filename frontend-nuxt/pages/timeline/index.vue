@@ -21,7 +21,7 @@
               font-family: 'Montserrat', sans-serif;
             "
           >
-            Timelime
+            Timeline
           </h2>
           <div style="flex-direction: row; gap: 10px; display: flex">
             <Select

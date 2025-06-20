@@ -128,7 +128,7 @@
                 background: '#1d4ed8',
               },
             }"
-            @click="handleSubmitComment"
+            @click="handleSubmitComment()"
           />
         </div>
       </template>
@@ -139,6 +139,7 @@
 <script setup>
 import { Image } from 'primevue'
 import CommentSection from './popup/CommentSection.vue'
+const toast = useToast()
 
 const OldDate = post.createdAt
 const NewDate = new Date(OldDate).toDateString()
@@ -162,11 +163,50 @@ const postStore = usePostStore()
 const comments = postStore.comments
 
 const commentInput = ref('')
-const handleSubmitComment = () => {
-  if (commentInput.value == '') return
-  const comment = { content: commentInput.value }
-  comments.push(comment)
 
+const body = computed(() => ({
+  content: commentInput.value,
+}))
+
+const { data, status, clear, execute, error } = useFetch(`/api/posts/${post.id}/comment`, {
+  method: 'POST',
+  body,
+  watch: false,
+  immediate: false,
+})
+
+const handleSubmitComment = async () => {
+  // console.log('CONTENT: ', commentInput.value)
+  // if (commentInput.value == '') return
+  // const comment = { content: commentInput.value }
+  // comments.push(comment)
+  // await execute()
+  if (!commentInput.value.trim()) return
+
+  await execute({
+    body: {
+      content: commentInput.value,
+    },
+  })
+
+  if (status.value === 'error') {
+    toast.add({
+      severity: 'error',
+      summary: 'Comment failed to Create',
+      detail: error.value,
+      life: 3000,
+    })
+  } else {
+    toast.add({
+      severity: 'success',
+      summary: 'Comment created successfully.',
+      // detail: 'Your project has been created.',
+      detail: data.value,
+      life: 3000,
+    })
+  }
+
+  clear()
   commentInput.value = ''
   // post.comments.push
 }
