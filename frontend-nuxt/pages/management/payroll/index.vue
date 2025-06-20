@@ -67,9 +67,9 @@
       </h2>
       <div style="flex-direction: row; gap: 10px; display: flex">
         <Select
-          v-model="selectedCity"
-          :options="cities"
-          optionLabel="name"
+          v-model="selectedDay"
+          :options="days"
+          optionLabel="day"
           placeholder="Filter Days"
           :dt="select"
           :pt="{
@@ -79,9 +79,9 @@
           }"
         />
         <Select
-          v-model="selectedCity"
-          :options="cities"
-          optionLabel="name"
+          v-model="selectedModeDay"
+          :options="modeDay"
+          optionLabel="modeDay"
           placeholder="Count Mode Days"
           :dt="select"
           :pt="{
@@ -121,10 +121,24 @@ import WorkerNumberCard from '~/components/project/card/WorkerNumberCard.vue'
 import PayrollTable from '~/components/table/PayrollTable.vue'
 
 const createFormVisible = ref(false)
-
 const selectedProject = ref('')
-
 const { data: projects } = useFetch('/api/projects')
+
+const days = ref([
+  { day: 'Monday', code: 'MON' },
+  { day: 'Tuesday', code: 'TUE' },
+  { day: 'Wednesday', code: 'WED' },
+  { day: 'Thursday', code: 'THU' },
+  { day: 'Friday', code: 'FRI' },
+  { day: 'Saturday', code: 'SAT' },
+  { day: 'Sunday', code: 'SUN' },
+])
+
+const modeDay = [
+  { modeDay: '8', code: 'D01' },
+  { modeDay: '20', code: 'D02' },
+  { modeDay: '31', code: 'D31' },
+]
 
 const select = {
   background: 'white',

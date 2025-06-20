@@ -18,8 +18,8 @@
       </h2>
       <div style="flex-direction: row; gap: 10px; display: flex">
         <Select
-          v-model="selectedCity"
-          :options="cities"
+          v-model="selectedProject"
+          :options="project"
           optionLabel="name"
           placeholder="Filter Project"
           :dt="select"
@@ -49,7 +49,10 @@
 <script setup>
 import ProjectCardHistory from '~/components/project/ProjectCardHistory.vue'
 
+const { data: project } = useFetch('/api/projects')
+
 const select = {
+  color: 'black',
   background: 'white',
   border: {
     color: '#ccc',

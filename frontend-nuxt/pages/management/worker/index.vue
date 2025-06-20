@@ -19,10 +19,10 @@
         </h2>
         <div style="flex-direction: row; gap: 10px; display: flex">
           <Select
-            v-model="selectedCity"
-            :options="cities"
+            v-model="selectedProject"
+            :options="projects"
             optionLabel="name"
-            placeholder="Filter Worker"
+            placeholder="Filter by Project"
             :dt="select"
             :pt="{
               root: {
@@ -30,6 +30,19 @@
               },
             }"
           />
+          <Select
+            v-model="selectedRole"
+            :options="roles"
+            optionLabel="role"
+            placeholder="Filter by Role"
+            :dt="select"
+            :pt="{
+              root: {
+                style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
+              },
+            }"
+          />
+
           <Button
             :dt="button"
             :pt="{
@@ -51,7 +64,10 @@
       </div>
       <hr style="margin: 12px 0; border-color: #ccc" />
       <div>
-        <WorkerTable />
+        <WorkerTable
+          :roleFilter="selectedRole"
+          :projectFilter="selectedProject"
+        />
       </div>
     </div>
     <CreateWorkerForm v-model="createFormVisible" />
@@ -59,13 +75,22 @@
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router'
 import CreateWorkerForm from '~/components/management/form/CreateWorkerForm.vue'
 import WorkerTable from '~/components/table/WorkerTable.vue'
 
-const route = useRoute()
 const createFormVisible = ref(false)
+const selectedRole = ref(null)
+const selectedProject = ref(null)
+
+const roles = ref([
+  { role: 'Senior', code: 'S' },
+  { role: 'Normal', code: 'N' },
+])
+
+const { data: projects } = useFetch('/api/projects')
+
 const select = {
+  color: 'black',
   background: 'white',
   border: {
     color: '#ccc',
@@ -86,6 +111,7 @@ const select = {
     y: '10px',
   },
 }
+
 const button = {
   primary: {
     background: '#203a43',

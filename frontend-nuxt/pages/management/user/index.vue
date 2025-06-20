@@ -19,10 +19,10 @@
         </h2>
         <div style="flex-direction: row; gap: 10px; display: flex">
           <Select
-            v-model="selectedCity"
-            :options="cities"
-            optionLabel="name"
-            placeholder="Filter Worker"
+            v-model="selectedRole"
+            :options="roles"
+            optionLabel="role"
+            placeholder="Filter by Role"
             :dt="select"
             :pt="{
               root: {
@@ -77,6 +77,7 @@ import CreateWorkerForm from '~/components/management/form/CreateWorkerForm.vue'
 
 const createFormVisible = ref(false)
 const select = {
+  color: 'black',
   background: 'white',
   border: {
     color: '#ccc',
@@ -97,34 +98,8 @@ const select = {
     y: '10px',
   },
 }
-const button = {
-  primary: {
-    background: '#222831',
-    color: 'white',
-    border: {
-      color: 'none',
-    },
-    hover: {
-      background: '#222831',
-      color: 'white',
-      border: {
-        color: 'none',
-      },
-    },
-    active: {
-      background: '#222831',
-      color: 'white',
-      border: {
-        color: 'none',
-      },
-    },
-  },
-  border: {
-    radius: '12px',
-  },
-  padding: {
-    x: '20px',
-    y: '10px',
-  },
-}
+const roles = ref([
+  { role: 'Senior', code: 'S' },
+  { role: 'Normal', code: 'N' },
+])
 </script>

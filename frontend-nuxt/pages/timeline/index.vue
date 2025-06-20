@@ -25,10 +25,10 @@
           </h2>
           <div style="flex-direction: row; gap: 10px; display: flex">
             <Select
-              v-model="selectedCity"
-              :options="cities"
-              optionLabel="name"
-              placeholder="Filter Timeline"
+              v-model="selectedProject"
+              :options="project"
+              optionLabel="project"
+              placeholder="Filter Project"
               :dt="select"
               :pt="{
                 root: {
@@ -95,6 +95,29 @@ const { data, error, execute } = useFetch('/api/posts', {
   method: 'GET',
 })
 
+const project = ref([
+  {
+    project: 'Residential Building Construction',
+    code: 'CONST001',
+  },
+  {
+    project: 'Bridge Renovation Project',
+    code: 'CONST002',
+  },
+  {
+    project: 'Road Expansion Program',
+    code: 'CONST003',
+  },
+  {
+    project: 'High-Rise Apartment Development',
+    code: 'CONST004',
+  },
+  {
+    project: 'Shopping Mall Construction',
+    code: 'CONST005',
+  },
+])
+
 onMounted(async () => {
   await execute()
   posts.value = data.value
@@ -102,6 +125,7 @@ onMounted(async () => {
 })
 
 const select = {
+  color: 'black',
   background: 'white',
   border: {
     color: '#ccc',

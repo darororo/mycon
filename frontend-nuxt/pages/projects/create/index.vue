@@ -37,13 +37,17 @@
         </h2>
         <div style="flex-direction: row; gap: 10px; display: flex">
           <Select
+            v-model="selectedProject"
+            :options="projects"
+            optionLabel="name"
             placeholder="Filter Project"
             :dt="select"
             :pt="{
               root: {
-                style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
+                style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, sans-serif',
               },
             }"
+            class="project-filter-select"
           />
           <Button
             :dt="button"
@@ -109,6 +113,7 @@ onMounted(async () => {
 })
 
 const select = {
+  color: 'black',
   background: 'white',
   border: {
     color: '#ccc',

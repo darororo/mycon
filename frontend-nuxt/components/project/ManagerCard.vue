@@ -134,17 +134,10 @@
                 },
               }"
               :dt="{
+                overlay: { background: 'red' },
                 chip: {
                   border: {
                     radius: '100px',
-                  },
-                },
-                overlay: {
-                  color: 'red',
-                  background: 'white',
-                  border: {
-                    color: '#ccc',
-                    radius: '10px',
                   },
                 },
                 option: {

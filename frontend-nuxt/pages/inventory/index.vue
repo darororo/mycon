@@ -19,9 +19,9 @@
         </h2>
         <div style="flex-direction: row; gap: 10px; display: flex">
           <Select
-            v-model="selectedCity"
-            :options="cities"
-            optionLabel="name"
+            v-model="selectedCategory"
+            :options="categories"
+            optionLabel="category"
             placeholder="Filter Category"
             :dt="select"
             :pt="{
@@ -63,7 +63,75 @@ import CreateInvenForm from '~/components/inventory/form/CreateInvenForm.vue'
 
 const createFormVisible = ref(false)
 
+const categories = ref([
+  {
+    category: 'Cement',
+    code: 'CM',
+  },
+  {
+    category: 'Steel',
+    code: 'ST',
+  },
+  {
+    category: 'Concrete',
+    code: 'CN',
+  },
+  {
+    category: 'Brick',
+    code: 'BR',
+  },
+  {
+    category: 'Sand',
+    code: 'SD',
+  },
+  {
+    category: 'Gravel',
+    code: 'GR',
+  },
+  {
+    category: 'Timber',
+    code: 'TB',
+  },
+  {
+    category: 'Plywood',
+    code: 'PW',
+  },
+  {
+    category: 'Roofing',
+    code: 'RF',
+  },
+  {
+    category: 'Tiles',
+    code: 'TL',
+  },
+  {
+    category: 'Paint',
+    code: 'PT',
+  },
+  {
+    category: 'Glass',
+    code: 'GL',
+  },
+  {
+    category: 'Insulation',
+    code: 'IN',
+  },
+  {
+    category: 'Electrical',
+    code: 'EL',
+  },
+  {
+    category: 'Plumbing',
+    code: 'PL',
+  },
+  {
+    category: 'Hardware',
+    code: 'HW',
+  },
+])
+
 const select = {
+  color: 'black',
   background: 'white',
   border: {
     color: '#ccc',

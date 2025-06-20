@@ -23,7 +23,7 @@
           >
             Select Manager
           </h2>
-          <div style="flex-direction: row; gap: 10px; display: flex">
+          <!-- <div style="flex-direction: row; gap: 10px; display: flex">
             <Select
               v-model="selectedCity"
               :options="cities"
@@ -36,7 +36,7 @@
                 },
               }"
             />
-          </div>
+          </div> -->
         </div>
         <hr style="margin: 12px 0; border-color: #ccc" />
         <div style="display: flex; flex-wrap: wrap; gap: 13px">
@@ -168,109 +168,5 @@ const managers = reactive([
     availability: true,
     selected: false,
   },
-  {
-    name: 'Kyojuro Rengoku',
-    role: 'Trainer',
-    avatar: 'https://i.pinimg.com/736x/ae/00/3b/ae003baf057596bf2d62c8ffd0393d30.jpg',
-    hours: '4-6',
-    price: '15$',
-    availability: false,
-    selected: false,
-  },
-  {
-    name: 'Itachi Uciha',
-    role: 'Trainer',
-    avatar: 'https://i.pinimg.com/736x/f3/78/96/f37896c54355b9ad4a6d1c8d43fabb25.jpg',
-    hours: '2-6',
-    price: '15$',
-    availability: false,
-    selected: false,
-  },
-  {
-    name: 'Kyojuro Rengoku',
-    role: 'Trainer',
-    avatar: 'https://i.pinimg.com/736x/ae/00/3b/ae003baf057596bf2d62c8ffd0393d30.jpg',
-    hours: '4-6',
-    price: '15$',
-    availability: false,
-    selected: false,
-  },
-  {
-    name: 'Itachi Uciha',
-    role: 'Trainer',
-    avatar: 'https://i.pinimg.com/736x/f3/78/96/f37896c54355b9ad4a6d1c8d43fabb25.jpg',
-    hours: '2-6',
-    price: '15$',
-    availability: false,
-    selected: false,
-  },
-  {
-    name: 'Yuzui Tengen',
-    role: 'Servicer',
-    avatar: 'https://i.pinimg.com/736x/88/10/0a/88100a490178cd2f05beb67134cf60ef.jpg',
-    hours: '1-8',
-    price: '10$',
-    availability: true,
-    selected: false,
-  },
-  {
-    name: 'Kyojuro Rengoku',
-    role: 'Trainer',
-    avatar: 'https://i.pinimg.com/736x/ae/00/3b/ae003baf057596bf2d62c8ffd0393d30.jpg',
-    hours: '4-6',
-    price: '15$',
-    availability: false,
-    selected: false,
-  },
-  {
-    name: 'Itachi Uciha',
-    role: 'Trainer',
-    avatar: 'https://i.pinimg.com/736x/f3/78/96/f37896c54355b9ad4a6d1c8d43fabb25.jpg',
-    hours: '2-6',
-    price: '15$',
-    availability: false,
-    selected: false,
-  },
-  {
-    name: 'Kyojuro Rengoku',
-    role: 'Trainer',
-    avatar: 'https://i.pinimg.com/736x/ae/00/3b/ae003baf057596bf2d62c8ffd0393d30.jpg',
-    hours: '4-6',
-    price: '15$',
-    availability: false,
-    selected: false,
-  },
-  {
-    name: 'Itachi Uciha',
-    role: 'Trainer',
-    avatar: 'https://i.pinimg.com/736x/f3/78/96/f37896c54355b9ad4a6d1c8d43fabb25.jpg',
-    hours: '2-6',
-    price: '15$',
-    availability: false,
-    selected: false,
-  },
 ])
-
-const select = {
-  background: 'white',
-  border: {
-    color: '#ccc',
-    radius: '12px',
-  },
-  hover: {
-    border: {
-      color: '#ccc',
-    },
-  },
-  focus: {
-    border: {
-      color: '#ccc',
-    },
-  },
-  padding: {
-    x: '18px',
-    y: '10px',
-    cards,
-  },
-}
 </script>
