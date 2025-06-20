@@ -8,10 +8,11 @@ import {
 } from 'typeorm';
 import { UserRole } from '../enums/role.enum';
 import { Project } from 'src/projects/entities/project.entity';
-import { Gender } from 'src/common/enums/gender.enum';
 import { Post } from 'src/posts/entities/post.entity';
 import { Comment } from 'src/comments/entities/comment.entity';
 import { UserPhoto } from 'src/users/entities/user-photo.entity';
+import { Exclude } from 'class-transformer';
+import { Gender } from 'src/common/enums/gender.enum';
 
 @Entity()
 export class User {
@@ -24,7 +25,7 @@ export class User {
   @Column()
   firstName: string;
 
-  @Column()
+  @Column({ default: Gender.Male })
   gender: Gender;
 
   @Column()
@@ -36,8 +37,18 @@ export class User {
   @Column({ unique: true })
   email: string;
 
+  // add new
   @Column()
+  @Exclude()
   password: string;
+
+  //add new
+  @Column({ nullable: true })
+  phone?: string;
+
+  // add new
+  @Column({ nullable: true })
+  address?: string;
 
   // Error User#photos not defined
   @OneToMany(() => UserPhoto, (photo) => photo.user)
