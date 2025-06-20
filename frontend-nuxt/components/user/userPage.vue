@@ -46,40 +46,8 @@
       </div>
 
       <div style="display: flex; flex-direction: row; gap: 18px">
-        <Toast
-          :dt="{
-            success: {
-              background: '#e6f4ea',
-              detailColor: '#2e7d32',
-              border: {
-                color: '#a5d6a7',
-                width: '1px',
-                style: 'solid',
-              },
-              padding: '12px 16px',
-              shadow: '0 4px 10px rgba(0, 0, 0, 0.05)',
-              borderRadius: '8px',
-              font: {
-                weight: 500,
-              },
-            },
-            warn: {
-              background: '#fff4e5',
-              detailColor: '#9f6000',
-              border: {
-                color: '#ff9800',
-                width: '1px',
-                style: 'solid',
-              },
-              padding: '12px 16px',
-              shadow: '0 4px 10px rgba(255, 152, 0, 0.3)',
-              borderRadius: '8px',
-              font: {
-                weight: 600,
-              },
-            },
-          }"
-        />
+        <Toast :dt="toastStyle" />
+
         <FileUpload
           ref="fileupload"
           mode="basic"
@@ -113,8 +81,8 @@
           severity="secondary"
         >
           <Icon
-            style="font-size: 18px"
             name="mdi:trash"
+            style="font-size: 18px"
           />
           <span>Delete avatar</span>
         </Button>
@@ -122,19 +90,19 @@
     </div>
 
     <!-- Form Fields -->
-    <div
-      style="background-color: none; padding: 20px; display: flex; justify-content: space-between"
-    >
+    <div style="padding: 20px; display: flex; justify-content: space-between">
       <FloatLabel>
         <InputText
+          v-model="firstName"
           class="input-text"
           id="first_name"
           :dt="inputDT"
         />
-        <label for="fist_name">First Name</label>
+        <label for="first_name">First Name</label>
       </FloatLabel>
       <FloatLabel>
         <InputText
+          v-model="lastName"
           class="input-text"
           id="last_name"
           :dt="inputDT"
@@ -142,11 +110,11 @@
         <label for="last_name">Last Name</label>
       </FloatLabel>
     </div>
-    <div
-      style="background-color: none; padding: 20px; display: flex; justify-content: space-between"
-    >
+
+    <div style="padding: 20px; display: flex; justify-content: space-between">
       <FloatLabel>
         <InputText
+          v-model="email"
           class="input-text"
           id="email"
           :dt="inputDT"
@@ -155,20 +123,22 @@
       </FloatLabel>
       <FloatLabel>
         <InputMask
+          v-model="phone"
           class="input-text"
           id="phone"
           mask="999-99-9999"
         />
-        <label for="over_label">Phone</label>
+        <label for="phone">Phone</label>
       </FloatLabel>
     </div>
+
     <div style="display: flex; padding: 20px; flex-direction: row; gap: 20px">
       <div class="check-box small">
         <RadioButton
           v-model="gender"
           input-id="gender_male"
           name="gender"
-          value="Male"
+          value="male"
           :dt="radioBtnDT"
         />
         <label
@@ -182,7 +152,7 @@
           v-model="gender"
           input-id="gender_female"
           name="gender"
-          value="Female"
+          value="female"
           :dt="radioBtnDT"
         />
         <label
@@ -193,19 +163,10 @@
       </div>
     </div>
 
-    <div
-      style="background-color: none; padding: 20px; display: flex; justify-content: space-between"
-    >
+    <div style="padding: 20px; display: flex; justify-content: space-between">
       <FloatLabel>
         <InputText
-          class="input-text"
-          id="tax_id"
-          :dt="inputDT"
-        />
-        <label for="tax_id">Tax Identification</label>
-      </FloatLabel>
-      <FloatLabel>
-        <InputText
+          v-model="role"
           class="input-text"
           id="role"
           :dt="inputDT"
@@ -213,16 +174,19 @@
         <label for="role">Role</label>
       </FloatLabel>
     </div>
+
     <div style="padding: 20px">
       <FloatLabel>
         <InputText
+          v-model="address"
           class="input-text-address"
           id="address"
           :dt="inputDT"
         />
-        <label for="over_label">Residential Addresss</label>
+        <label for="address">Residential Address</label>
       </FloatLabel>
     </div>
+
     <div style="display: flex; justify-content: center">
       <Button
         style="width: 150px"
@@ -233,14 +197,41 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useToast } from 'primevue/usetoast'
 
 const toast = useToast()
 const fileupload = ref()
-const avatarUrl = ref('')
-const gender = ref('')
 
+// Form fields
+const username = ref('')
+const firstName = ref('')
+const lastName = ref('')
+const email = ref('')
+const phone = ref('')
+const role = ref('')
+const address = ref('')
+const gender = ref('')
+const avatarUrl = ref('')
+
+// Fetch user and bind to fields
+const { data: user } = await useFetch('/api/users/1')
+
+onMounted(() => {
+  if (user.value) {
+    username.value = user.value.username
+    firstName.value = user.value.firstName
+    lastName.value = user.value.lastName
+    email.value = user.value.email
+    phone.value = user.value.phone || ''
+    role.value = user.value.role
+    address.value = user.value.address || ''
+    gender.value = user.value.gender
+    avatarUrl.value = user.value.avatarUrl || ''
+  }
+})
+
+// Upload avatar
 const triggerUpload = () => {
   fileupload.value.choose()
 }
@@ -257,15 +248,15 @@ const onUpload = (event: any) => {
   }
 }
 
+// Delete avatar
 const deleteAvatar = () => {
   avatarUrl.value = ''
   toast.add({ severity: 'warn', summary: 'Deleted', detail: 'Avatar Removed', life: 3000 })
 }
 
-const size = ref<string[]>([])
-
+// Styles
 const inputDT = {
-  background: 'transparenet',
+  background: 'transparent',
   border: {
     color: 'grey',
   },
@@ -277,14 +268,51 @@ const inputDT = {
 }
 
 const radioBtnDT = {
+  background: 'white',
+  icon: {
+    checked: {
+      color: '#4da8da',
+      hover: {
+        color: '#4da8da',
+      },
+      border: {
+        color: '#4da8da',
+      },
+      background: '#4da8da',
+    },
+  },
   checked: {
     border: {
       color: '#4da8da',
     },
-    background: '#4da8da',
+    background: 'white',
     hover: {
-      background: '#4da8da',
+      border: {
+        color: '#4da8da',
+      },
+      background: 'white',
     },
+  },
+}
+
+const toastStyle = {
+  success: {
+    background: '#e6f4ea',
+    detailColor: '#2e7d32',
+    border: { color: '#a5d6a7', width: '1px', style: 'solid' },
+    padding: '12px 16px',
+    shadow: '0 4px 10px rgba(0, 0, 0, 0.05)',
+    borderRadius: '8px',
+    font: { weight: 500 },
+  },
+  warn: {
+    background: '#fff4e5',
+    detailColor: '#9f6000',
+    border: { color: '#ff9800', width: '1px', style: 'solid' },
+    padding: '12px 16px',
+    shadow: '0 4px 10px rgba(255, 152, 0, 0.3)',
+    borderRadius: '8px',
+    font: { weight: 600 },
   },
 }
 </script>
@@ -298,11 +326,7 @@ const radioBtnDT = {
   font-weight: 500;
   font-family: 'Montserrat', sans-serif;
 }
-::v-deep(.p-button):hover {
-  background-color: #4da8da;
-  color: white;
-  border: none;
-}
+::v-deep(.p-button):hover,
 ::v-deep(.p-button):focus {
   background-color: #4da8da;
   color: white;
@@ -341,9 +365,7 @@ const radioBtnDT = {
   font-weight: 500;
   border-color: #bbb;
 }
-.input-text:focus {
-  border-color: #bbb;
-}
+.input-text:focus,
 .input-text:hover {
   border-color: #bbb;
 }
