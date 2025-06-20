@@ -10,6 +10,7 @@ import { Worker } from 'src/workers/entities/worker.entity';
 import { Comment } from 'src/comments/entities/comment.entity';
 import { Post } from 'src/posts/entities/post.entity';
 import { PostPhoto } from 'src/posts/entities/post-photo.entity';
+import { UserPhoto } from 'src/users/entities/user-photo.entity';
 
 @Module({
   imports: [
@@ -20,21 +21,12 @@ import { PostPhoto } from 'src/posts/entities/post-photo.entity';
       username: 'postgres',
       password: 'postgres',
       database: 'mycon_dev',
-      entities: [
-        User,
-        Post,
-        PostPhoto,
-        Comment,
-        Project,
-        Manager,
-        Worker,
-        Inventory,
-        ProjectPhoto,
-      ],
+      autoLoadEntities: true,
       synchronize: true,
     }),
     TypeOrmModule.forFeature([
       User,
+      UserPhoto,
       Post,
       PostPhoto,
       Comment,
