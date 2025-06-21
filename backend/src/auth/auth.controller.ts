@@ -6,16 +6,24 @@ import {
   Patch,
   Param,
   Delete,
+  Res,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthInput, SignInData } from './types/auth-data.type';
+import { AuthInput } from './types/auth-data.type';
+import { Response } from 'express';
+import { PassportLocalGuard } from './guards/local-auth.guard';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('login')
-  login(@Body() createAuthDto: AuthInput) {
-    return this.authService.authenticate(createAuthDto);
+  // @UseGuards(PassportLocalGuard)
+  login(
+    @Body() createAuthDto: AuthInput,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return this.authService.authenticate(createAuthDto, response);
   }
 }

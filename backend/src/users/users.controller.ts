@@ -11,6 +11,7 @@ import {
   FileTypeValidator,
   ValidationPipe,
   UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -18,6 +19,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { SkipThrottle } from '@nestjs/throttler';
 import { ParseJsonPipe } from 'src/common/pipes/parse-json.pipe';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { JwtStrategy } from 'src/auth/strategies/jwt.strategy';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @SkipThrottle()
 @Controller('users')
@@ -30,6 +33,7 @@ export class UsersController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.usersService.findAll();
   }
