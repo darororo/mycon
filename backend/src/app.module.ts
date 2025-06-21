@@ -21,6 +21,7 @@ import { InventoryModule } from './inventory/inventory.module';
 import { SeedModule } from './seed/seed.module';
 import { PayrollModule } from './payroll/payroll.module';
 import { AttendancesModule } from './attendances/attendances.module';
+import { GoogleSignUpModule } from './google-sign-up/google-sign-up.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -78,6 +79,7 @@ import { AttendancesModule } from './attendances/attendances.module';
     SeedModule,
     PayrollModule,
     AttendancesModule,
+    GoogleSignUpModule,
   ],
   controllers: [AppController],
   providers: [
