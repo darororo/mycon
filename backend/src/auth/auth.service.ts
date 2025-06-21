@@ -20,16 +20,19 @@ export class AuthService {
     return this.signIn(user);
   }
   async validateUser(input: AuthInput): Promise<SignInData | null> {
-    const user = await this.userService.findOne(input.userId);
-    const authenticated = await compare(input.password, user.password);
-
-    if (authenticated) {
+    try {
+      const user = await this.userService.findOne(input.userId);
+      const authenticated = await compare(input.password, user.password);
+      if (!authenticated) {
+        throw new UnauthorizedException();
+      }
       return {
         username: input.username,
         userId: input.userId,
       };
+    } catch {
+      throw new UnauthorizedException('Invalid Credentials');
     }
-    return null;
   }
 
   async signIn(user: SignInData): Promise<AuthResult> {
