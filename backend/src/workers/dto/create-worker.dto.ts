@@ -16,5 +16,5 @@ export class CreateWorkerDto {
   role: WorkerRole;
 
   @IsNumber()
-  dailyRate: number;
+  hourlyRate: number;
 }

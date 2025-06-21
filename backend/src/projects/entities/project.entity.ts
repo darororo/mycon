@@ -12,6 +12,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ProjectPhoto } from './project-photo.entity';
+import { Attendance } from 'src/attendances/entities/attendance.entity';
 
 @Entity()
 export class Project {
@@ -51,4 +52,7 @@ export class Project {
 
   @OneToMany(() => ProjectPhoto, (photo) => photo.project)
   photos: ProjectPhoto[];
+
+  @OneToMany(() => Attendance, (attendance) => attendance.project)
+  attendance: Attendance[];
 }

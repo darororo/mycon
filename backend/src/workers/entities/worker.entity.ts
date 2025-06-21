@@ -9,6 +9,7 @@ import {
 import { WorkerRole } from '../enums/worker-role.enum';
 import { Gender } from 'src/common/enums/gender.enum';
 import { Payroll } from 'src/payroll/entities/payroll.entity';
+import { Attendance } from 'src/attendances/entities/attendance.entity';
 
 @Entity()
 export class Worker {
@@ -35,4 +36,7 @@ export class Worker {
 
   @OneToMany(() => Payroll, (payroll) => payroll.worker)
   payrolls: Payroll[];
+
+  @OneToMany(() => Attendance, (attendance) => attendance.worker)
+  attendance: Attendance[];
 }

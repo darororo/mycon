@@ -28,6 +28,12 @@ export class Payroll {
   @Column({ type: 'decimal', scale: 2, default: 0 })
   deduction: number;
 
+  @Column()
+  startDate: Date;
+
+  @Column()
+  endDate: Date;
+
   @CreateDateColumn()
   createdAt: Date;
 
