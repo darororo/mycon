@@ -12,7 +12,6 @@ import { UserRole } from '../users/enums/role.enum';
 import * as bcrypt from 'bcrypt';
 import { Gender } from 'src/common/enums/gender.enum';
 import { AuthService } from 'src/auth/auth.service';
-import { Response } from 'express';
 
 @Injectable()
 export class GoogleSignUpService {
@@ -29,7 +28,7 @@ export class GoogleSignUpService {
     );
   }
 
-  async registerWithGoogle(idToken: string, response: Response): Promise<any> {
+  async registerWithGoogle(idToken: string): Promise<any> {
     try {
       const ticket = await this.googleClient.verifyIdToken({
         idToken,
@@ -53,9 +52,8 @@ export class GoogleSignUpService {
         const signData = {
           userId: existingUser.id,
           username: existingUser.username,
-          email: existingUser.email,
         };
-        return this.authService.signIn(signData, response);
+        return this.authService.signIn(signData);
       }
 
       // Generate password first (await the Promise)
@@ -81,9 +79,8 @@ export class GoogleSignUpService {
       const signData = {
         userId: savedUser.id,
         username: savedUser.username,
-        email: savedUser.email,
       };
-      return this.authService.signIn(signData, response);
+      return this.authService.signIn(signData);
       // return userWithoutPassword;
     } catch (error) {
       console.error('Google registration error:', error); // Add logging

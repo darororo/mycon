@@ -6,7 +6,6 @@ import {
   HttpCode,
   BadRequestException,
   Get,
-  Res,
 } from '@nestjs/common';
 import { GoogleSignUpService } from './google-sign-up.service';
 import { SkipThrottle } from '@nestjs/throttler';
@@ -22,20 +21,14 @@ export class GoogleSignUpController {
 
   @Post()
   // @HttpCode(HttpStatus.CREATED)
-  async create(
-    @Body() body: GoogleRegisterDto,
-    @Res({ passthrough: true }) response,
-  ) {
+  async create(@Body() body: GoogleRegisterDto) {
     const { idToken } = body;
 
     if (!idToken) {
       throw new BadRequestException('Google ID token is required');
     }
 
-    const user = await this.googleSignUpService.registerWithGoogle(
-      idToken,
-      response,
-    );
+    const user = await this.googleSignUpService.registerWithGoogle(idToken);
 
     return {
       success: true,
