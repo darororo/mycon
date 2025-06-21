@@ -24,21 +24,12 @@ export class PostsService {
     @Inject(forwardRef(() => CommentsService))
     private readonly commentService: CommentsService,
     private readonly uploadService: UploadService,
-    // private readonly configService: ConfigService,
   ) {}
 
   async create(createPostDto: CreatePostDto, files: Express.Multer.File[]) {
     const post = this.postRepository.create(createPostDto);
 
     if (files) {
-      // const storageHost =
-      //   this.configService.getOrThrow<string>('MINIO_ENDPOINT');
-      // const storagePort = this.configService.getOrThrow<string>('MINIO_PORT');
-      // const storageBucket =
-      //   this.configService.getOrThrow<string>('MINIO_BUCKET');
-
-      // const fileStorage = `${storageHost}:${storagePort}/${storageBucket}/`;
-
       const pathPrefix = 'posts/';
 
       const { original, small } = this.uploadService.uploadImages(files, {

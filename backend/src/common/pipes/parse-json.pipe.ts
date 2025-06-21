@@ -1,4 +1,5 @@
 import { PipeTransform, Injectable, BadRequestException } from '@nestjs/common';
+import { log } from 'console';
 
 @Injectable()
 export class ParseJsonPipe implements PipeTransform {
@@ -6,6 +7,7 @@ export class ParseJsonPipe implements PipeTransform {
     try {
       return JSON.parse(value);
     } catch {
+      log(value);
       throw new BadRequestException('Invalid JSON');
     }
   }

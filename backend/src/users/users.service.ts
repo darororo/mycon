@@ -10,13 +10,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { UserPhoto } from './entities/user-photo.entity';
+import { UploadService } from 'src/upload/upload.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @InjectRepository(UserPhoto)
-    private readonly profileRepository: Repository<UserPhoto>,
+    private readonly photoRepository: Repository<UserPhoto>,
+    private readonly uploadService: UploadService,
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
@@ -28,6 +30,31 @@ export class UsersService {
     if (emailExist) {
       throw new HttpException('Email already taken', HttpStatus.BAD_REQUEST);
     }
+
+    // const user = this.userRepository.create(createUserDto);
+
+    // if (files) {
+    //   const pathPrefix = 'users/';
+
+    //   const { original, small } = this.uploadService.uploadImages(files, {
+    //     prefix: pathPrefix,
+    //   });
+    //   const imgOriginal = await Promise.all(original);
+    //   const imgSmall = await Promise.all(small);
+
+    //   const photos: UserPhoto[] = [];
+    //   for (let i = 0; i < files.length; i++) {
+    //     const fileName = files[i].originalname;
+
+    //     const photoData = this.photoRepository.create();
+    //     photoData.url = pathPrefix + 'original/' + fileName;
+    //     photoData.thumbnail = pathPrefix + 'small/' + fileName;
+
+    //     const photo = await this.photoRepository.save(photoData);
+    //     photos.push(photo);
+    //   }
+    //   user.photos = photos;
+    // }
 
     return this.userRepository.save(createUserDto);
   }
@@ -50,8 +77,35 @@ export class UsersService {
     return user;
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
+  async update(
+    id: number,
+    updateUserDto: UpdateUserDto,
+    files: Express.Multer.File[],
+  ): Promise<User> {
     const user = await this.findOne(id);
+
+    if (files) {
+      const pathPrefix = `users/user-${id}/`;
+
+      const { original, small } = this.uploadService.uploadImages(files, {
+        prefix: pathPrefix,
+      });
+      const imgOriginal = await Promise.all(original);
+      const imgSmall = await Promise.all(small);
+
+      const photos: UserPhoto[] = [];
+      for (let i = 0; i < files.length; i++) {
+        const fileName = files[i].originalname;
+
+        const photoData = this.photoRepository.create();
+        photoData.url = pathPrefix + 'original/' + fileName;
+        photoData.thumbnail = pathPrefix + 'small/' + fileName;
+
+        const photo = await this.photoRepository.save(photoData);
+        photos.push(photo);
+      }
+      user.photos = photos;
+    }
 
     Object.assign(user, updateUserDto);
 
