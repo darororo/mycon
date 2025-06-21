@@ -92,9 +92,39 @@ export class PostsService {
     return post;
   }
 
-  async update(id: number, updatePostDto: UpdatePostDto) {
+  async update(
+    id: number,
+    updatePostDto: UpdatePostDto,
+    files: Express.Multer.File[],
+  ) {
     const post = await this.findOne(id);
     Object.assign(post, updatePostDto);
+
+    if (files && files.length > 0) {
+      const pathPrefix = 'posts/';
+
+      // const { original, small } = this.uploadService.uploadImages(files, {
+      //   prefix: pathPrefix,
+      // });
+
+      const newPhotos: PostPhoto[] = [];
+
+      if (post.photos?.length > 0) {
+        await this.photoRepository.remove(post.photos);
+      }
+
+      for (let i = 0; i < files.length; i++) {
+        const fileName = files[i].originalname;
+
+        const newPhotoData = this.photoRepository.create();
+        newPhotoData.url = pathPrefix + 'original/' + fileName;
+        newPhotoData.thumbnail = pathPrefix + 'small/' + fileName;
+
+        const photo = await this.photoRepository.save(newPhotoData);
+        newPhotos.push(photo);
+      }
+      post.photos = newPhotos;
+    }
 
     return this.postRepository.save(post);
   }

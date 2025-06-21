@@ -92,7 +92,10 @@
         </div>
       </template>
     </Card>
-    <UpdateProjectForm v-model="updateFormVisible" />
+    <UpdateProjectForm
+      v-model="updateFormVisible"
+      :project="item"
+    />
   </div>
 </template>
 

@@ -80,11 +80,41 @@ export class ProjectsService {
     return project;
   }
 
-  async update(id: number, updateProjectDto: UpdateProjectDto) {
+  async update(
+    id: number,
+    updateProjectDto: UpdateProjectDto,
+    files: Express.Multer.File[],
+  ) {
     const project = await this.findOne(id);
     Object.assign(project, updateProjectDto);
 
-    return project;
+    if (files && files.length > 0) {
+      const pathPrefix = 'projects/';
+
+      // const { original, small } = this.uploadService.uploadImages(files, {
+      //   prefix: pathPrefix,
+      // });
+
+      const newPhotos: ProjectPhoto[] = [];
+
+      if (project.photos?.length > 0) {
+        await this.photoRepo.remove(project.photos);
+      }
+
+      for (let i = 0; i < files.length; i++) {
+        const fileName = files[i].originalname;
+
+        const newPhotoData = this.photoRepo.create();
+        newPhotoData.url = pathPrefix + 'original/' + fileName;
+        newPhotoData.thumbnail = pathPrefix + 'small/' + fileName;
+
+        const photo = await this.photoRepo.save(newPhotoData);
+        newPhotos.push(photo);
+      }
+      project.photos = newPhotos;
+    }
+
+    return this.projectRepository.save(project);
   }
 
   async remove(id: number) {

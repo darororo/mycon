@@ -14,9 +14,64 @@
               <span class="use-role">{{ 'Superman' }}</span>
             </div>
           </div>
-          <div class="more-action">
-            <OptionIcon />
-            <span class="post-time">{{ NewDate || 'HELP' }}</span>
+          <div class="user-details">
+            <div class="more-action">
+              <Icon
+                name="material-symbols:more-horiz"
+                class="option-button"
+                @click="toggle"
+              />
+              <TieredMenu
+                ref="menu"
+                id="overlay_tmenu"
+                :model="items"
+                popup
+                :dt="{
+                  background: '#ffffff',
+                  border: {
+                    color: '#e0e0e0',
+                  },
+                  item: {
+                    color: '#333333',
+                    focus: {
+                      background: '#f0f0f5',
+                      color: '#333333',
+                    },
+                  },
+                  hover: {
+                    background: 'red',
+                  },
+                }"
+                style="font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: 500"
+              >
+                <!-- <template #item="{ item }">
+                    <div class="p-menuitem-content">
+                      <span class="menu-label">{{ item.label }}</span>
+                      <Icon
+                        :name="item.icon"
+                        class="menu-icon"
+                        @click="updateFormVisible = true"
+                      />
+                    </div>
+                  </template> -->
+                <template #item="{ item, originalEvent }">
+                  <div
+                    class="p-menuitem-content"
+                    @click="onMenuItemClick(item)"
+                  >
+                    <span class="menu-label">{{ item.label }}</span>
+                    <Icon
+                      :name="item.icon"
+                      class="menu-icon"
+                    />
+                  </div>
+                </template>
+              </TieredMenu>
+            </div>
+            <div class="more-action">
+              <OptionIcon />
+              <span class="post-time">{{ NewDate || 'HELP' }}</span>
+            </div>
           </div>
         </div>
       </template>
@@ -133,6 +188,10 @@
         </div>
       </template>
     </Dialog>
+    <ProjectFormUpdateTimelineForm
+      v-model="updateFormVisible"
+      :post="post"
+    />
   </div>
 </template>
 
@@ -153,6 +212,21 @@ const { comments } = storeToRefs(usePostStore())
 // const comments = postStore.comments
 
 const commentInput = ref('')
+
+const menu = ref()
+
+const updateFormVisible = ref(false)
+
+const items = ref([
+  {
+    label: 'Update',
+    icon: 'material-symbols:edit-outline',
+  },
+  {
+    label: 'Delete',
+    icon: 'material-symbols:delete-outline',
+  },
+])
 
 const body = computed(() => ({
   content: commentInput.value,
@@ -207,6 +281,19 @@ const handleSubmitComment = async () => {
 
 const toggleLike = () => {
   isLiked.value = !isLiked.value
+}
+
+const toggle = event => {
+  menu.value.toggle(event)
+}
+
+const onMenuItemClick = item => {
+  if (item.label === 'Update') {
+    updateFormVisible.value = true
+  } else if (item.label === 'Delete') {
+    return ''
+  }
+  menu.value.hide()
 }
 
 const commentVisible = ref(false)
@@ -379,6 +466,23 @@ hr {
   grid-template-columns: auto auto;
   grid-template-rows: auto auto;
   /* max-height: 400px; */
+}
+
+.option-button {
+  cursor: pointer;
+  size: 24px;
+}
+
+.p-menuitem-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 10px;
+}
+
+.menu-icon {
+  font-size: 16px;
+  color: #333333;
 }
 
 /* .image-container span:nth-child(3) {

@@ -257,6 +257,8 @@ import UploadImage from './UploadImage.vue'
 import { Toast } from 'primevue'
 import { useImageUploader } from '@/composables/useImageUploader'
 
+const { project } = defineProps(['project'])
+
 const updateFormVisible = defineModel<boolean>()
 
 const projects = ref([
@@ -320,8 +322,8 @@ const initialValues = ref<updateProjectDto>({
 const { images, loadImages, removeImage, uploadImages, clearImageData } = useImageUploader()
 
 const formData = ref(new FormData())
-const { data, error, status, clear, execute } = useFetch(`/api/projects`, {
-  method: 'POST',
+const { data, error, status, clear, execute } = useFetch(`/api/projects/${project.id}`, {
+  method: 'PATCH',
   body: formData,
   watch: false,
   immediate: false,
@@ -346,7 +348,7 @@ const handleSubmit = async ({ valid }) => {
     } else {
       toast.add({
         severity: 'success',
-        summary: 'Creation completed successfully.',
+        summary: 'Creation updated successfully.',
         // detail: 'Your project has been updated.',
         detail: data.value,
         life: 3000,

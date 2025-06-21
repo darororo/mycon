@@ -63,7 +63,7 @@ export class ProjectsController {
       }),
     )
     files: Express.Multer.File[],
-    @Param('id') id,
+    @Param('id') id: number,
     @Body(
       'jsonData',
       new ParseJsonPipe(),
@@ -71,7 +71,7 @@ export class ProjectsController {
     )
     updateProjectDto: UpdateProjectDto,
   ) {
-    return this.projectsService.update(id, updateProjectDto);
+    return this.projectsService.update(id, updateProjectDto, files);
   }
 
   @Delete(':id')

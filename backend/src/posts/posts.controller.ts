@@ -64,8 +64,24 @@ export class PostsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-    return this.postsService.update(+id, updatePostDto);
+  @UseInterceptors(FilesInterceptor('files'))
+  update(
+    @UploadedFiles(
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: 'image/' })],
+        fileIsRequired: false,
+      }),
+    )
+    files: Express.Multer.File[],
+    @Body(
+      'jsonData',
+      new ParseJsonPipe(),
+      new ValidationPipe({ whitelist: true }),
+    )
+    updatePostDto: UpdatePostDto,
+    @Param('id') id: number,
+  ) {
+    return this.postsService.update(id, updatePostDto, files);
   }
 
   @Delete(':id')
