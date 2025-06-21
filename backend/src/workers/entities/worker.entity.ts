@@ -1,7 +1,14 @@
 import { Project } from 'src/projects/entities/project.entity';
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { WorkerRole } from '../enums/worker-role.enum';
 import { Gender } from 'src/common/enums/gender.enum';
+import { Payroll } from 'src/payroll/entities/payroll.entity';
 
 @Entity()
 export class Worker {
@@ -25,4 +32,7 @@ export class Worker {
 
   @ManyToMany(() => Project, (project) => project.workers)
   projects: Project[];
+
+  @OneToMany(() => Payroll, (payroll) => payroll.worker)
+  payrolls: Payroll[];
 }

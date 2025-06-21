@@ -19,6 +19,7 @@ import { CommentsModule } from './comments/comments.module';
 import { PostsModule } from './posts/posts.module';
 import { InventoryModule } from './inventory/inventory.module';
 import { SeedModule } from './seed/seed.module';
+import { PayrollModule } from './payroll/payroll.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -74,6 +75,7 @@ import { SeedModule } from './seed/seed.module';
     PostsModule,
     InventoryModule,
     SeedModule,
+    PayrollModule,
   ],
   controllers: [AppController],
   providers: [
