@@ -4,6 +4,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
+
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -31,32 +33,11 @@ export class UsersService {
       throw new HttpException('Email already taken', HttpStatus.BAD_REQUEST);
     }
 
-    // const user = this.userRepository.create(createUserDto);
+    const { password } = createUserDto;
 
-    // if (files) {
-    //   const pathPrefix = 'users/';
+    const hashedPass = await bcrypt.hash(password, 10);
 
-    //   const { original, small } = this.uploadService.uploadImages(files, {
-    //     prefix: pathPrefix,
-    //   });
-    //   const imgOriginal = await Promise.all(original);
-    //   const imgSmall = await Promise.all(small);
-
-    //   const photos: UserPhoto[] = [];
-    //   for (let i = 0; i < files.length; i++) {
-    //     const fileName = files[i].originalname;
-
-    //     const photoData = this.photoRepository.create();
-    //     photoData.url = pathPrefix + 'original/' + fileName;
-    //     photoData.thumbnail = pathPrefix + 'small/' + fileName;
-
-    //     const photo = await this.photoRepository.save(photoData);
-    //     photos.push(photo);
-    //   }
-    //   user.photos = photos;
-    // }
-
-    return this.userRepository.save(createUserDto);
+    return this.userRepository.save({ ...createUserDto, password: hashedPass });
   }
 
   async findAll(): Promise<User[]> {
