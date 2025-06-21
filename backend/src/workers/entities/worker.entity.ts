@@ -28,7 +28,7 @@ export class Worker {
   role: WorkerRole;
 
   @Column({ type: 'decimal' })
-  dailyRate: number;
+  hourlyRate: number;
 
   @ManyToMany(() => Project, (project) => project.workers)
   projects: Project[];

@@ -16,11 +16,17 @@ export class Payroll {
   @ManyToOne(() => Worker, (worker) => worker.payrolls)
   worker: Worker;
 
-  @Column()
+  @Column({ type: 'decimal' })
   totalHours: number;
 
-  @Column()
+  @Column({ type: 'decimal' })
   hourlyRate: number;
+
+  @Column({ type: 'decimal', scale: 2, default: 0 })
+  allowance: number;
+
+  @Column({ type: 'decimal', scale: 2, default: 0 })
+  deduction: number;
 
   @CreateDateColumn()
   createdAt: Date;
