@@ -13,6 +13,7 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { UserPhoto } from './entities/user-photo.entity';
 import { UploadService } from 'src/upload/upload.service';
+import { hash } from 'crypto';
 
 @Injectable()
 export class UsersService {
@@ -96,5 +97,11 @@ export class UsersService {
   async remove(id: number): Promise<User> {
     const user = await this.findOne(id);
     return this.userRepository.remove(user);
+  }
+
+  async setRefreshToken(id: number, token: string) {
+    const user = await this.findOne(id);
+    const hashed = await bcrypt.hash(token, 10);
+    user.refreshToken = hashed;
   }
 }
