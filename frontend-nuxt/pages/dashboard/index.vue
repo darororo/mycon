@@ -42,6 +42,6 @@ import TopProjectItem from '~/components/TopProjectItem/TopProjectItem.vue'
         <CategoryExpenseChart title="Material Expense" />
       </div>
     </div>
-    <TopProjectItem />
+    <TopProjectItem style="margin-bottom: 12px" />
   </div>
 </template>

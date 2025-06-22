@@ -50,7 +50,7 @@
         </div>
       </div>
       <hr style="margin: 12px 0; border-color: #ccc" />
-      <InventoryTable />
+      <InventoryTable style="margin-bottom: 12px" />
     </div>
 
     <CreateInvenForm v-model="createFormVisible" />

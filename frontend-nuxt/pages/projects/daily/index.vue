@@ -58,7 +58,7 @@
       </div>
     </div>
     <hr style="margin: 12px 0; border-color: #ccc" />
-    <DailyTaskTable />
+    <DailyTaskTable style="margin-bottom: 12px" />
     <DailyTaskForm v-model="createFormVisible" />
   </div>
 </template>

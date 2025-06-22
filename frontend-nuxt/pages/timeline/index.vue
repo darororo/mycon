@@ -70,7 +70,9 @@
           </div>
         </div>
       </div>
-      <div style="border-radius: 10px; padding: 20px 0; border: 1px solid #ccc">
+      <div
+        style="border-radius: 10px; padding: 20px 0; border: 1px solid #ccc; margin-bottom: 12px"
+      >
         <h1 class="worklist-list-title">All Workflows</h1>
         <div class="sticky top-20 h-50">
           <SideWorkflow />

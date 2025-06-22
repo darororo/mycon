@@ -33,7 +33,7 @@
         </div>
       </div>
       <hr style="margin: 12px 0; border-color: #ccc" />
-      <div>
+      <div style="margin-bottom: 12px">
         <UserTable />
       </div>
     </div>

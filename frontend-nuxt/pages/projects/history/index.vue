@@ -32,7 +32,7 @@
       </div>
     </div>
     <hr style="margin: 12px 0; border-color: #ccc" />
-    <div style="display: flex; justify-content: center">
+    <div style="display: flex; justify-content: center; margin-bottom: 12px">
       <ScrollPanel style="width: auto; height: 100rem; margin-top: 10px; max-height: 68rem">
         <div style="display: flex; flex-direction: column; gap: 24px">
           <ProjectCardHistory

@@ -39,7 +39,7 @@
           </div> -->
         </div>
         <hr style="margin: 12px 0; border-color: #ccc" />
-        <div style="display: flex; flex-wrap: wrap; gap: 13px">
+        <div style="display: flex; flex-wrap: wrap; gap: 13px; margin-bottom: 12px">
           <ManagerCard
             v-for="person in managers"
             :key="person.name"
@@ -47,7 +47,15 @@
           />
         </div>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 4px">
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          margin-top: 4px;
+          margin-bottom: 12px;
+        "
+      >
         <label
           style="
             display: flex;

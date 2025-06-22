@@ -37,7 +37,7 @@
       </h2>
     </div>
     <hr style="margin: 12px 0; border-color: #ccc" />
-    <div>
+    <div style="margin-bottom: 12px">
       <BillingTable @open-project-dialog="projectOverviewVisible = true" />
     </div>
 

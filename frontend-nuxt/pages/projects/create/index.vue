@@ -70,7 +70,10 @@
       </div>
       <hr style="margin: 12px 0; border-color: #ccc" />
     </div>
-    <div class="flex flex-row w-full justify-between">
+    <div
+      class="flex flex-row w-full justify-between"
+      style="margin-bottom: 12px"
+    >
       <ScrollPanel style="width: 62rem; height: 50rem; padding: 12px 0; border-radius: 8px">
         <div style="display: flex; flex-direction: column; align-items: center; gap: 14px">
           <ProjectCard
@@ -83,7 +86,7 @@
       <ScrollPanel style="width: 20rem; height: 50rem">
         <div
           class="mb-4"
-          v-for="i in 20"
+          v-for="i in 12"
           :key="i"
         >
           <ProjectUpcomingProject />

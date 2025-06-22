@@ -30,7 +30,9 @@
         <h1 class="project-title">
           {{ selectedProject ? selectedProject.name : projects[0].name }}
         </h1>
-        <p class="project-description">Let's take a good look at today's current events</p>
+        <p class="project-description">
+          Track real-time updates and performance across all roles and activities.
+        </p>
       </div>
       <div class="title-decoration">
         <div class="decoration-circle"></div>
@@ -277,7 +279,7 @@ const cards = [
   font-weight: 800;
   color: #1f2937;
   font-family: 'Montserrat', sans-serif;
-  margin: 0 0 16px 0;
+  margin: 12px 0 22px 0;
   letter-spacing: -0.02em;
   line-height: 1.1;
   background: linear-gradient(135deg, #1f2937 0%, #4b5563 100%);
@@ -350,83 +352,5 @@ const cards = [
   width: 100rem;
   max-width: 1500px;
   margin-bottom: 20px;
-}
-
-/* Animations */
-@keyframes titleFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes descriptionFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 0.9;
-    transform: translateY(0);
-  }
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-20px) rotate(180deg);
-  }
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.2);
-  }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .project-title-section {
-    padding: 40px 20px;
-    margin-bottom: 30px;
-  }
-
-  .project-title {
-    font-size: 36px;
-  }
-
-  .project-description {
-    font-size: 16px;
-  }
-
-  .decoration-circle {
-    width: 150px;
-    height: 150px;
-    top: -30px;
-    right: -30px;
-  }
-}
-
-@media (max-width: 480px) {
-  .project-title {
-    font-size: 28px;
-  }
-
-  .project-description {
-    font-size: 14px;
-  }
 }
 </style>

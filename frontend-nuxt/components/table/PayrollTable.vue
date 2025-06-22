@@ -9,6 +9,7 @@
         overflow-x: hidden;
         border-radius: 10px;
         border: 1px solid #ccc;
+        margin-bottom: 12px;
       "
       :value="workers"
       :dt="myTable"
@@ -81,6 +82,7 @@ const myTable = ref({
       border: {
         color: '#ccc',
       },
+      padding: '24px',
     },
   },
   header: {
