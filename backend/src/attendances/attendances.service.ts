@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAttendanceDto } from './dto/create-attendance.dto';
 import { UpdateAttendanceDto } from './dto/update-attendance.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -17,6 +17,7 @@ export class AttendancesService {
 
     private readonly projectService: ProjectsService,
   ) {}
+
   async create(createAttendanceDto: CreateAttendanceDto) {
     const { workerId, projectId } = createAttendanceDto;
     const attendance = this.attendanceRepo.create(createAttendanceDto);
@@ -30,19 +31,38 @@ export class AttendancesService {
     return this.attendanceRepo.save(attendance);
   }
 
-  findAll() {
-    return `This action returns all attendances`;
+  async findAll() {
+    const attendance = await this.attendanceRepo.find();
+    if (!attendance) {
+      throw new HttpException('Attendance list is empty', 404);
+    }
+    return attendance;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} attendance`;
+  async findOne(projectId: number, id: number) {
+    const attendance = await this.attendanceRepo.findOne({
+      where: { id, project: { id: projectId } },
+      relations: ['project', 'worker'],
+    });
+
+    if (!attendance) {
+      throw new NotFoundException(`Attendance with id ${id} not found`);
+    }
+    return attendance;
   }
 
-  update(id: number, updateAttendanceDto: UpdateAttendanceDto) {
-    return `This action updates a #${id} attendance`;
+  async update(
+    id: number,
+    projectId: number,
+    updateAttendanceDto: UpdateAttendanceDto,
+  ): Promise<Attendance> {
+    const attendance = await this.findOne(id, projectId);
+    Object.assign(attendance, updateAttendanceDto);
+    return this.attendanceRepo.save(attendance);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} attendance`;
+  async remove(id: number, projectId: number) {
+    const attendance = await this.findOne(id, projectId);
+    return this.attendanceRepo.remove(attendance);
   }
 }

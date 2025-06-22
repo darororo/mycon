@@ -17,4 +17,7 @@ export class CreateWorkerDto {
 
   @IsNumber()
   hourlyRate: number;
+
+  @IsNumber()
+  projectId: number;
 }

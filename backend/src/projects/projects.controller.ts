@@ -48,6 +48,11 @@ export class ProjectsController {
     return this.projectsService.findAll();
   }
 
+  @Get(':id/workers')
+  findWorker(@Param('id') id: number) {
+    return this.projectsService.getWorkersByProject(id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.projectsService.findOne(+id);

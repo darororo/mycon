@@ -4,20 +4,31 @@ import { UpdateWorkerDto } from './dto/update-worker.dto';
 import { Repository } from 'typeorm';
 import { Worker } from './entities/worker.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ProjectsService } from 'src/projects/projects.service';
 
 @Injectable()
 export class WorkersService {
   constructor(
     @InjectRepository(Worker)
     private readonly workerRepository: Repository<Worker>,
+
+    private readonly projectService: ProjectsService,
   ) {}
 
   async create(createWorkerDto: CreateWorkerDto): Promise<Worker> {
-    return this.workerRepository.save(createWorkerDto);
+    const project = await this.projectService.findOne(
+      createWorkerDto.projectId,
+    );
+
+    const worker = this.workerRepository.create(createWorkerDto);
+
+    worker.projects = [project];
+
+    return this.workerRepository.save(worker);
   }
 
   async findAll(): Promise<Worker[]> {
-    return this.workerRepository.find();
+    return this.workerRepository.find({ relations: { projects: true } });
   }
 
   async findOne(id: number): Promise<Worker> {

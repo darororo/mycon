@@ -1,10 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePayrollDto } from './dto/create-payroll.dto';
 import { UpdatePayrollDto } from './dto/update-payroll.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Payroll } from './entities/payroll.entity';
 import { Repository } from 'typeorm';
 import { WorkersService } from 'src/workers/workers.service';
+import { ProjectsService } from 'src/projects/projects.service';
 @Injectable()
 export class PayrollService {
   constructor(
@@ -12,56 +13,53 @@ export class PayrollService {
     private readonly payrollRepo: Repository<Payroll>,
 
     private readonly workerService: WorkersService,
+    private readonly projectService: ProjectsService,
   ) {}
 
-  async create(
-    createPayrollDto: CreatePayrollDto,
-    // startDate: Date,
-  ): Promise<Payroll> {
+  async create(createPayrollDto: CreatePayrollDto): Promise<Payroll> {
     const worker = await this.workerService.findOne(createPayrollDto.workerId);
+    const project = await this.projectService.findOne(
+      createPayrollDto.projectId,
+    );
+    const { hourlyRate, totalHours } = createPayrollDto;
 
-    // const endDate = new Date(startDate);
-    // endDate.setDate(startDate.getDate() + 29);
-    // const hourlyRate = new
+    const payroll = this.payrollRepo.create({
+      worker,
+      project,
+      hourlyRate,
+      totalHours,
+    });
 
-    // const totalHours = await this.calculateTotalHours(worker.id, startDate, endDate, hourlyRate)
-
-    return this.payrollRepo.save(worker);
+    return this.payrollRepo.save(payroll);
   }
 
-  findAll() {
-    return `This action returns all payroll`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} payroll`;
-  }
-
-  update(id: number, updatePayrollDto: UpdatePayrollDto) {
-    return `This action updates a #${id} payroll`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} payroll`;
-  }
-
-  private calculateTotalHours(start: Date, end: Date, hourlyRate: number) {
-    const total = this.getBusinessDaysBetween(start, end) * hourlyRate;
-    return total;
-  }
-
-  private getBusinessDaysBetween(start: Date, end: Date): number {
-    let count = 0;
-    const current = new Date(start);
-
-    while (current <= end) {
-      const day = current.getDay(); // 0 = Sunday, 6 = Saturday
-      if (day !== 0 && day !== 6) {
-        count++;
-      }
-      current.setDate(current.getDate() + 1);
+  async findAll() {
+    const payroll = await this.payrollRepo.find();
+    if (!payroll) {
+      throw new HttpException(`Payroll list is empty`, 404);
     }
+    return payroll;
+  }
 
-    return count;
+  async findOne(id: number) {
+    const payroll = await this.payrollRepo.findOne({ where: { id } });
+    if (!payroll) {
+      throw new NotFoundException(`Payroll with ID ${id} is not found`);
+    }
+    return payroll;
+  }
+
+  async update(
+    id: number,
+    updatePayrollDto: UpdatePayrollDto,
+  ): Promise<Payroll> {
+    const payroll = await this.findOne(id);
+    Object.assign(payroll, updatePayrollDto);
+    return this.payrollRepo.save(payroll);
+  }
+
+  async remove(id: number) {
+    const payroll = await this.findOne(id);
+    return this.payrollRepo.remove(payroll);
   }
 }

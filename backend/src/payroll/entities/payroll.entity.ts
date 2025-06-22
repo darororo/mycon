@@ -1,3 +1,4 @@
+import { Project } from 'src/projects/entities/project.entity';
 import { Worker } from 'src/workers/entities/worker.entity';
 import {
   Column,
@@ -12,9 +13,6 @@ import {
 export class Payroll {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @ManyToOne(() => Worker, (worker) => worker.payrolls)
-  worker: Worker;
 
   @Column({ type: 'decimal' })
   totalHours: number;
@@ -39,4 +37,10 @@ export class Payroll {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ManyToOne(() => Worker, (worker) => worker.payrolls)
+  worker: Worker;
+
+  @ManyToOne(() => Project, (project) => project.payrolls)
+  project: Project;
 }

@@ -17,4 +17,7 @@ export class CreatePayrollDto {
 
   @IsNumber()
   workerId: number;
+
+  @IsNumber()
+  projectId: number;
 }

@@ -163,8 +163,8 @@
                 >Daily Rate</label
               >
               <InputNumber
-                name="dailyRate"
-                v-model="dailyRate"
+                name="hourlyRate"
+                v-model="hourlyRate"
                 placeholder="Enter daily rate"
                 class="input"
                 autocomplete="off"
@@ -176,11 +176,11 @@
                 locale="en-US"
                 fluid
               /><Message
-                v-if="$form.dailyRate?.invalid"
+                v-if="$form.hourlyRate?.invalid"
                 severity="error"
                 :dt="message"
               >
-                {{ $form.dailyRate.error.message }}
+                {{ $form.hourlyRate.error.message }}
               </Message>
             </div>
           </div>
@@ -237,7 +237,7 @@ const initialValues = ref({
   lastName: '',
   gender: '',
   role: '',
-  dailyRate: 0,
+  hourlyRate: 0,
 })
 
 const resolver = ({ values }) => {
@@ -261,10 +261,10 @@ const resolver = ({ values }) => {
   if (!values.gender) {
     errors.gender = [{ message: 'Gender is required.' }]
   }
-  if (!values.dailyRate) {
-    errors.dailyRate = [{ message: 'Hourly rate is required.' }]
-  } else if (parseFloat(values.dailyRate) < 100) {
-    errors.dailyRate = [{ message: 'Hourly rate must be at least $100.' }]
+  if (!values.hourlyRate) {
+    errors.hourlyRate = [{ message: 'Hourly rate is required.' }]
+  } else if (parseFloat(values.hourlyRate) < 100) {
+    errors.hourlyRate = [{ message: 'Hourly rate must be at least $100.' }]
   }
   return {
     errors,
@@ -275,11 +275,11 @@ const workerDto = reactive<WorkerDto>({
   firstName: '',
   lastName: '',
   gender: '',
-  dailyRate: 0,
+  hourlyRate: 0,
   role: '',
 })
 
-const { firstName, lastName, gender, dailyRate, role } = toRefs(workerDto)
+const { firstName, lastName, gender, hourlyRate, role } = toRefs(workerDto)
 const { execute, clear, data, error, status } = useFetch('/api/workers', {
   method: 'POST',
   body: workerDto,
@@ -323,7 +323,7 @@ function clearForm() {
   lastName.value = ''
   gender.value = ''
   role.value = ''
-  dailyRate.value = 0
+  hourlyRate.value = 0
 }
 
 const message = {

@@ -13,6 +13,7 @@ import {
 } from 'typeorm';
 import { ProjectPhoto } from './project-photo.entity';
 import { Attendance } from 'src/attendances/entities/attendance.entity';
+import { Payroll } from 'src/payroll/entities/payroll.entity';
 
 @Entity()
 export class Project {
@@ -43,7 +44,7 @@ export class Project {
   @ManyToOne(() => Manager, (manager) => manager.projectsAssigned)
   manager: Manager;
 
-  @ManyToMany(() => Worker, (worker) => worker.projects)
+  @ManyToMany(() => Worker, (worker) => worker.projects, { cascade: true })
   @JoinTable()
   workers: Worker[];
 
@@ -55,4 +56,7 @@ export class Project {
 
   @OneToMany(() => Attendance, (attendance) => attendance.project)
   attendance: Attendance[];
+
+  @OneToMany(() => Payroll, (payroll) => payroll.project)
+  payrolls: Payroll[];
 }

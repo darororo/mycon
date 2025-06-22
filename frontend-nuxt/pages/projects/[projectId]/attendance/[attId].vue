@@ -109,124 +109,141 @@
           },
         }"
       />
+      <Form @submit="onFormSubmit">
+        <div class="form-wrapper">
+          <DataTable
+            :value="datas"
+            scrollable
+            editMode="cell"
+            scroll-height="720px"
+            :pt="{
+              table: {
+                style: `
+            min-width: 80rem;
+          `,
+              },
+              tableContainer: {
+                style: `
+            max-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            border: 1px solid #e0e0e0;
+            font-size: 14px;
+          `,
+              },
+              header: {
+                style: `
+            position: sticky;
+            top: 0;
+            color: white;
+            font-weight: 600;
+            padding: 12px 20px;
+            z-index: 1;
+          `,
+              },
+              column: {
+                headercell: {
+                  style: `
+              color: white;
+              padding: 12px 20px;
+              font-weight: 600;
+            `,
+                },
+                bodycell: ({ state }) => ({
+                  style: `
+              padding: 16px 20px;
+              border-bottom: 1px solid #f0f0f0;
+              transition: background-color 0.2s;
+            `,
+                  class: [{ '!py-0': state['d_editing'] }],
+                }),
+              },
+              row: {
+                style: `transition: background-color 0.2s;`,
+              },
+            }"
+            :dt="tableDt"
+            @cell-edit-complete="onCellEditComplete"
+          >
+            <Column
+              header="No."
+              style="width: 10%"
+              :pt="{
+                headerCell: {
+                  style: 'border-top-left-radius: 8px; background-color: #3674B5;',
+                },
+              }"
+            >
+              <template #body="{ index }">
+                {{ index + 1 }}
+              </template>
+            </Column>
 
-      <DataTable
-        :value="users"
-        scrollable
-        editMode="cell"
-        scroll-height="720px"
-        :pt="{
-          table: {
-            style: `
-        min-width: 80rem;
-      `,
-          },
-          tableContainer: {
-            style: `
-        max-height: 100vh;
-        font-family: 'Montserrat', sans-serif;
-        border: 1px solid #e0e0e0;
-        font-size: 14px;
-      `,
-          },
-          header: {
-            style: `
-        position: sticky;
-        top: 0;
-        color: white;
-        font-weight: 600;
-        padding: 12px 20px;
-        z-index: 1;
-      `,
-          },
-          column: {
-            headercell: {
-              style: `
-          color: white;
-          padding: 12px 20px;
-          font-weight: 600;
-        `,
-            },
-            bodycell: ({ state }) => ({
-              style: `
-          padding: 16px 20px;
-          border-bottom: 1px solid #f0f0f0;
-          transition: background-color 0.2s;
-        `,
-              class: [{ '!py-0': state['d_editing'] }],
-            }),
-          },
-          row: {
-            style: `transition: background-color 0.2s;`,
-          },
-        }"
-        :dt="tableDt"
-        @cell-edit-complete="onCellEditComplete"
-      >
-        <Column
-          header="No."
-          style="width: 10%"
-          :pt="{
-            headerCell: {
-              style: 'border-top-left-radius: 8px; background-color: #3674B5;',
-            },
-          }"
-        >
-          <template #body="{ index }">
-            {{ index + 1 }}
-          </template>
-        </Column>
-
-        <Column
-          v-for="col of columns"
-          :key="col.field"
-          :field="col.field"
-          :header="col.header"
-          style="width: 30%"
-          :pt="{
-            headerCell: {
-              style:
-                col.field === 'name'
-                  ? 'background-color: #3A4750; color: white;'
-                  : col.field === 'role'
-                    ? 'background-color: #3A4750; color: white;'
-                    : col.field === 'hours'
+            <Column
+              v-for="col of columns"
+              :key="col.field"
+              :field="col.field"
+              :header="col.header"
+              style="width: 30%"
+              :pt="{
+                headerCell: {
+                  style:
+                    col.field === 'firstName'
                       ? 'background-color: #3A4750; color: white;'
-                      : '',
-            },
-          }"
-        >
-          <template #body="{ data, field }">
-            <div style="display: flex; flex-direction: column">
-              <span v-if="!isEditableField(field)">
-                {{ data[field] }}
-              </span>
+                      : col.field === 'lastName'
+                        ? 'background-color: #3A4750; color: white;'
+                        : col.field === 'role'
+                          ? 'background-color: #3A4750; color: white;'
+                          : col.field === 'hours'
+                            ? 'background-color: #3A4750; color: white;'
+                            : '',
+                },
+              }"
+            >
+              <template #body="{ data, field }">
+                <div style="display: flex; flex-direction: column">
+                  <span v-if="!isEditableField(field)">
+                    {{ data[field] }}
+                  </span>
 
-              <InputNumber
-                v-else
-                v-model="data[field]"
-                autofocus
-                :class="{ 'p-invalid': errors[data.id]?.[field] }"
-                placeholder="Enter hours worked (max 16)"
-              />
+                  <InputNumber
+                    v-else
+                    v-model="data[field]"
+                    autofocus
+                    :class="{ 'p-invalid': errors[data.id]?.[field] }"
+                    placeholder="Enter hours worked (max 16)"
+                  />
 
-              <Message
-                v-if="errors[data.id]?.[field]"
-                severity="error"
-                variant="simple"
-                :dt="message"
-              >
-                {{ errors[data.id][field] }}
-              </Message>
-            </div>
-          </template>
-        </Column>
-      </DataTable>
+                  <Message
+                    v-if="errors[data.id]?.[field]"
+                    severity="error"
+                    variant="simple"
+                    :dt="message"
+                  >
+                    {{ errors[data.id][field] }}
+                  </Message>
+                </div>
+              </template>
+            </Column>
+          </DataTable>
+          <div class="submit-button">
+            <Button
+              :dt="button"
+              :pt="{
+                root: {
+                  style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
+                },
+              }"
+              label="Submit"
+              type="submit"
+            />
+          </div>
+        </div>
+      </Form>
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
@@ -234,9 +251,11 @@ import InputNumber from 'primevue/inputnumber'
 import Message from 'primevue/message'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
+import type { AttendanceDto } from '~/interfaces/attendance.interface'
 
 const columns = ref([
-  { field: 'name', header: 'Name' },
+  { field: 'firstName', header: 'First Name' },
+  { field: 'lastName', header: 'Last Name' },
   { field: 'role', header: 'Role' },
   { field: 'hours', header: 'Hours' },
 ])
@@ -245,6 +264,64 @@ const users = ref([])
 const errors = ref({})
 const toast = useToast()
 const isEditableField = field => field === 'hours'
+
+// const { workers } = storeToRefs(useWorkerStore())
+// const {attendance} = storeToRefs(useAttendenceStore())
+const attendanceDto = reactive<AttendanceDto>({
+  hour: 0,
+  workerId: 0,
+  projectId: 0,
+  attendanceId: 0,
+})
+const { hour, workerId, projectId } = toRefs(attendanceDto)
+const {
+  data: datas,
+  error: fetchError,
+  execute: fetchWorkers,
+} = useFetch(`/api/projects/1/workers`, {
+  method: 'GET',
+})
+
+const {
+  data: dataPost,
+  error: PostError,
+  execute: fetchPosts,
+  status,
+} = useFetch(`/api/attendences/1/${attendanceId}`, {
+  method: 'POST',
+})
+
+onMounted(async () => {
+  await fetchWorkers()
+
+  // workers.value = data.value
+  // console.log(workers.value)
+})
+
+const onFormSubmit = async ({ valid }) => {
+  if (valid) {
+    await fetchPosts()
+
+    if (status.value === 'error') {
+      toast.add({
+        severity: 'error',
+        summary: 'Project Failed to Create',
+        detail: PostError.value,
+        life: 3000,
+      })
+    } else {
+      toast.add({
+        severity: 'success',
+        summary: 'Creation completed successfully.',
+        // detail: 'Your project has been created.',
+        detail: dataPost.value,
+        life: 3000,
+      })
+
+      // if (workers.value) workers.value.push(datas.value)
+    }
+  }
+}
 
 const onCellEditComplete = event => {
   const { data, newValue, field } = event
@@ -300,17 +377,6 @@ const onCellEditComplete = event => {
   }
 }
 
-// Fetch user data
-const fetchUsers = async () => {
-  const response = await fetch('https://6817864126a599ae7c3aa650.mockapi.io/api/users')
-  const result = await response.json()
-
-  users.value = result.map(user => ({
-    ...user,
-    hours: 0, // Default editable value
-  }))
-}
-
 const today = new Date()
 const formattedDate = ref(
   today.toLocaleDateString('en-GB', {
@@ -319,7 +385,6 @@ const formattedDate = ref(
     year: 'numeric',
   })
 )
-onMounted(fetchUsers)
 
 const message = {
   text: {
@@ -378,6 +443,37 @@ const tableDt = {
     },
   },
 }
+
+const button = {
+  primary: {
+    background: '#203a43',
+    color: 'white',
+    border: {
+      color: 'none',
+    },
+    hover: {
+      background: '#203a43',
+      color: 'white',
+      border: {
+        color: 'none',
+      },
+    },
+    active: {
+      background: '#203a43',
+      color: 'white',
+      border: {
+        color: 'none',
+      },
+    },
+  },
+  border: {
+    radius: '12px',
+  },
+  padding: {
+    x: '20px',
+    y: '10px',
+  },
+}
 </script>
 
 <style scoped>
@@ -391,7 +487,7 @@ const tableDt = {
   overflow-x: auto;
   width: 100%;
   max-width: auto;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   border-radius: 10px 10px 0 0;
 }
 ::v-deep(.p-inputnumber-input) {
@@ -419,5 +515,19 @@ const tableDt = {
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+.submit-button {
+  display: flex;
+  justify-content: flex-end;
+  border: none;
+  margin-top: 10px;
+}
+
+.form-wrapper {
+  /* padding: 32px 28px 18px 28px; */
+  font-family: 'Montserrat', sans-serif;
+  border-radius: 20px;
+  margin: 0 auto;
 }
 </style>
