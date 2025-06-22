@@ -10,10 +10,16 @@ export const useGoogleAuthStore = defineStore('googleAuth', () => {
     const signUpWithGoogle = async (token: string) => {
         loading.value = true
         error.value = null
+        console.log('call');
 
         try {
-            const response = await googleSignUpServices.googleSignUp({ token })
-            user.value = response.user || response // depends on API response shape
+            const response = await googleSignUpServices.googleSignUp(token)
+            // user.value = response.user || response // depends on API response shape
+
+            if (response.success) {
+                navigateTo('/dashboard')
+            }
+
         } catch (err: unknown) {
             error.value = err?.data?.message || err.message || 'Sign up failed'
         } finally {

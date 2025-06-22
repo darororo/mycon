@@ -20,7 +20,17 @@ export default defineNuxtConfig({
     public: {
       apiBase: process.env.API_HOST,
       fileStorage: process.env.STORAGE_ENDPOINT,
+      googleClientId: process.env.GOOGLE_CLIENT_ID
     },
+  },
+
+  head: {
+    script: [
+      {
+        src: 'https://accounts.google.com/gsi/client',
+        defer: true
+      }
+    ]
   },
 
   // alias: {
