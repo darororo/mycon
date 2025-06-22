@@ -10,7 +10,7 @@
         border-radius: 10px;
         border: 1px solid #ccc;
       "
-      :value="people"
+      :value="workers"
       :dt="myTable"
       scrollable
       scrollHeight="800px"
@@ -50,7 +50,7 @@
       </Column>
 
       <Column
-        field="rate"
+        field="hourlyRate"
         header="TOTAL"
         frozen
         alignFrozen="right"
@@ -67,7 +67,14 @@
 </template>
 
 <script setup lang="ts">
+const props = defineProps(['workers'])
+
 const { data: people } = await useFetch('https://6817396926a599ae7c39aeae.mockapi.io/users')
+
+onMounted(() => {
+  console.log(props.workers)
+})
+
 const myTable = ref({
   body: {
     cell: {
@@ -101,7 +108,8 @@ const myTable = ref({
 const myColumns = ref([
   { field: 'id', header: 'Name', frozen: true },
   { field: 'firstName', header: 'Name', frozen: true },
-  { field: 'position', header: 'Role', frozen: true },
+  { field: 'lastName', header: 'Name', frozen: true },
+  { field: 'role', header: 'Role', frozen: true },
   { field: 'rate', header: 'Rate', frozen: true },
 ])
 </script>

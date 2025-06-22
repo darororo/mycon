@@ -111,7 +111,7 @@
       </div>
     </div>
     <hr style="margin: 12px 0; border-color: #ccc" />
-    <PayrollTable />
+    <PayrollTable :workers="projects[0].workers" />
   </div>
 </template>
 
@@ -123,6 +123,8 @@ import PayrollTable from '~/components/table/PayrollTable.vue'
 const createFormVisible = ref(false)
 const selectedProject = ref('')
 const { data: projects } = useFetch('/api/projects')
+
+// const {data: workers} = useFetch('/api/projects')
 
 const days = ref([
   { day: 'Monday', code: 'MON' },

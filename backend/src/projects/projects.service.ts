@@ -64,7 +64,7 @@ export class ProjectsService {
 
   async findAll(): Promise<Project[]> {
     return this.projectRepository.find({
-      relations: { photos: true, client: true },
+      relations: { photos: true, client: true, workers: true },
     });
   }
 

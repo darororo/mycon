@@ -1,4 +1,4 @@
-import { IsEnum, IsNumber, IsString } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 import { WorkerRole } from '../enums/worker-role.enum';
 import { Gender } from 'src/common/enums/gender.enum';
 
@@ -18,6 +18,7 @@ export class CreateWorkerDto {
   @IsNumber()
   hourlyRate: number;
 
+  @IsOptional()
   @IsNumber()
   projectId: number;
 }

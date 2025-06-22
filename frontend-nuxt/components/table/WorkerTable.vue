@@ -35,7 +35,7 @@
       >
         <template #body="slotProps">
           <NuxtImg
-            :src="slotProps.data.profile || 'https://picsum.photos/id/237/200/300'"
+            :src="slotProps.data.profile || '/assets/default-worker.png'"
             :custom="true"
             alt="Profile"
             style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover"
@@ -43,14 +43,13 @@
           >
             <img
               v-if="isLoaded"
-              v-bind="imgAttrs"
               :src="src"
             />
             <img
               v-else
               height="30"
               width="30"
-              src="../../assets/loading.gif"
+              src="/static/assets/default-worker.png"
             />
           </NuxtImg>
         </template>

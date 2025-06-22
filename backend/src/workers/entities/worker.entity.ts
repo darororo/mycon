@@ -31,7 +31,7 @@ export class Worker {
   @Column({ type: 'decimal' })
   hourlyRate: number;
 
-  @ManyToMany(() => Project, (project) => project.workers)
+  @ManyToMany(() => Project, (project) => project.workers, { nullable: true })
   projects: Project[];
 
   @OneToMany(() => Payroll, (payroll) => payroll.worker)

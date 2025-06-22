@@ -16,13 +16,13 @@ export class WorkersService {
   ) {}
 
   async create(createWorkerDto: CreateWorkerDto): Promise<Worker> {
-    const project = await this.projectService.findOne(
-      createWorkerDto.projectId,
-    );
-
     const worker = this.workerRepository.create(createWorkerDto);
-
-    worker.projects = [project];
+    if (createWorkerDto.projectId) {
+      const project = await this.projectService.findOne(
+        createWorkerDto.projectId,
+      );
+      worker.projects = [project];
+    }
 
     return this.workerRepository.save(worker);
   }

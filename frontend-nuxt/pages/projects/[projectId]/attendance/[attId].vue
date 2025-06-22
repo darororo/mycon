@@ -260,10 +260,16 @@ const columns = ref([
   { field: 'hours', header: 'Hours' },
 ])
 
+const route = useRoute()
+
 const users = ref([])
 const errors = ref({})
 const toast = useToast()
 const isEditableField = field => field === 'hours'
+
+console.log(route.params)
+
+const attendanceId = route.params.attId
 
 // const { workers } = storeToRefs(useWorkerStore())
 // const {attendance} = storeToRefs(useAttendenceStore())
@@ -271,7 +277,7 @@ const attendanceDto = reactive<AttendanceDto>({
   hour: 0,
   workerId: 0,
   projectId: 0,
-  attendanceId: 0,
+  attendanceId: attendanceId,
 })
 const { hour, workerId, projectId } = toRefs(attendanceDto)
 const {
