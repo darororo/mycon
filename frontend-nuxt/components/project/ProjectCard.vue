@@ -18,7 +18,7 @@
             <img
               v-else
               width="360"
-              src="/assets/default-project.jpg"
+              src="/static/assets/default-project.jpg"
               class="project-image"
             />
           </NuxtLink>
