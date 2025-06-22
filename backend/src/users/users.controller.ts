@@ -40,9 +40,9 @@ export class UsersController {
   }
 
   @Get(':id')
-  @UseGuards(JwtRefreshAuthGuard)
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  // @UseGuards(JwtRefreshAuthGuard)
+  findOne(@Param('id') id: number) {
+    return this.usersService.findOne(id);
   }
 
   @Patch(':id')

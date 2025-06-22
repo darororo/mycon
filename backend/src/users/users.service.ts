@@ -10,7 +10,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import { UserPhoto } from './entities/user-photo.entity';
 import { UploadService } from 'src/upload/upload.service';
 import { hash } from 'crypto';
@@ -52,6 +52,15 @@ export class UsersService {
 
   async findOne(id: number): Promise<User> {
     const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw NotFoundException;
+    }
+
+    return user;
+  }
+
+  async findByEmail(email: string): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { email } });
     if (!user) {
       throw NotFoundException;
     }
@@ -103,5 +112,6 @@ export class UsersService {
     const user = await this.findOne(id);
     const hashed = await bcrypt.hash(token, 10);
     user.refreshToken = hashed;
+    await this.userRepository.save(user);
   }
 }
