@@ -1,9 +1,11 @@
-const api = useApi()
 export const googleSignUpServices = {
-    googleSignUp: async (payload: string) => {
-        return await api('/auth/google-signup', {
+    googleSignUp: async (idToken: string) => {
+        const api = useApi()
+        return await api('/google-sign-up', {
             method: 'POST',
-            body: payload
+            body: {
+                idToken: idToken
+            }
         })
     }
 }
