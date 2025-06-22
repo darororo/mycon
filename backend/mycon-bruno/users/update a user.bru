@@ -1,0 +1,31 @@
+meta {
+  name: update a user
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseUrl}}/users/1
+  body: multipartForm
+  auth: inherit
+}
+
+body:json {
+  {
+    "username": "kimJongTrois",
+    "firstName": "John",
+    "lastName": "Cena",
+    "email": "johncena@gmail.com",
+    "password": "123abcABC$"
+  }
+}
+
+body:multipart-form {
+  jsonData: '''
+    {
+      "username": "Bruno Man",
+      "firstName": "Bruno Mom"
+    }
+  '''
+  files: @file(/home/daro/fish.jpg)
+}

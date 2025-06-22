@@ -1,24 +1,12 @@
 <template>
-  <!-- Table Card -->
   <div class="table-container card">
     <DataTable
       :value="data"
       table-style="min-width: 100%;"
       :dt="table"
-      :pt="{
-        tableContainer: {
-          style: `
-          max-height: 100vh;
-          border-top-left-radius: 10px;
-          border-top-right-radius: 10px;
-          font-family: 'Montserrat', sans-serif;
-          font-size: 14px;
-          `,
-        },
-      }"
       scrollable
       show-gridlines=""
-      scroll-height="600px"
+      scroll-height="720px"
       v-model:editingRows="editingRows"
       editMode="row"
       data-key="id"
@@ -27,12 +15,11 @@
       <Column
         field="id"
         header="ID"
-        :pt="{}"
       />
 
       <Column
-        field="worker"
-        header="Worker"
+        field="task"
+        header="Task"
       >
         <template #editor="{ data, field }">
           <InputText
@@ -42,24 +29,24 @@
         </template>
       </Column>
       <Column
-        field="gender"
-        header="Gender"
+        field="amount"
+        header="Amount"
       >
         <template #editor="{ data, field }">
           <InputNumber v-model="data[field]" />
         </template>
       </Column>
       <Column
-        field="role"
-        header="Role"
+        field="unit"
+        header="Unit"
       >
         <template #editor="{ data, field }">
           <InputText v-model="data[field]" />
         </template>
       </Column>
       <Column
-        field="project"
-        header="Project"
+        field="category"
+        header="Category"
       >
         <template #editor="{ data, field }">
           <InputText v-model="data[field]" />
@@ -130,26 +117,6 @@ const table = {
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
   font-weight: 600;
-}
-
-.table-container::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-.table-container::-webkit-scrollbar-track {
-  background: #f0f0f0;
-  border-radius: 8px;
-}
-
-.table-container::-webkit-scrollbar-thumb {
-  background-color: #cbd5e1;
-  border-radius: 8px;
-  border: 2px solid #f0f0f0;
-}
-
-.table-container::-webkit-scrollbar-thumb:hover {
-  background-color: #94a3b8;
 }
 
 .table-container {

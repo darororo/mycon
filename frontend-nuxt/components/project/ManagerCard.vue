@@ -64,10 +64,113 @@
         </div>
 
         <div
-          class="availability text-black bg-[#e8f5e9]"
-          :class="[{ 'bg-red-200': !person.availability, 'text-black': !person.availability }]"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 20px;
+            gap: 16px;
+          "
         >
-          <span>{{ person.availability ? 'Available' : 'Not Available' }}</span>
+          <div
+            style="display: flex; align-items: center; justify-content: center"
+            class="availability text-black bg-[#e8f5e9] flex"
+            :class="[{ 'bg-orange-200': !person.availability, 'text-black': !person.availability }]"
+          >
+            <span>{{ person.availability ? 'Available' : 'Busy' }}</span>
+          </div>
+          <div>
+            <MultiSelect
+              style="
+                height: 32px;
+                border-radius: 100px;
+                margin-bottom: 20px;
+                font-size: 12px;
+                font-weight: 500;
+                display: flex;
+                width: 200px;
+                max-width: 200px;
+                align-items: center;
+                font-family: 'Montserrat', sans-serif;
+              "
+              v-model="selectedCities"
+              display="chip"
+              :options="project"
+              optionLabel="name"
+              filter
+              placeholder="Select Projects"
+              :maxSelectedLabels="3"
+              :pt="{
+                pcOptionCheckbox: {
+                  box: {
+                    style: `
+                      background-color: #f1f1f1;
+                      color: black;
+                      border-color: #ccc;
+                    `,
+                  },
+                },
+                pcHeaderCheckbox: {
+                  box: {
+                    style: `
+                      background-color: #f1f1f1;
+                      color: black;
+                      border-color: #ccc;
+                    `,
+                  },
+                },
+                pcFilter: {
+                  root: {
+                    style: `
+                      background-color: white;
+                      color: black;
+                      border-color: #ccc;
+                      padding: 0;
+                      font-size: 14px;
+                      padding: 6px 12px;
+
+                    `,
+                  },
+                },
+              }"
+              :dt="{
+                overlay: { background: 'red' },
+                chip: {
+                  border: {
+                    radius: '100px',
+                  },
+                },
+                option: {
+                  color: 'black',
+                  focus: {
+                    color: 'black',
+                    background: '#eee',
+                  },
+                },
+                optionLabel: {
+                  root: {
+                    style: `
+                      font-family: 'Montserrat', sans-serif;
+                      font-size: 14px;
+                    `,
+                  },
+                },
+                background: 'white',
+                border: {
+                  color: 'grey',
+                },
+                placeholder: {
+                  color: 'black',
+                },
+                color: 'black',
+                focus: {
+                  border: {
+                    color: 'grey',
+                  },
+                },
+              }"
+            />
+          </div>
         </div>
       </template>
     </Card>
@@ -75,6 +178,12 @@
 </template>
 
 <script setup>
+const selectedCities = ref()
+const project = ref([
+  { name: 'Skyline Tower', code: 'ST' },
+  { name: 'State Stone House', code: 'SSH' },
+  { name: 'Nova Vila', code: 'NV' },
+])
 const props = defineProps({
   person: {
     type: Object,
@@ -98,6 +207,14 @@ const toggleSelected = () => {
 </script>
 
 <style scoped>
+::v-deep(.p-chip) {
+  background-color: #f1f1f1;
+  color: black;
+}
+::v-deep(.p-chip-remove-icon) {
+  color: black;
+}
+
 .tick {
   position: absolute;
   top: -12px;
@@ -111,7 +228,6 @@ const toggleSelected = () => {
   align-items: center;
   justify-content: center;
   z-index: 100;
-  /* box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); */
 }
 
 .person-info {
@@ -157,7 +273,7 @@ const toggleSelected = () => {
   display: flex;
   padding: 6px 20px;
   border-radius: 100px;
-  margin: 0 20px 20px 20px;
+  margin-bottom: 20px;
   border: 1px solid grey;
 }
 

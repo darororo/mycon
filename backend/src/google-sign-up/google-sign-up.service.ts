@@ -1,0 +1,115 @@
+// google-sign-up.service.ts
+import {
+  Injectable,
+  BadRequestException,
+  ConflictException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { OAuth2Client } from 'google-auth-library';
+import { User } from '../users/entities/user.entity';
+import { UserRole } from '../users/enums/role.enum';
+import * as bcrypt from 'bcrypt';
+import { Gender } from 'src/common/enums/gender.enum';
+import { AuthService } from 'src/auth/auth.service';
+import { Response } from 'express';
+
+@Injectable()
+export class GoogleSignUpService {
+  private googleClient: OAuth2Client;
+
+  constructor(
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+    private authService: AuthService,
+  ) {
+    this.googleClient = new OAuth2Client(
+      process.env.EMAIL_CLIENT_ID,
+      process.env.EMAIL_CLIENT_SECRET,
+    );
+  }
+
+  async registerWithGoogle(idToken: string, response: Response): Promise<any> {
+    try {
+      const ticket = await this.googleClient.verifyIdToken({
+        idToken,
+        audience: process.env.EMAIL_CLIENT_ID,
+      });
+
+      console.log(ticket, 'tivk');
+
+      const payload = ticket.getPayload();
+      if (!payload) {
+        throw new BadRequestException('Invalid Google token');
+      }
+      // console.log(payload, 'mean gender');
+
+      // Check if user exists
+      const existingUser = await this.userRepository.findOne({
+        where: { email: payload.email },
+      });
+
+      if (existingUser) {
+        const signData = {
+          userId: existingUser.id,
+          username: existingUser.username,
+          email: existingUser.email,
+        };
+        return this.authService.signIn(signData, response);
+      }
+
+      // Generate password first (await the Promise)
+      const hashedPassword = await this.generateRandomPassword();
+
+      // Create new user - make sure all required fields match your User entity
+      const newUser = this.userRepository.create({
+        email: payload.email!,
+        firstName: payload.given_name || '',
+        lastName: payload.family_name || '',
+        username: this.generateUsername(
+          payload.name || '',
+          payload.email || '',
+        ),
+        password: hashedPassword, // Now it's a string, not a Promise
+        role: UserRole.Client, // Make sure this enum exists
+        gender: Gender.Other, // Make sure this enum exists
+      });
+
+      const savedUser = await this.userRepository.save(newUser);
+      const { password, ...userWithoutPassword } = savedUser;
+      //
+      const signData = {
+        userId: savedUser.id,
+        username: savedUser.username,
+        email: savedUser.email,
+      };
+      return this.authService.signIn(signData, response);
+      // return userWithoutPassword;
+    } catch (error) {
+      console.error('Google registration error:', error); // Add logging
+      if (
+        error instanceof ConflictException ||
+        error instanceof BadRequestException
+      ) {
+        throw error;
+      }
+      throw new BadRequestException('Failed to register with Google: ');
+    }
+  }
+
+  private generateUsername(name: string, email: string): string {
+    const baseUsername = name
+      ? name.toLowerCase().replace(/\s+/g, '_')
+      : email.split('@')[0];
+
+    const randomSuffix = Math.random().toString(36).substring(2, 8);
+    return `${baseUsername}_${randomSuffix}`;
+  }
+
+  private async generateRandomPassword(): Promise<string> {
+    const randomPassword =
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15);
+    return await bcrypt.hash(randomPassword, 10);
+  }
+}

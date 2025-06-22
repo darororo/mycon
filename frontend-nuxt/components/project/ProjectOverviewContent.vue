@@ -17,12 +17,14 @@
           >Project Overview</label
         >
       </template>
-      <div class="panel-body w-full">
-        <div class="flex flex-row h-full w-auto">
-          <div class="flex flex-col justify-between pr-20">
-            <p style="line-height: 22px; font-size: 13px; font-weight: 400; padding-bottom: 30px">
-              {{ content }}
-            </p>
+      <div class="panel-body w-full justify-between">
+        <div class="flex flex-row w-full h-full">
+          <div class="flex flex-col justify-between w-full">
+            <div class="w-full">
+              <p style="line-height: 22px; font-size: 13px; font-weight: 400; padding-bottom: 30px">
+                {{ project.description }}
+              </p>
+            </div>
 
             <div class="user">
               <img
@@ -34,8 +36,9 @@
               >
             </div>
           </div>
+
           <div
-            class="h-[40%] w-[40%] md:h-[240px] md:w-full max-w-lg bg-black mr-4 rounded-lg overflow-hidden"
+            class="h-[360px] w-[360px] md:h-[240px] md:w-full max-w-lg rounded-lg overflow-hidden pl-6"
           >
             <LMap
               ref="map"
@@ -73,6 +76,7 @@ const panel = {
   },
 }
 defineProps({
+  project: { type: Object },
   content: {
     type: String,
     default:

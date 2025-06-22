@@ -13,7 +13,7 @@
       }"
       :dt="cardDt"
     >
-      <template #content>
+      <!-- <template #content>
         <div class="card-content">
           <div class="user-info">
             <img
@@ -28,6 +28,82 @@
             name="material-symbols:close"
           />
         </div>
+      </template> -->
+      <template #content>
+        <Accordion
+          :dt="{
+            panel: {
+              border: {
+                width: '0',
+              },
+            },
+            content: {
+              background: 'white',
+              border: {
+                width: '0',
+              },
+              padding: '0',
+            },
+            header: {
+              padding: '20px 0 10px 0',
+              background: 'white',
+              hover: {
+                background: 'white',
+              },
+              active: {
+                background: 'white',
+                hover: {
+                  background: 'white',
+                },
+              },
+              toggle: {
+                icon: {
+                  active: {
+                    color: 'black',
+                    hover: {
+                      color: 'black',
+                    },
+                  },
+                  hover: {
+                    color: 'black',
+                  },
+                  color: 'black',
+                },
+              },
+            },
+          }"
+          value="0"
+        >
+          <AccordionPanel value="0">
+            <AccordionHeader
+              ><div class="user-info">
+                <img
+                  class="avatar"
+                  :src="item.urlImg"
+                  alt="User Avatar"
+                />
+                <div class="username-block">
+                  <span class="username">{{ item.username }} </span>
+                  <span class="role">Manager</span>
+                </div>
+              </div></AccordionHeader
+            >
+            <AccordionContent>
+              <hr class="divider" />
+              <div class="project-section">
+                <label class="project-label">Active Projects</label>
+                <ul class="project-list">
+                  <li
+                    v-for="(project, idx) in item.projects"
+                    :key="idx"
+                  >
+                    {{ project }}
+                  </li>
+                </ul>
+              </div>
+            </AccordionContent>
+          </AccordionPanel>
+        </Accordion>
       </template>
     </Card>
   </div>
@@ -36,18 +112,61 @@
 <script setup>
 const cardDt = {
   body: {
-    padding: '8px 10px',
+    padding: '0 20px 10px 20px',
   },
 }
 
 defineProps({
   item: {
     type: Object,
+    required: true,
   },
 })
 </script>
 
 <style scoped>
+.username-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.username {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  color: black;
+  font-weight: 600;
+}
+.role {
+  font-size: 10px;
+  font-weight: 600;
+  color: grey;
+}
+.divider {
+  border: 1px solid #ccc;
+  margin: 10px 0;
+}
+.project-section {
+  margin: 12px 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+}
+
+.project-label {
+  color: black;
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.project-list {
+  color: black;
+  margin: 10px 0 0 0;
+  padding: 0 0 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  list-style: decimal;
+}
 .card-content {
   display: flex;
   align-items: center;

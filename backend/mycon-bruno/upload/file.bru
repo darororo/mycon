@@ -1,0 +1,15 @@
+meta {
+  name: file
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/upload
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  files: @file(/home/daro/Documents/Pics/Shitposts/462892076_3943569195872564_5404187740269570469_n.jpg|/home/daro/Documents/Pics/Shitposts/463485204_122118384110505791_8301956308105140314_n.jpg)
+}

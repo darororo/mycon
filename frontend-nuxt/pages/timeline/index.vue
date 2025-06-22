@@ -21,14 +21,14 @@
               font-family: 'Montserrat', sans-serif;
             "
           >
-            Timelime
+            Timeline
           </h2>
           <div style="flex-direction: row; gap: 10px; display: flex">
             <Select
-              v-model="selectedCity"
-              :options="cities"
-              optionLabel="name"
-              placeholder="Filter Timeline"
+              v-model="selectedProject"
+              :options="project"
+              optionLabel="project"
+              placeholder="Filter Project"
               :dt="select"
               :pt="{
                 root: {
@@ -44,6 +44,7 @@
                 },
               }"
               label="Add Timeline"
+              @click="createFormVisible = true"
             >
               <template #icon>
                 <Icon
@@ -57,9 +58,10 @@
         <hr style="margin: 12px 0; border-color: #ccc" />
 
         <div class="grid grid-cols-1 gap-4">
+          <h1>{{ error }}</h1>
           <div
             v-for="post in posts"
-            :key="post"
+            :key="post.id"
             class="flex flex-row justify-center w-full h-full"
           >
             <div class="min-w-[360px] max-w-[540px] max-h-[1000px]">
@@ -68,20 +70,64 @@
           </div>
         </div>
       </div>
-      <div style="border-radius: 10px; padding: 20px 0; border: 1px solid #ccc">
+      <div
+        style="border-radius: 10px; padding: 20px 0; border: 1px solid #ccc; margin-bottom: 12px"
+      >
         <h1 class="worklist-list-title">All Workflows</h1>
         <div class="sticky top-20 h-50">
           <SideWorkflow />
         </div>
       </div>
     </div>
+    <TimelineForm v-model="createFormVisible" />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import PostCard from '~/components/post/PostCard.vue'
+import TimelineForm from '~/components/project/form/TimelineForm.vue'
 import SideWorkflow from '~/components/workflow/SideWorkflow.vue'
+
+const createFormVisible = ref(false)
+const { posts } = storeToRefs(usePostStore())
+// const { posts, postsDummy } = postStore
+
+const { data, error, execute } = useFetch('/api/posts', {
+  method: 'GET',
+})
+
+const project = ref([
+  {
+    project: 'Residential Building Construction',
+    code: 'CONST001',
+  },
+  {
+    project: 'Bridge Renovation Project',
+    code: 'CONST002',
+  },
+  {
+    project: 'Road Expansion Program',
+    code: 'CONST003',
+  },
+  {
+    project: 'High-Rise Apartment Development',
+    code: 'CONST004',
+  },
+  {
+    project: 'Shopping Mall Construction',
+    code: 'CONST005',
+  },
+])
+
+onMounted(async () => {
+  await execute()
+  posts.value = data.value
+  console.log(posts.value)
+})
+
 const select = {
+  color: 'black',
   background: 'white',
   border: {
     color: '#ccc',
@@ -104,20 +150,20 @@ const select = {
 }
 const button = {
   primary: {
-    background: '#222831',
+    background: '#203a43',
     color: 'white',
     border: {
       color: 'none',
     },
     hover: {
-      background: '#222831',
+      background: '#203a43',
       color: 'white',
       border: {
         color: 'none',
       },
     },
     active: {
-      background: '#222831',
+      background: '#203a43',
       color: 'white',
       border: {
         color: 'none',
@@ -134,36 +180,6 @@ const button = {
 }
 const selectedCity = ref()
 const cities = ref([{ name: 'New York', code: 'NY' }])
-
-const posts = [
-  {
-    userName: 'Yem Daro',
-    userRole: 'Client',
-    postTime: '8:30am-5:00pm',
-    postStatus:
-      'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock',
-    avatarUrl: 'https://i.pinimg.com/736x/83/6c/a5/836ca5b55fd7af5f4870bfa931b8a082.jpg',
-    postImageUrl: 'https://i.pinimg.com/736x/3c/bd/0f/3cbd0f6640f168461388437b7ccb9058.jpg',
-  },
-  {
-    userName: 'Yem Daro',
-    userRole: 'Client',
-    postTime: '8:30am-5:00pm',
-    postStatus:
-      'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur',
-    avatarUrl: 'https://i.pinimg.com/736x/83/6c/a5/836ca5b55fd7af5f4870bfa931b8a082.jpg',
-    postImageUrl: 'https://i.pinimg.com/736x/3c/bd/0f/3cbd0f6640f168461388437b7ccb9058.jpg',
-  },
-  {
-    userName: 'Yem Daro',
-    userRole: 'Client',
-    postTime: '8:30am-5:00pm',
-    postStatus:
-      'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur',
-    avatarUrl: 'https://i.pinimg.com/736x/83/6c/a5/836ca5b55fd7af5f4870bfa931b8a082.jpg',
-    postImageUrl: 'https://i.pinimg.com/736x/3c/bd/0f/3cbd0f6640f168461388437b7ccb9058.jpg',
-  },
-]
 </script>
 
 <style scoped>

@@ -45,7 +45,8 @@
               style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
             },
           }"
-          label="Create new Task"
+          label="Create Task"
+          @click="createFormVisible = true"
         >
           <template #icon>
             <Icon
@@ -57,13 +58,17 @@
       </div>
     </div>
     <hr style="margin: 12px 0; border-color: #ccc" />
-    <DailyTaskTable />
+    <DailyTaskTable style="margin-bottom: 12px" />
+    <DailyTaskForm v-model="createFormVisible" />
   </div>
 </template>
 
 <script setup>
+import DailyTaskForm from '~/components/project/form/DailyTaskForm.vue'
 import TaskSummary from '~/components/project/taskdaily/TaskSummary.vue'
 import DailyTaskTable from '~/components/table/DailyTaskTable.vue'
+
+const createFormVisible = ref(false)
 
 const select = {
   background: 'white',
@@ -88,20 +93,20 @@ const select = {
 }
 const button = {
   primary: {
-    background: '#222831',
+    background: '#203a43',
     color: 'white',
     border: {
       color: 'none',
     },
     hover: {
-      background: '#222831',
+      background: '#203a43',
       color: 'white',
       border: {
         color: 'none',
       },
     },
     active: {
-      background: '#222831',
+      background: '#203a43',
       color: 'white',
       border: {
         color: 'none',

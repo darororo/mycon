@@ -1,17 +1,28 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-import { options } from '#build/eslint.config.mjs'
+// import { options } from '#build/eslint.config.mjs'
 import Aura from '@primeuix/themes/aura'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
+
   routeRules: {
     '/': {
       redirect: '/dashboard',
     },
   },
+
+  runtimeConfig: {
+    apiHost: process.env.API_HOST,
+    fileStorage: process.env.STORAGE_ENDPOINT,
+    public: {
+      apiBase: process.env.API_HOST,
+      fileStorage: process.env.STORAGE_ENDPOINT,
+    },
+  },
+
   // alias: {
   //   "~": "/",
   //   "@": "/<srcDir>",
@@ -44,6 +55,7 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     '@primevue/nuxt-module',
     '@nuxtjs/leaflet',
+    '@pinia/nuxt',
   ],
 
   fonts: {
@@ -55,7 +67,7 @@ export default defineNuxtConfig({
       theme: {
         preset: Aura,
         options: {
-          darkModeSelector: 'none',
+          // darkModeSelector: 'none',
         },
       },
     },

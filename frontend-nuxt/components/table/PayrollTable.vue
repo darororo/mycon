@@ -9,8 +9,9 @@
         overflow-x: hidden;
         border-radius: 10px;
         border: 1px solid #ccc;
+        margin-bottom: 12px;
       "
-      :value="people"
+      :value="workers"
       :dt="myTable"
       scrollable
       scrollHeight="800px"
@@ -50,7 +51,7 @@
       </Column>
 
       <Column
-        field="rate"
+        field="hourlyRate"
         header="TOTAL"
         frozen
         alignFrozen="right"
@@ -67,13 +68,21 @@
 </template>
 
 <script setup lang="ts">
+const props = defineProps(['workers'])
+
 const { data: people } = await useFetch('https://6817396926a599ae7c39aeae.mockapi.io/users')
+
+onMounted(() => {
+  console.log(props.workers)
+})
+
 const myTable = ref({
   body: {
     cell: {
       border: {
         color: '#ccc',
       },
+      padding: '24px',
     },
   },
   header: {
@@ -83,6 +92,7 @@ const myTable = ref({
         color: '#ccc',
       },
       padding: '10px',
+      color: 'white',
     },
   },
   row: {
@@ -91,7 +101,7 @@ const myTable = ref({
   column: {
     title: {
       font: {
-        weight: '500',
+        weight: '600',
       },
     },
   },
@@ -100,7 +110,8 @@ const myTable = ref({
 const myColumns = ref([
   { field: 'id', header: 'Name', frozen: true },
   { field: 'firstName', header: 'Name', frozen: true },
-  { field: 'position', header: 'Role', frozen: true },
+  { field: 'lastName', header: 'Name', frozen: true },
+  { field: 'role', header: 'Role', frozen: true },
   { field: 'rate', header: 'Rate', frozen: true },
 ])
 </script>
@@ -108,30 +119,5 @@ const myColumns = ref([
 <style scoped>
 ::v-deep(.p-datatable-column-title) {
   width: 90px;
-}
-
-.table-container::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-.table-container::-webkit-scrollbar-track {
-  background: #f0f0f0;
-  border-radius: 8px;
-}
-
-.table-container::-webkit-scrollbar-thumb {
-  background-color: #cbd5e1;
-  border-radius: 8px;
-  border: 2px solid #f0f0f0;
-}
-
-.table-container::-webkit-scrollbar-thumb:hover {
-  background-color: #94a3b8;
-}
-
-.table-container {
-  scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 #f0f0f0;
 }
 </style>

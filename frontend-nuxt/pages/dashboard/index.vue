@@ -1,4 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import CategoryExpenseChart from '~/components/dashboard/CategoryExpenseChart.vue'
+import ExpenseCard from '~/components/dashboard/ExpenseCard.vue'
+import NotificationCard from '~/components/dashboard/NotificationCard.vue'
+import TotalExpenseChart from '~/components/dashboard/TotalExpenseChart.vue'
+import TopProjectItem from '~/components/TopProjectItem/TopProjectItem.vue'
+</script>
 
 <template>
   <div class="max-w-[1500px]">
@@ -15,27 +21,27 @@
       >
         Dashboard
       </h2>
-      <DashboardNotificationCard />
+      <NotificationCard />
     </div>
     <hr style="margin: 12px 0; border-color: #ccc" />
     <div
       style="margin-bottom: 10px; gap: 10px"
-      class="flex flex-row gap-2 rounded-md border-2"
+      class="flex flex-row gap-2 rounded-md"
     >
-      <DashboardExpenseCard />
+      <ExpenseCard />
       <div class="w-full max-w-[800px] h-auto">
-        <DashboardTotalExpenseChart />
+        <TotalExpenseChart />
       </div>
     </div>
 
     <div class="flex flex-row gap-2">
       <div class="w-full">
-        <DashboardCategoryExpenseChart title="Labor Expense" />
+        <CategoryExpenseChart title="Labor Expense" />
       </div>
       <div class="w-full">
-        <DashboardCategoryExpenseChart title="Material Expense" />
+        <CategoryExpenseChart title="Material Expense" />
       </div>
     </div>
-    <TopProjectItem />
+    <TopProjectItem style="margin-bottom: 12px" />
   </div>
 </template>

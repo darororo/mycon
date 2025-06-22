@@ -1,63 +1,137 @@
 <template>
-  <div
-    style="width: 100rem"
-    class="max-w-[1500px]"
-  >
+  <div>
     <div
-      style="display: flex; flex-direction: row; justify-content: space-between; align-items: end"
+      style="width: 100rem"
+      class="max-w-[1500px]"
     >
-      <h2
-        style="
-          font-weight: 600;
-          font-size: 22px;
-          color: black;
-          font-family: 'Montserrat', sans-serif;
-        "
+      <div
+        style="display: flex; flex-direction: row; justify-content: space-between; align-items: end"
       >
-        Inventory
-      </h2>
-      <div style="flex-direction: row; gap: 10px; display: flex">
-        <Select
-          v-model="selectedCity"
-          :options="cities"
-          optionLabel="name"
-          placeholder="Filter Category"
-          :dt="select"
-          :pt="{
-            root: {
-              style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
-            },
-          }"
-        />
-        <Button
-          :dt="button"
-          :pt="{
-            root: {
-              style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
-            },
-          }"
-          label="Create Item"
+        <h2
+          style="
+            font-weight: 600;
+            font-size: 22px;
+            color: black;
+            font-family: 'Montserrat', sans-serif;
+          "
         >
-          <template #icon>
-            <Icon
-              style="font-size: 20px; background-color: white"
-              name="ic:round-plus"
-            />
-          </template>
-        </Button>
+          Inventory
+        </h2>
+        <div style="flex-direction: row; gap: 10px; display: flex">
+          <Select
+            v-model="selectedCategory"
+            :options="categories"
+            optionLabel="category"
+            placeholder="Filter Category"
+            :dt="select"
+            :pt="{
+              root: {
+                style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
+              },
+            }"
+          />
+          <Button
+            :dt="button"
+            :pt="{
+              root: {
+                style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
+              },
+            }"
+            label="Create Item"
+            @click="createFormVisible = true"
+          >
+            <template #icon>
+              <Icon
+                style="font-size: 20px; background-color: white"
+                name="ic:round-plus"
+              />
+            </template>
+          </Button>
+        </div>
       </div>
+      <hr style="margin: 12px 0; border-color: #ccc" />
+      <InventoryTable style="margin-bottom: 12px" />
     </div>
-    <hr style="margin: 12px 0; border-color: #ccc" />
-    <div>
-      <InventoryTable />
-    </div>
+
+    <CreateInvenForm v-model="createFormVisible" />
   </div>
 </template>
 
 <script setup>
 import InventoryTable from '~/components/inventory/table/InventoryTable.vue'
+import CreateInvenForm from '~/components/inventory/form/CreateInvenForm.vue'
+
+const createFormVisible = ref(false)
+
+const categories = ref([
+  {
+    category: 'Cement',
+    code: 'CM',
+  },
+  {
+    category: 'Steel',
+    code: 'ST',
+  },
+  {
+    category: 'Concrete',
+    code: 'CN',
+  },
+  {
+    category: 'Brick',
+    code: 'BR',
+  },
+  {
+    category: 'Sand',
+    code: 'SD',
+  },
+  {
+    category: 'Gravel',
+    code: 'GR',
+  },
+  {
+    category: 'Timber',
+    code: 'TB',
+  },
+  {
+    category: 'Plywood',
+    code: 'PW',
+  },
+  {
+    category: 'Roofing',
+    code: 'RF',
+  },
+  {
+    category: 'Tiles',
+    code: 'TL',
+  },
+  {
+    category: 'Paint',
+    code: 'PT',
+  },
+  {
+    category: 'Glass',
+    code: 'GL',
+  },
+  {
+    category: 'Insulation',
+    code: 'IN',
+  },
+  {
+    category: 'Electrical',
+    code: 'EL',
+  },
+  {
+    category: 'Plumbing',
+    code: 'PL',
+  },
+  {
+    category: 'Hardware',
+    code: 'HW',
+  },
+])
 
 const select = {
+  color: 'black',
   background: 'white',
   border: {
     color: '#ccc',
@@ -80,20 +154,20 @@ const select = {
 }
 const button = {
   primary: {
-    background: '#222831',
+    background: '#203a43',
     color: 'white',
     border: {
       color: 'none',
     },
     hover: {
-      background: '#222831',
+      background: '#203a43',
       color: 'white',
       border: {
         color: 'none',
       },
     },
     active: {
-      background: '#222831',
+      background: '#203a43',
       color: 'white',
       border: {
         color: 'none',

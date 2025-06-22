@@ -1,7 +1,7 @@
 <template>
   <div class="table-container card">
     <DataTable
-      :value="data"
+      :value="inventory"
       tableStyle="min-width: 50rem"
       scrollable
       show-gridlines=""
@@ -24,11 +24,11 @@
       @row-edit-save="onRowEditSave"
     >
       <Column
-        field="itemName"
+        field="name"
         header="Item Name"
         :pt="{
           headerCell: {
-            style: 'border-top-left-radius: 10px',
+            style: 'border-top-left-radius: 10px;',
           },
         }"
       >
@@ -71,7 +71,7 @@
             fluid
           /> </template
       ></Column>
-      <Column
+      <!-- <Column
         field="restockDate"
         header="Last Restock Date"
       >
@@ -83,40 +83,16 @@
             showIcon
           />
         </template>
-        <!-- <template #editor="{ data, field }">
-          <Calendar
-            :modelValue="data[field]"
-            dateFormat="yy-mm-dd"
-            showIcon
-          />
-        </template> -->
-      </Column>
+      </Column> -->
       <Column
-        field="status"
+        field="quantity"
         header="Status"
         style="width: 14%"
       >
-        <template #editor="{ data, field }">
-          <Select
-            v-model="data[field]"
-            :options="statuses"
-            optionLabel="label"
-            optionValue="value"
-            placeholder="Select a Status"
-            fluid
-          >
-            <template #option="slotProps">
-              <Tag
-                :value="slotProps.option.value"
-                :severity="getStatusLabel(slotProps.option.value)"
-              />
-            </template>
-          </Select>
-        </template>
         <template #body="slotProps">
           <Tag
-            :value="slotProps.data.status"
-            :class="getStatusLabel(slotProps.data.status)"
+            :value="getStatus(slotProps.data.quantity)"
+            :class="getStatusLabel(slotProps.data.quantity)"
             style="font-family: 'Montserrate', sans-serif"
           />
         </template>
@@ -132,10 +108,20 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 
-const { data } = await useFetch('https://6817864126a599ae7c3aa650.mockapi.io/api/users')
+const { inventory } = storeToRefs(useInventoryStore())
+const { data, error, execute } = useFetch('/api/inventory', {
+  method: 'GET',
+})
+
+onMounted(async () => {
+  await execute()
+
+  inventory.value = data.value
+  console.log(inventory.value)
+})
 
 const editingRows = ref([])
 const onRowEditSave = event => {
@@ -158,6 +144,7 @@ const inventoryTable = {
         color: '#ccc',
         width: '2px',
       },
+      color: 'white',
     },
   },
   row: {
@@ -175,26 +162,30 @@ const inventoryTable = {
   },
 }
 
-const getStatusLabel = status => {
-  switch (status) {
-    case 'INSTOCK':
-      return 'tag-instock'
+const getStatus = (quantity: number) => {
+  if (quantity <= 0) {
+    return 'OUT OF STOCK'
+  } else if (quantity < 10) {
+    return 'LOW STOCK'
+  } else {
+    return 'IN STOCK'
+  }
+}
 
-    case 'LOWSTOCK':
-      return 'tag-lowstock'
-
-    case 'OUTOFSTOCK':
-      return 'tag-outofstock'
-
-    default:
-      return 'tag default'
+const getStatusLabel = (quantity: number) => {
+  if (quantity <= 0) {
+    return 'tag-outofstock'
+  } else if (quantity < 10) {
+    return 'tag-lowstock'
+  } else {
+    return 'tag-instock'
   }
 }
 // set defualt stock
-data.value = data.value.map(item => ({
-  ...item,
-  status: item.status || 'INSTOCK',
-}))
+// data.value = data.value.map(item => ({
+//   ...item,
+//   status: item.status || 'INSTOCK',
+// }))
 
 // date format
 function formatDate(date) {
@@ -238,32 +229,5 @@ function formatDate(date) {
 ::v-deep(.p-select-label) {
   padding: 6px 20px;
   font-size: 14px;
-}
-
-/* customize scrollbar */
-
-.table-container::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-.table-container::-webkit-scrollbar-track {
-  background: #f0f0f0;
-  border-radius: 8px;
-}
-
-.table-container::-webkit-scrollbar-thumb {
-  background-color: #cbd5e1;
-  border-radius: 8px;
-  border: 2px solid #f0f0f0;
-}
-
-.table-container::-webkit-scrollbar-thumb:hover {
-  background-color: #94a3b8;
-}
-
-.table-container {
-  scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 #f0f0f0;
 }
 </style>

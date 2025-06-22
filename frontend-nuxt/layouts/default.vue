@@ -5,7 +5,7 @@ import MenuComponent from '~/components/navigation/MenuComponent.vue'
 </script>
 
 <template>
-  <div class="relative overflow-x-clip">
+  <div class="relative overflow-x-clip p-[10px]">
     <div class="fixed z-30 w-full pr-4 top-0">
       <TopbarComponent />
     </div>
@@ -26,6 +26,12 @@ import MenuComponent from '~/components/navigation/MenuComponent.vue'
     </div>
   </div>
 </template>
+
+<!-- <template>
+  <div>
+    <slot></slot>
+  </div>
+</template> -->
 
 <style scoped>
 .welcome-page {

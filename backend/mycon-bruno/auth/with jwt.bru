@@ -1,0 +1,15 @@
+meta {
+  name: with jwt
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/users
+  body: none
+  auth: inherit
+}
+
+headers {
+  Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTc0OTUzNTM0NSwiZXhwIjoxNzQ5NjIxNzQ1fQ.xn5qtpbdoVyn5Oq0MP9fRHa_CDthsispt8Hy4n0z-_E
+}

@@ -1,0 +1,35 @@
+meta {
+  name: update project
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseUrl}}/projects/1
+  body: multipartForm
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "project 01",
+    "description": "hello world",
+    "location": "VIETNAM",
+    "longtitude": 168,
+    "latitude": 360,
+    "price": 2400
+  }
+}
+
+body:multipart-form {
+  jsonData: '''
+    {
+      "name": "Koh Kong 01",
+      "description": "hello world",
+      "location": "Cambodia",
+      "longtitude": 168,
+      "latitude": 360,
+      "price": 2400
+    }
+  '''
+}

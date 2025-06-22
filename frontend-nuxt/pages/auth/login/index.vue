@@ -1,154 +1,290 @@
+<template>
+  <div class="login-wrapper">
+    <Card
+      :dt="cardDt"
+      class="glass-card"
+    >
+      <template #content>
+        <div class="login-container">
+          <div class="header">
+            <h1 class="title">Log In</h1>
+            <p class="subtitle">Login to access your personal dashboard</p>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Email</label>
+            <EmailInputField v-model="userLoginDto.email" />
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Password</label>
+            <PassInputField v-model="userLoginDto.password" />
+          </div>
+
+          <div class="options">
+            <div style="display: flex; align-items: center; gap: 10px">
+              <Checkbox
+                :dt="{
+                  checked: {
+                    background: 'white',
+                    border: {
+                      color: 'white',
+                    },
+                    hover: {
+                      border: {
+                        color: 'white',
+                      },
+                      background: 'white',
+                    },
+                  },
+                }"
+                v-model="size"
+                input-id="size_small"
+                name="size"
+                value="Small"
+                size="small"
+              />
+              <label
+                for="size_small"
+                class="remember-label"
+                >Remember Me</label
+              >
+            </div>
+            <a
+              href="#"
+              class="forgot-password"
+              >Forgot Password?</a
+            >
+          </div>
+
+          <LoginButton @click="router.push({ name: 'dashboard' })" />
+
+          <div class="divider">
+            <div class="line" />
+            <span class="divider-text">Or log in with</span>
+            <div class="line" />
+          </div>
+
+          <Button
+            :dt="buttonStyle"
+            class="social-button"
+          >
+            <Icon
+              name="flat-color-icons:google"
+              style="font-size: 26px"
+            />
+            <span class="button-text">Google</span>
+          </Button>
+
+          <Button
+            :dt="buttonStyle"
+            class="social-button"
+            style="margin: 14px 0"
+          >
+            <Icon
+              name="logos:facebook"
+              style="font-size: 26px"
+            />
+            <span class="button-text">Facebook</span>
+          </Button>
+
+          <div class="signup-prompt">
+            <label class="signup-label">
+              Don't have an account?
+              <NuxtLink
+                :to="{ name: 'auth-signup' }"
+                class="signup-link"
+                >Sign Up
+              </NuxtLink>
+            </label>
+          </div>
+        </div>
+      </template>
+    </Card>
+  </div>
+</template>
+
 <script setup lang="ts">
-definePageMeta({
-  layout: 'auth',
+import EmailInputField from '~/components/auth/EmailInputField.vue'
+import LoginButton from '~/components/auth/LoginButton.vue'
+import PassInputField from '~/components/auth/PassInputField.vue'
+import type { UserLogin } from '~/interfaces/auth.interface'
+
+const userLoginDto = reactive(<UserLogin>{
+  email: '',
+  password: '',
 })
+
+definePageMeta({
+  layout: false,
+})
+
 const router = useRouter()
 
-function switchPage() {
-  router.push({ name: 'auth-signup' })
+const cardDt = {
+  background: 'white',
+  border: {
+    color: 'black',
+    radius: 'none',
+  },
+  body: {
+    padding: '80px 100px',
+  },
+}
+
+const buttonStyle = {
+  primary: {
+    background: 'white',
+    border: {
+      color: '#ccc',
+    },
+    hover: {
+      background: 'white',
+      border: {
+        color: '#ccc',
+      },
+    },
+    active: {
+      background: '#f1f1f1',
+      border: {
+        color: '#ccc',
+      },
+    },
+  },
 }
 </script>
 
-<template>
-  <NuxtLayout name="auth">
-    <div class="login-welcome-section">
-      <h1 class="welcome-title">WELCOME<br />BACK!</h1>
-      <p class="welcome-description">We hope you will have a nice<br />experience with our app</p>
-    </div>
-    <div class="form-container">
-      <h2 class="auth-title">Login</h2>
-      <div class="auth-form-section">
-        <AuthInputField placeholder="Email or Username">
-          <Icon
-            name="ic:baseline-person"
-            size="42px"
-          />
-        </AuthInputField>
-        <AuthInputField placeholder="Password">
-          <Icon
-            name="ic:baseline-lock"
-            size="42px"
-          />
-        </AuthInputField>
-      </div>
-      <AuthButton
-        class="auth-button"
-        @click="switchPage"
-        label="Login"
-      />
-      <p class="toggle-text">
-        Don't have an account?
-        <NuxtLink
-          :to="{ name: 'auth-signup' }"
-          class="text-blue-400 font-semibold underline"
-        >
-          Sign Up
-        </NuxtLink>
-      </p>
-      <div class="social-login-buttons">
-        <button class="social-button">
-          <Icon
-            name="flat-color-icons:google"
-            size="40px"
-          />
-        </button>
-        <button class="social-button">
-          <Icon
-            name="logos:facebook"
-            size="40px"
-          />
-        </button>
-      </div>
-    </div>
-  </NuxtLayout>
-</template>
-
 <style scoped>
-.login-page {
-  background-image: url(../assets/auth/bg.jpg);
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
+.login-wrapper {
+  font-family: 'Montserrat', sans-serif;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 98.2vh;
-  padding: 0 100px 100px;
-}
-
-.login-welcome-section {
-  display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  animation: gradientShift 15s ease infinite;
 }
 
-.welcome-title {
-  font-family: 'Montserrat Subrayada', sans-serif;
-  font-size: 66px;
-  font-weight: 700;
-  color: #333;
+.glass-card {
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+  padding: 20px;
 }
 
-.welcome-description {
-  color: #333;
-  font-size: 26px;
-  font-family: 'Montserrat', sans-serif;
-  line-height: 2.5rem;
-  margin-top: 0px;
-}
-
-.auth-form-section {
-  display: flex;
-  flex-direction: column;
-  line-height: 100px;
-  padding-left: 20px;
-}
-
-.auth-title {
-  font-family: 'Montserrat', sans-serif;
-  color: white;
-  font-size: 40px;
-  margin-bottom: 60px;
-}
-
-.form-container {
+.login-container {
+  width: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.auth-button {
-  margin-top: 30px;
+.header {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.toggle-text {
+.title {
   font-family: 'Montserrat', sans-serif;
-  font-size: 20px;
-  margin-top: 50px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
 }
 
-.signup-text > a {
-  padding-left: 4px;
-  font-weight: 600;
-  text-decoration: none;
+.subtitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  color: #ccc;
 }
 
-.social-login-buttons {
+.input-group {
   display: flex;
-  gap: 30px;
-  margin-top: 30px;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.input-label {
+  color: #ffffff;
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-weight: 400;
+}
+
+.options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 16px 0 24px;
+  font-size: 14px;
+}
+
+.remember-label,
+.forgot-password {
+  color: #ffffff;
+}
+
+.forgot-password {
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.forgot-password:hover {
+  color: #00c3ff;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 24px 0;
+}
+
+.line {
+  flex-grow: 1;
+  height: 1px;
+  background-color: #ccc;
+}
+
+.divider-text {
+  margin: 0 16px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .social-button {
-  display: flex;
+  width: 100%;
   justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  border: none;
-  height: 70px;
-  width: 70px;
-  cursor: pointer;
-  background-color: rgba(255, 255, 255, 0.1);
+  background: #fff;
+  color: #333;
+  transition: transform 0.2s ease;
+  border-radius: 8px;
+}
+.social-button:hover {
+  color: #333;
+}
+.button-text {
+  margin-left: 10px;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+}
+
+.signup-prompt {
+  margin-top: 24px;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.signup-link {
+  color: #00c3ff;
+  text-decoration: underline;
+  margin-left: 6px;
 }
 </style>

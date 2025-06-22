@@ -1,0 +1,38 @@
+meta {
+  name: create project
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/projects
+  body: multipartForm
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "project 01",
+    "description": "hello world",
+    "location": "CAMBODIA",
+    "longtitude": 168,
+    "latitude": 360,
+    "price": 2400,
+    "userId": 1
+  }
+}
+
+body:multipart-form {
+  jsonData: '''
+    {
+      "name": "project 01",
+      "description": "hello world",
+      "location": "CAMBODIA",
+      "longtitude": 168,
+      "latitude": 360,
+      "price": 2400,
+      "clientId": 1
+    }
+  '''
+  files: @file(/home/daro/Documents/e.png)
+}

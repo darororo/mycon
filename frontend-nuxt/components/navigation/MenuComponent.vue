@@ -3,7 +3,7 @@
     style="
       gap: 10px;
       padding: 40px 20px;
-      background-color: #222831;
+      background: #203a43;
       border-radius: 10px;
       flex-direction: column;
       justify-content: center;
@@ -33,7 +33,7 @@
             custom
           >
             <a
-              class="menu-item cursor-pointer"
+              :class="['menu-item', isActiveRoute(item.route) ? 'active-tab' : '']"
               style="
                 display: flex;
                 align-items: center;
@@ -182,9 +182,15 @@
 <script setup>
 import { ref } from 'vue'
 import { Icon } from '@iconify/vue'
+import { useRoute } from 'vue-router'
 
-// Hide management panel if the user role is Client
+const route = useRoute()
+
 const isClient = false
+
+const isActiveRoute = r => {
+  return r && r.name === route.name
+}
 
 const mainMenu = ref([
   { label: 'Dashboard', icon: 'material-symbols:dashboard-rounded', route: { name: 'dashboard' } },
@@ -194,13 +200,14 @@ const mainMenu = ref([
     icon: ['ix:user-management-settings-filled', 'solar:alt-arrow-down-bold'],
     visible: !isClient,
     items: [
+      { label: 'Users', icon: 'mdi:user', route: { name: 'management-user' } },
       { label: 'Workers', icon: 'mdi:worker', route: { name: 'management-worker' } },
       { label: 'Payrolls', icon: 'carbon:user-role', route: { name: 'management-payroll' } },
     ],
   },
   {
     label: 'Project',
-    icon: ['eos-icons:project', 'solar:alt-arrow-down-bold'],
+    icon: ['ant-design:project-filled', 'solar:alt-arrow-down-bold'],
     items: [
       {
         label: 'Create Project',
@@ -239,7 +246,7 @@ const mainMenu = ref([
       name: 'inventory',
     },
   },
-  { label: 'Billing', icon: 'medical-icon:i-billing', route: { name: 'billing' } },
+  { label: 'Billing', icon: 'stash:billing-info', route: { name: 'billing' } },
 ])
 
 const userMenu = ref([
@@ -301,11 +308,17 @@ const menu = {
 }
 .menu-sec {
   position: relative;
-  /* right: 40px; */
   padding: 10px 20px;
+  color: white;
 }
 .user-menu {
-  /* margin-top: 20px; */
   margin-top: 160px;
+}
+.active-tab {
+  background-color: white;
+  color: black;
+}
+.active-tab .icon {
+  filter: brightness(1.2);
 }
 </style>

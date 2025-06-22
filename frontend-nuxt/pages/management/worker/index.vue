@@ -1,62 +1,96 @@
 <template>
-  <div
-    style="width: 100rem"
-    class="max-w-[1500px]"
-  >
+  <div>
     <div
-      style="display: flex; flex-direction: row; justify-content: space-between; align-items: end"
+      style="width: 100rem"
+      class="max-w-[1500px]"
     >
-      <h2
-        style="
-          font-weight: 600;
-          font-size: 22px;
-          color: black;
-          font-family: 'Montserrat', sans-serif;
-        "
+      <div
+        style="display: flex; flex-direction: row; justify-content: space-between; align-items: end"
       >
-        Worker
-      </h2>
-      <div style="flex-direction: row; gap: 10px; display: flex">
-        <Select
-          v-model="selectedCity"
-          :options="cities"
-          optionLabel="name"
-          placeholder="Filter Worker"
-          :dt="select"
-          :pt="{
-            root: {
-              style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
-            },
-          }"
-        />
-        <Button
-          :dt="button"
-          :pt="{
-            root: {
-              style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
-            },
-          }"
-          label="Add Worker"
+        <h2
+          style="
+            font-weight: 600;
+            font-size: 22px;
+            color: black;
+            font-family: 'Montserrat', sans-serif;
+          "
         >
-          <template #icon>
-            <Icon
-              style="font-size: 20px; background-color: white"
-              name="ic:round-plus"
-            />
-          </template>
-        </Button>
+          Worker
+        </h2>
+        <div style="flex-direction: row; gap: 10px; display: flex">
+          <Select
+            v-model="selectedProject"
+            :options="projects"
+            optionLabel="name"
+            placeholder="Filter by Project"
+            :dt="select"
+            :pt="{
+              root: {
+                style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
+              },
+            }"
+          />
+          <Select
+            v-model="selectedRole"
+            :options="roles"
+            optionLabel="role"
+            placeholder="Filter by Role"
+            :dt="select"
+            :pt="{
+              root: {
+                style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
+              },
+            }"
+          />
+
+          <Button
+            :dt="button"
+            :pt="{
+              root: {
+                style: 'font-weight: 500; font-size: 14px; font-family: Montserrat, san serif',
+              },
+            }"
+            label="Add Worker"
+            @click="createFormVisible = true"
+          >
+            <template #icon>
+              <Icon
+                style="font-size: 20px; background-color: white"
+                name="ic:round-plus"
+              />
+            </template>
+          </Button>
+        </div>
+      </div>
+      <hr style="margin: 12px 0; border-color: #ccc" />
+      <div style="margin-bottom: 12px">
+        <WorkerTable
+          :roleFilter="selectedRole"
+          :projectFilter="selectedProject"
+        />
       </div>
     </div>
-    <hr style="margin: 12px 0; border-color: #ccc" />
-    <div>
-      <WorkerTable />
-    </div>
+    <CreateWorkerForm v-model="createFormVisible" />
   </div>
 </template>
 
 <script setup>
-import WorkerTable from '~/components/table/DailyTaskTable.vue'
+import CreateWorkerForm from '~/components/management/form/CreateWorkerForm.vue'
+import WorkerTable from '~/components/table/WorkerTable.vue'
+
+const createFormVisible = ref(false)
+const selectedRole = ref(null)
+const selectedProject = ref(null)
+
+const roles = ref([
+  { role: 'Senior', code: 'S' },
+  { role: 'Normal', code: 'N' },
+])
+
+const { data: projects } = useFetch('/api/projects')
+
 const select = {
+  color: 'black',
   background: 'white',
   border: {
     color: '#ccc',
@@ -77,22 +111,23 @@ const select = {
     y: '10px',
   },
 }
+
 const button = {
   primary: {
-    background: '#222831',
+    background: '#203a43',
     color: 'white',
     border: {
       color: 'none',
     },
     hover: {
-      background: '#222831',
+      background: '#203a43',
       color: 'white',
       border: {
         color: 'none',
       },
     },
     active: {
-      background: '#222831',
+      background: '#203a43',
       color: 'white',
       border: {
         color: 'none',
@@ -108,3 +143,22 @@ const button = {
   },
 }
 </script>
+
+<style scoped>
+.button {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 20px 0;
+}
+.creative-button {
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  border-radius: 6px;
+  width: 50%;
+  max-width: 700px;
+  background-color: #007bff;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+</style>

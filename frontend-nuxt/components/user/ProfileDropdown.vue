@@ -28,6 +28,8 @@
           <div class="user-info-card">
             <div class="user-info">
               <Avatar
+                @click="router.push({ name: 'users', params: { id: 1 } })"
+                style="cursor: pointer"
                 :image="user.avatar"
                 shape="circle"
                 class="user-profile"
@@ -99,6 +101,8 @@
 </template>
 
 <script setup>
+const router = useRouter()
+
 const emit = defineEmits(['logout', 'settings', 'help'])
 
 const dropdown = ref(null)
@@ -167,7 +171,7 @@ const actions = [
 }
 
 .blue-screen {
-  background-color: #333;
+  background-color: #203a43;
   border-radius: 20px;
 }
 
