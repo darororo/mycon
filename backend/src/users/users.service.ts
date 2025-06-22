@@ -108,7 +108,7 @@ export class UsersService {
     return this.userRepository.remove(user);
   }
 
-  async setRefreshToken(id: number, token: string) {
+  async setAndHashRefreshToken(id: number, token: string) {
     const user = await this.findOne(id);
     const hashed = await bcrypt.hash(token, 10);
     user.refreshToken = hashed;
