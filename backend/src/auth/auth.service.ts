@@ -8,7 +8,7 @@ export class AuthService {
   constructor(
     private userService: UsersService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async authenticate(input: AuthInput): Promise<AuthResult> {
     const user = await this.validateUser(input);
@@ -36,11 +36,17 @@ export class AuthService {
     };
 
     const accessToken = await this.jwtService.signAsync(tokenPayload);
+    let authUser
+    if (accessToken) {
+      authUser = await this.userService.findOne(user.userId)
+    }
 
     return {
       accessToken,
       username: user.username,
       userId: user.userId,
+      // success: true,
+      user: authUser,
     };
   }
 }
