@@ -6,9 +6,10 @@
     style="color: black"
   >
     <Avatar
-      :image="user.avatar"
+      :image="user?.photos?.[0]?.url"
       shape="circle"
       style="width: auto; height: 36px"
+      referrerpolicy="no-referrer"
     />
   </Button>
   <Popover
@@ -30,12 +31,12 @@
               <Avatar
                 @click="router.push({ name: 'users', params: { id: 1 } })"
                 style="cursor: pointer"
-                :image="user.avatar"
+                :image="user?.photos?.[0]?.url"
                 shape="circle"
                 class="user-profile"
               />
               <div class="user-details">
-                <h3>{{ user.name }}</h3>
+                <h3>{{ user.firstname }} {{ user.lastname }}</h3>
                 <p>{{ user.role }}</p>
                 <div class="contact-info">
                   <p>
@@ -57,25 +58,6 @@
             </div>
           </div>
           <hr class="line" />
-          <div>
-            <div
-              v-for="(company, index) in companies"
-              :key="index"
-              class="company-item"
-            >
-              <div class="company-info">
-                <Avatar
-                  :image="company.logo"
-                  shape="circle"
-                  class="list-user-profile"
-                />
-                <span>{{ company.name }}</span>
-              </div>
-              <button class="menu-button">
-                <i class="pi pi-ellipsis-h"></i>
-              </button>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -100,8 +82,23 @@
   </Popover>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const router = useRouter()
+
+interface UserData {
+  id?: number
+  firstname: string
+  lastname: string
+  role: string
+  email: string
+  location: string
+  photos?: Array<{ url: string }>
+}
+
+// Accept user as prop (changed from userData to user)
+const props = defineProps<{
+  user: UserData
+}>()
 
 const emit = defineEmits(['logout', 'settings', 'help'])
 
@@ -114,25 +111,6 @@ const handleAction = type => {
   dropdown.value.hide()
   emit(type)
 }
-
-const user = {
-  name: 'Jonh Cena',
-  role: 'Super admin',
-  email: 'cenajohn169@gmail.com',
-  location: 'Cambodia',
-  avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
-}
-
-const companies = [
-  {
-    name: 'Global Innovation CJ',
-    logo: 'https://randomuser.me/api/portraits/men/91.jpg',
-  },
-  {
-    name: 'Visionary Venture LT',
-    logo: 'https://randomuser.me/api/portraits/men/32.jpg',
-  },
-]
 
 const actions = [
   {

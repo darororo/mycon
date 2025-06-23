@@ -58,10 +58,10 @@
             <hr class="line-right" />
             <div class="account-menu">
               <!-- <img :src="urlProfile" alt="profile" class="user-profile" /> -->
-              <UserProfileDropdown />
+              <UserProfileDropdown :user="userData"/>
               <div class="username-role">
-                <span class="name">{{ name }}</span>
-                <span class="role">{{ role }}</span>
+                <span class="name">{{ userData.firstName }} {{ userData.lastName }}</span>
+                <span class="role">{{ userData.role }}</span>
               </div>
               <Icon
                 name="ion:chevron-down-sharp"
@@ -78,6 +78,13 @@
 
 <script setup>
 import Toolbar from 'primevue/toolbar'
+import { getFromCache } from '~/composables/useCache'
+
+const userData = ref({})
+onMounted(() => {
+  const cacheData = getFromCache('userStore')
+  userData.value = cacheData.value
+})
 defineProps({
   language: {
     type: String,
@@ -93,7 +100,8 @@ defineProps({
   },
   urlProfile: {
     type: String,
-    default: 'https://i.pinimg.com/736x/8f/86/50/8f8650ffcdfda6f1767a99565d3a4402.jpg',
+    // default: 'https://i.pinimg.com/736x/8f/86/50/8f8650ffcdfda6f1767a99565d3a4402.jpg',
+    default: '',
   },
 })
 </script>

@@ -33,17 +33,7 @@ export class GoogleSignUpController {
         return {
             success: true,
             message: 'User registered successfully',
-            user,
+            data: user,
         };
-    }
-
-    @Get('test')
-    findAll() {
-        return "kab dav";
-    }
-
-    @Get()
-    getRoot() {
-        return "Google sign-up module is working!";
     }
 }
