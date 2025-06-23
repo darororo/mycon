@@ -1,11 +1,17 @@
+/* eslint-disable prettier/prettier */
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { AuthInput, AuthResult, SignInData } from './types/auth-data.type';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
   constructor(
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
     private userService: UsersService,
     private jwtService: JwtService,
   ) { }
@@ -38,7 +44,11 @@ export class AuthService {
     const accessToken = await this.jwtService.signAsync(tokenPayload);
     let authUser
     if (accessToken) {
-      authUser = await this.userService.findOne(user.userId)
+      authUser = await this.userRepository
+        .createQueryBuilder('user')
+        .leftJoinAndSelect('user.photos', 'photos')
+        .where('user.id = :id', { id: user.userId })
+        .getOne();
     }
 
     return {
