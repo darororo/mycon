@@ -99,7 +99,6 @@ export class AuthService {
       username: user.username,
       userId: user.userId,
       // success: true,
-      user: authUser,
     };
   }
 

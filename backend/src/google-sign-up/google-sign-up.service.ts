@@ -1,4 +1,4 @@
-// google-sign-up.service.ts
+/* eslint-disable prettier/prettier */
 import {
   Injectable,
   BadRequestException,
@@ -12,6 +12,7 @@ import { UserRole } from '../users/enums/role.enum';
 import * as bcrypt from 'bcrypt';
 import { Gender } from 'src/common/enums/gender.enum';
 import { AuthService } from 'src/auth/auth.service';
+import { UserPhoto } from 'src/users/entities/user-photo.entity';
 
 @Injectable()
 export class GoogleSignUpService {
@@ -41,7 +42,6 @@ export class GoogleSignUpService {
       if (!payload) {
         throw new BadRequestException('Invalid Google token');
       }
-      // console.log(payload, 'mean gender');
 
       // Check if user exists
       const existingUser = await this.userRepository.findOne({
@@ -59,6 +59,14 @@ export class GoogleSignUpService {
       // Generate password first (await the Promise)
       const hashedPassword = await this.generateRandomPassword();
 
+      const photos: UserPhoto[] = [];
+      const photoData = this.photoRepository.create();
+      photoData.url = payload.picture || '';
+      photoData.thumbnail = payload.picture || '';
+
+      const photo = await this.photoRepository.save(photoData);
+      photos.push(photo);
+
       // Create new user - make sure all required fields match your User entity
       const newUser = this.userRepository.create({
         email: payload.email!,
@@ -68,22 +76,21 @@ export class GoogleSignUpService {
           payload.name || '',
           payload.email || '',
         ),
-        password: hashedPassword, // Now it's a string, not a Promise
-        role: UserRole.Client, // Make sure this enum exists
-        gender: Gender.Other, // Make sure this enum exists
+        password: hashedPassword,
+        role: UserRole.Client,
+        gender: Gender.Other,
+        photos: photos,
       });
 
       const savedUser = await this.userRepository.save(newUser);
-      const { password, ...userWithoutPassword } = savedUser;
-      //
+
       const signData = {
         userId: savedUser.id,
         username: savedUser.username,
       };
       return this.authService.signIn(signData);
-      // return userWithoutPassword;
     } catch (error) {
-      console.error('Google registration error:', error); // Add logging
+      console.error('Google registration error:', error);
       if (
         error instanceof ConflictException ||
         error instanceof BadRequestException
