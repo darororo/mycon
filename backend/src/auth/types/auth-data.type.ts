@@ -2,6 +2,7 @@ export type AuthResult = {
   email: string;
   userId: number;
   username: string;
+  user: object;
 };
 export type AuthInput = {
   email: string;

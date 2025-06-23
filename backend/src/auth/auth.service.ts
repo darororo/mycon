@@ -98,6 +98,8 @@ export class AuthService {
       email: user.email,
       username: user.username,
       userId: user.userId,
+      // success: true,
+      user: authUser,
     };
   }
 
