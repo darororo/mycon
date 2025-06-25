@@ -130,10 +130,11 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useToast } from 'primevue/usetoast'
 import UploadImage from './UploadImage.vue'
 import { useImageUploader } from '@/composables/useImageUploader'
+import type { TimelinePost } from '~/interfaces/timeline-post.interface'
 
 const toast = useToast()
 const createFormVisible = defineModel()
@@ -158,13 +159,15 @@ const resolver = ({ values }) => {
   }
 }
 
+const postStore = usePostStore()
+
 const postDto = ref({
   description: description,
 })
 
 const formData = ref(new FormData())
 
-const { data, status, clear, execute, error } = useFetch(`/api/posts`, {
+const { data, status, clear, execute, error } = useFetch<TimelinePost>(`/api/posts`, {
   method: 'POST',
   body: formData,
   watch: false,
@@ -200,12 +203,13 @@ const handleSubmit = async ({ valid }) => {
         detail: data.value,
         life: 3000,
       })
-
-      createFormVisible.value = false
-      clear()
-      clearImageData()
-      formData.value = new FormData()
+      postStore.posts.unshift(data.value)
     }
+
+    createFormVisible.value = false
+    clear()
+    clearImageData()
+    formData.value = new FormData()
   }
 }
 

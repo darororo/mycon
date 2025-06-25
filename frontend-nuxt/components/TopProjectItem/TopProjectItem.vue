@@ -34,9 +34,13 @@
                   style="font-weight: 600; font-size: 16px; font-family: 'Montserrat', sans-serif"
                   >{{ project.description }}</label
                 >
-                <div style="cursor: pointer; gap: 6px; align-items: center; display: flex">
-                  <span style="color: red; font-size: 14px; font-family: 'Montserrat', sans-serif"
-                    >See details</span
+                <div
+                  style="cursor: pointer; gap: 6px; align-items: center; disp`/projects/${project.id}`lay: flex"
+                >
+                  <NuxtLink
+                    :to="`/projects/${project.id}`"
+                    style="color: red; font-size: 14px; font-family: 'Montserrat', sans-serif"
+                    >See details</NuxtLink
                   >
                   <Icon
                     style="color: red; font-size: 24px"
