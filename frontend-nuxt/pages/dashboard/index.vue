@@ -4,6 +4,13 @@ import ExpenseCard from '~/components/dashboard/ExpenseCard.vue'
 import NotificationCard from '~/components/dashboard/NotificationCard.vue'
 import TotalExpenseChart from '~/components/dashboard/TotalExpenseChart.vue'
 import TopProjectItem from '~/components/TopProjectItem/TopProjectItem.vue'
+import type { IProject } from '~/interfaces/project.interface'
+
+const projectStore = useProjectStore()
+const { data: projectData, pending } = useFetch<IProject[]>('/api/projects', { lazy: true })
+if (projectData.value) {
+  projectStore.projects = projectData.value
+}
 </script>
 
 <template>
@@ -42,6 +49,13 @@ import TopProjectItem from '~/components/TopProjectItem/TopProjectItem.vue'
         <CategoryExpenseChart title="Material Expense" />
       </div>
     </div>
-    <TopProjectItem style="margin-bottom: 12px" />
+    <div v-if="pending">Loading Projects ...</div>
+    <TopProjectItem
+      v-else
+      v-for="project in projectStore.projects"
+      :key="project.id"
+      :project="project"
+      style="margin-bottom: 12px"
+    />
   </div>
 </template>

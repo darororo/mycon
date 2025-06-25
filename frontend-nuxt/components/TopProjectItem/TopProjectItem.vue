@@ -10,17 +10,13 @@
       },
     }"
   >
-    <Card
-      v-for="item in topProject"
-      :key="item.id"
-      :dt="card"
-    >
+    <Card :dt="card">
       <template #content>
         <div style="gap: 20px; justify-content: space-between; display: flex">
           <img
             style="border-radius: 10px; width: 270px; height: auto"
-            :src="item.UrlmgProject"
-            alt="UrlProject"
+            :src="`/api/storage/${project.photos[0].thumbnail}`"
+            alt="Project Photo"
           />
           <div
             style="
@@ -36,7 +32,7 @@
               <div style="justify-content: space-between; align-items: center; display: flex">
                 <label
                   style="font-weight: 600; font-size: 16px; font-family: 'Montserrat', sans-serif"
-                  >{{ item.topic }}</label
+                  >{{ project.description }}</label
                 >
                 <div style="cursor: pointer; gap: 6px; align-items: center; display: flex">
                   <span style="color: red; font-size: 14px; font-family: 'Montserrat', sans-serif"
@@ -58,12 +54,12 @@
                   font-family: 'Montserrat', sans-serif;
                 "
               >
-                {{ item.content }}
+                {{ project.description }}
               </p>
             </div>
             <div style="justify-content: space-between; align-items: center; display: flex">
               <label style="font-size: 14px; font-family: 'Montserrat', sans-serif"
-                >Location: <span>{{ item.location }}</span></label
+                >Location: <span>{{ project.location }}</span></label
               >
               <label
                 style="
@@ -72,7 +68,8 @@
                   display: flex;
                   font-family: 'Montserrat', sans-serif;
                 "
-                >{{ item.username }}<span style="color: red">{{ item.role }}</span></label
+                >{{ project.client.username
+                }}<span style="color: red">{{ project.client.role }}</span></label
               >
             </div>
           </div>
@@ -82,44 +79,13 @@
   </ScrollPanel>
 </template>
 
-<script setup>
-defineProps({
-  topProject: {
-    type: Array,
-    default: () => [
-      {
-        id: 1,
-        topic: 'Artisan Builder',
-        UrlmgProject: 'https://i.pinimg.com/736x/ac/68/8a/ac688a8dc7078aac637dc9a2f3717419.jpg',
-        content:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae enim aliquid, explicabo ratione qui, fugiat doloribus minima veritatis quaerat similique deserunt maxime exercitationem dolorem impedit repellat debitis cupiditate.',
-        location: 'Phnom Penh, Cambodia',
-        username: 'Taiki Inomata',
-        role: '(Manager)',
-      },
-      {
-        id: 2,
-        topic: 'Cityscape Builder',
-        UrlmgProject: 'https://i.pinimg.com/736x/6f/02/98/6f029862a78d73e48618d80629029d78.jpg',
-        content:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae enim aliquid, explicabo ratione qui, fugiat doloribus minima veritatis quaerat similique deserunt maxime exercitationem dolorem impedit repellat debitis cupiditate.',
-        location: 'Tokyo, Japan',
-        username: 'Kaguya Shinomiya',
-        role: '(Owner)',
-      },
-      {
-        id: 3,
-        topic: 'Keystone Construction',
-        UrlmgProject: 'https://i.pinimg.com/736x/4c/9c/2c/4c9c2c5c604da4d7588ed561a8a3f79e.jpg',
-        content:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae enim aliquid, explicabo ratione qui, fugiat doloribus minima veritatis quaerat similique deserunt maxime exercitationem dolorem impedit repellat debitis cupiditate.',
-        location: 'Bankok, Thailand',
-        username: 'Sawako Kuronuma',
-        role: '(Client)',
-      },
-    ],
-  },
-})
+<script setup lang="ts">
+import type { IProject } from '~/interfaces/project.interface'
+
+const props = defineProps<{
+  project: IProject
+}>()
+
 const card = {
   background: 'none',
   color: 'black',
