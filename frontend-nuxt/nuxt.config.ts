@@ -56,6 +56,7 @@ export default defineNuxtConfig({
     '@primevue/nuxt-module',
     '@nuxtjs/leaflet',
     '@pinia/nuxt',
+    '@sidebase/nuxt-auth',
   ],
 
   fonts: {
