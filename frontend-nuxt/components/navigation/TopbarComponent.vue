@@ -57,11 +57,27 @@
             </div>
             <hr class="line-right" />
             <div class="account-menu">
-              <!-- <img :src="urlProfile" alt="profile" class="user-profile" /> -->
-              <UserProfileDropdown :user="userData" />
-              <div class="username-role">
-                <span class="name">{{ userData.firstName }} {{ userData.lastName }}</span>
-                <span class="role">{{ userData.role }}</span>
+              <div v-if="currentUser?.photos.length === 0">lol</div>
+              <img
+                v-else
+                :src="`/api/storage/${currentUser?.photos[0].thumbnail}`"
+                alt="profile"
+                class="user-profile"
+              />
+              <UserProfileDropdown :user="currentUser" />
+              <div
+                v-if="currentUser"
+                class="username-role"
+              >
+                <span class="name">{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
+                <span class="role">{{ currentUser.role }}</span>
+              </div>
+              <div
+                v-else
+                class="username-role"
+              >
+                <span class="name">Anonymous</span>
+                <span class="role">Client</span>
               </div>
               <Icon
                 name="ion:chevron-down-sharp"
@@ -76,17 +92,22 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Toolbar from 'primevue/toolbar'
 import { getFromCache } from '~/composables/useCache'
+import type { User } from '~/interfaces/user.interface'
 
-const userData = ref({})
+// const { data } = await useFetch<User>('/api/users/1')
+
+const authStore = useAuthStore()
+const { currentUser } = storeToRefs(useAuthStore())
+
 onMounted(async () => {
   const cacheData = getFromCache('userStore')
   if (cacheData) {
-    userData.value = cacheData.value
+    currentUser.value = cacheData.value
   } else {
-    userData.value = await $fetch('/api/users/1')
+    currentUser.value = await $fetch<User>(`/api/users/${authStore.authUser?.userId}`)
   }
 })
 defineProps({

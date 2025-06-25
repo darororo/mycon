@@ -6,7 +6,7 @@
     style="color: black"
   >
     <Avatar
-      :image="user?.photos?.[0]?.url"
+      :image="getUserAvatar"
       shape="circle"
       style="width: auto; height: 36px"
       referrerpolicy="no-referrer"
@@ -31,12 +31,12 @@
               <Avatar
                 @click="router.push({ name: 'users', params: { id: 1 } })"
                 style="cursor: pointer"
-                :image="user?.photos?.[0]?.url"
+                :image="getUserAvatar"
                 shape="circle"
                 class="user-profile"
               />
               <div class="user-details">
-                <h3>{{ user.firstname }} {{ user.lastname }}</h3>
+                <h3>{{ user.firstName }} {{ user.lastName }}</h3>
                 <p>{{ user.role }}</p>
                 <div class="contact-info">
                   <p>
@@ -51,7 +51,7 @@
                       name="typcn:location"
                       size="16px"
                     />
-                    {{ user.location }}
+                    {{ user.address }}
                   </p>
                 </div>
               </div>
@@ -83,22 +83,12 @@
 </template>
 
 <script setup lang="ts">
+import type { User } from '@/interfaces/user.interface'
+
 const router = useRouter()
 
-interface UserData {
-  id?: number
-  firstname: string
-  lastname: string
-  role: string
-  email: string
-  location: string
-  photos?: Array<{ url: string }>
-}
-
 // Accept user as prop (changed from userData to user)
-const props = defineProps<{
-  user: UserData
-}>()
+const { user } = defineProps<{ user: User }>()
 
 const emit = defineEmits(['logout', 'settings', 'help'])
 
@@ -111,6 +101,13 @@ const handleAction = type => {
   dropdown.value.hide()
   emit(type)
 }
+
+const getUserAvatar = computed(() => {
+  if (!user.photos?.[0]) {
+    return 'https://picsum.photos/id/237/200/300'
+  }
+  return '/api/storage/' + user.photos[0].thumbnail
+})
 
 const actions = [
   {

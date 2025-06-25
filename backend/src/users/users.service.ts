@@ -42,7 +42,9 @@ export class UsersService {
   }
 
   async findAll(): Promise<User[]> {
-    const users = await this.userRepository.find();
+    const users = await this.userRepository.find({
+      relations: { photos: true },
+    });
     if (!users) {
       throw new HttpException('User list is empty', 404);
     }
@@ -51,7 +53,10 @@ export class UsersService {
   }
 
   async findOne(id: number): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { id } });
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: { photos: true },
+    });
     if (!user) {
       throw NotFoundException;
     }
@@ -60,7 +65,10 @@ export class UsersService {
   }
 
   async findByEmail(email: string): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { email } });
+    const user = await this.userRepository.findOne({
+      where: { email },
+      relations: { photos: true },
+    });
     if (!user) {
       throw NotFoundException;
     }
