@@ -13,6 +13,7 @@ import * as bcrypt from 'bcrypt';
 import { Gender } from 'src/common/enums/gender.enum';
 import { AuthService } from 'src/auth/auth.service';
 import { UserPhoto } from 'src/users/entities/user-photo.entity';
+import { Response } from 'express';
 
 @Injectable()
 export class GoogleSignUpService {
@@ -29,7 +30,7 @@ export class GoogleSignUpService {
     );
   }
 
-  async registerWithGoogle(idToken: string): Promise<any> {
+  async registerWithGoogle(idToken: string, response: Response): Promise<any> {
     try {
       const ticket = await this.googleClient.verifyIdToken({
         idToken,
@@ -52,20 +53,21 @@ export class GoogleSignUpService {
         const signData = {
           userId: existingUser.id,
           username: existingUser.username,
+          email: existingUser.email,
         };
-        return this.authService.signIn(signData);
+        return this.authService.signIn(signData, response);
       }
 
       // Generate password first (await the Promise)
       const hashedPassword = await this.generateRandomPassword();
 
-      const photos: UserPhoto[] = [];
-      const photoData = this.photoRepository.create();
-      photoData.url = payload.picture || '';
-      photoData.thumbnail = payload.picture || '';
+      // const photos: UserPhoto[] = [];
+      // const photoData = this.photoRepository.create();
+      // photoData.url = payload.picture || '';
+      // photoData.thumbnail = payload.picture || '';
 
-      const photo = await this.photoRepository.save(photoData);
-      photos.push(photo);
+      // const photo = await this.photoRepository.save(photoData);
+      // photos.push(photo);
 
       // Create new user - make sure all required fields match your User entity
       const newUser = this.userRepository.create({
@@ -79,7 +81,6 @@ export class GoogleSignUpService {
         password: hashedPassword,
         role: UserRole.Client,
         gender: Gender.Other,
-        photos: photos,
       });
 
       const savedUser = await this.userRepository.save(newUser);
@@ -87,8 +88,9 @@ export class GoogleSignUpService {
       const signData = {
         userId: savedUser.id,
         username: savedUser.username,
+        email: savedUser.email,
       };
-      return this.authService.signIn(signData);
+      return this.authService.signIn(signData, response);
     } catch (error) {
       console.error('Google registration error:', error);
       if (

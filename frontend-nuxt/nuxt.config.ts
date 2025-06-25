@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     public: {
       apiBase: process.env.API_HOST,
       fileStorage: process.env.STORAGE_ENDPOINT,
-      googleClientId: process.env.GOOGLE_CLIENT_ID
+      googleClientId: process.env.GOOGLE_CLIENT_ID,
     },
   },
 
@@ -28,9 +28,9 @@ export default defineNuxtConfig({
     script: [
       {
         src: 'https://accounts.google.com/gsi/client',
-        defer: true
-      }
-    ]
+        defer: true,
+      },
+    ],
   },
 
   // alias: {
@@ -66,7 +66,6 @@ export default defineNuxtConfig({
     '@primevue/nuxt-module',
     '@nuxtjs/leaflet',
     '@pinia/nuxt',
-    '@sidebase/nuxt-auth',
   ],
 
   fonts: {

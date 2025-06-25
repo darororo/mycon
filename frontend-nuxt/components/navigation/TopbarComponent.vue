@@ -58,7 +58,7 @@
             <hr class="line-right" />
             <div class="account-menu">
               <!-- <img :src="urlProfile" alt="profile" class="user-profile" /> -->
-              <UserProfileDropdown :user="userData"/>
+              <UserProfileDropdown :user="userData" />
               <div class="username-role">
                 <span class="name">{{ userData.firstName }} {{ userData.lastName }}</span>
                 <span class="role">{{ userData.role }}</span>
@@ -81,9 +81,13 @@ import Toolbar from 'primevue/toolbar'
 import { getFromCache } from '~/composables/useCache'
 
 const userData = ref({})
-onMounted(() => {
+onMounted(async () => {
   const cacheData = getFromCache('userStore')
-  userData.value = cacheData.value
+  if (cacheData) {
+    userData.value = cacheData.value
+  } else {
+    userData.value = await $fetch('/api/users/1')
+  }
 })
 defineProps({
   language: {
