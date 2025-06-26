@@ -186,7 +186,15 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
-const isClient = false
+const { currentUser } = storeToRefs(useAuthStore())
+
+const isClient = computed(() => {
+  return currentUser.value.role === 'client'
+})
+
+const isManager = computed(() => {
+  return currentUser.value.role === 'manager'
+})
 
 const isActiveRoute = r => {
   return r && r.name === route.name
@@ -198,7 +206,7 @@ const mainMenu = ref([
   {
     label: 'Management',
     icon: ['ix:user-management-settings-filled', 'solar:alt-arrow-down-bold'],
-    visible: !isClient,
+    visible: !isClient.value,
     items: [
       { label: 'Users', icon: 'mdi:user', route: { name: 'management-user' } },
       { label: 'Workers', icon: 'mdi:worker', route: { name: 'management-worker' } },
@@ -207,6 +215,7 @@ const mainMenu = ref([
   },
   {
     label: 'Project',
+    visible: !isClient,
     icon: ['ant-design:project-filled', 'solar:alt-arrow-down-bold'],
     items: [
       {
@@ -218,6 +227,7 @@ const mainMenu = ref([
       },
       {
         label: 'Assign Managers',
+        visible: !isManager.value,
         icon: 'clarity:assign-user-line',
         route: {
           name: 'projects-assign',

@@ -20,7 +20,10 @@ export class Attendance {
   worker: Worker;
 
   @Column()
-  hour: number;
+  hours: number;
+
+  @Column()
+  date: Date;
 
   @ManyToOne(() => Project, (project) => project.attendance)
   project: Project;

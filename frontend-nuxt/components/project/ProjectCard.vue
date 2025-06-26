@@ -4,10 +4,10 @@
       <template #content>
         <div class="card-wrapper">
           <NuxtLink
-            :to="{ path: `${item.id}` }"
+            :to="{ path: `/projects/${item.id}` }"
             no-rel
           >
-            <Image
+            <NuxtImg
               v-if="item.photos.length > 0"
               width="360"
               :src="`/api/storage/${item.photos[0].thumbnail}`"
@@ -25,7 +25,7 @@
           <div class="project-details">
             <div class="project-content">
               <div class="project-header">
-                <h1>{{ item.name }}</h1>
+                <h1>{{ item.photos[0].thumbnail }}</h1>
                 <Icon
                   class="more-option"
                   name="iwwa:option-horizontal"

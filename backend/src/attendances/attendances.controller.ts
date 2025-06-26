@@ -25,12 +25,12 @@ export class AttendancesController {
     return this.attendancesService.findAll();
   }
 
-  @Get(':id/projects/:project')
+  @Get(':id/projects/:projectId')
   findOne(@Param('id') id: string, @Param('projectId') projectId: string) {
     return this.attendancesService.findOne(+projectId, +id);
   }
 
-  @Patch(':id/projects/:project')
+  @Patch(':id/projects/:projectId')
   update(
     @Param('projectId') projectId: string,
     @Param('id') id: string,
@@ -39,7 +39,7 @@ export class AttendancesController {
     return this.attendancesService.update(+projectId, +id, updateAttendanceDto);
   }
 
-  @Delete(':id/projects/:project')
+  @Delete(':id/projects/:projectId')
   remove(@Param('id') id: string, @Param('projectId') projectId: string) {
     return this.attendancesService.remove(+projectId, +id);
   }

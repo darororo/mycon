@@ -1,12 +1,15 @@
-import { IsNumber } from 'class-validator';
+import { IsDateString, IsNumber } from 'class-validator';
 
 export class CreateAttendanceDto {
   @IsNumber()
-  hour: number;
+  hours: number;
 
   @IsNumber()
   workerId: number;
 
   @IsNumber()
   projectId: number;
+
+  @IsDateString()
+  date: Date;
 }
