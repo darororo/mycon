@@ -124,6 +124,7 @@ export class ProjectsService {
 
   async remove(id: number) {
     const project = await this.findOne(id);
-    return this.projectRepository.remove(project);
+
+    return this.projectRepository.softRemove(project);
   }
 }

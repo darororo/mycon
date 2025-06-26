@@ -51,7 +51,7 @@
       </Column>
 
       <Column
-        field="hourlyRate"
+        field=""
         header="TOTAL"
         frozen
         alignFrozen="right"
@@ -69,8 +69,6 @@
 
 <script setup lang="ts">
 const props = defineProps(['workers'])
-
-const { data: people } = await useFetch('https://6817396926a599ae7c39aeae.mockapi.io/users')
 
 onMounted(() => {
   console.log(props.workers)
@@ -108,11 +106,11 @@ const myTable = ref({
 })
 
 const myColumns = ref([
-  { field: 'id', header: 'Name', frozen: true },
-  { field: 'firstName', header: 'Name', frozen: true },
-  { field: 'lastName', header: 'Name', frozen: true },
+  { field: 'id', header: 'ID', frozen: true },
+  { field: 'firstName', header: 'First Name', frozen: true },
+  { field: 'lastName', header: 'Last Name', frozen: true },
   { field: 'role', header: 'Role', frozen: true },
-  { field: 'rate', header: 'Rate', frozen: true },
+  { field: 'hourlyRate', header: 'Rate', frozen: true },
 ])
 </script>
 

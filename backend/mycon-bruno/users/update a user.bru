@@ -5,7 +5,7 @@ meta {
 }
 
 patch {
-  url: {{baseUrl}}/users/1
+  url: {{baseUrl}}/users/5
   body: multipartForm
   auth: inherit
 }
@@ -23,9 +23,11 @@ body:json {
 body:multipart-form {
   jsonData: '''
     {
-      "username": "Bruno Man",
-      "firstName": "Bruno Mom"
-    }
+        "username": "Vuth Menghuor",
+        "firstName": "Vuth",
+        "lastName": "Menghuor",
+        "gender": "male",
+        "role": "manager"
+      }
   '''
-  files: @file(/home/daro/fish.jpg)
 }

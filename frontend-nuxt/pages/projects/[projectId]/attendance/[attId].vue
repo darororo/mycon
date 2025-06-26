@@ -150,7 +150,7 @@
                 },
                 bodycell: ({ state }) => ({
                   style: `
-              padding: 16px 20px;
+              padding: 10px 20px;
               border-bottom: 1px solid #f0f0f0;
               transition: background-color 0.2s;
             `,

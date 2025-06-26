@@ -18,7 +18,6 @@
           v-for="items in billingCard"
           :key="items.id"
           :items="items"
-          style="margin-bottom: 20px"
         />
       </ScrollPanel>
     </div>
