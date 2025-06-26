@@ -38,7 +38,7 @@ export class User {
   email: string;
 
   // add new
-  @Column({ select: false })
+  @Column()
   password: string;
 
   //add new

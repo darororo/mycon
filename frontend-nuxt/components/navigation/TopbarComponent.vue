@@ -43,7 +43,7 @@
         <div class="end-section">
           <div class="tool-bar-group">
             <div class="notification-alert">
-              <span class="info-language">{{ language }}</span>
+              <span class="info-language">English</span>
               <Icon
                 name="ic:outline-email"
                 size="26"
@@ -57,13 +57,13 @@
             </div>
             <hr class="line-right" />
             <div class="account-menu">
-              <div v-if="currentUser?.photos.length === 0">lol</div>
+              <!-- <div v-if="currentUser?.photos.length === 0">lol</div>
               <img
                 v-else
                 :src="`/api/storage/${currentUser?.photos[0].thumbnail}`"
                 alt="profile"
                 class="user-profile"
-              />
+              /> -->
               <UserProfileDropdown :user="currentUser!" />
               <div
                 v-if="currentUser"
