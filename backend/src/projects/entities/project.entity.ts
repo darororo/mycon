@@ -4,12 +4,15 @@ import { User } from 'src/users/entities/user.entity';
 import { Worker } from 'src/workers/entities/worker.entity';
 import {
   Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { ProjectPhoto } from './project-photo.entity';
 import { Attendance } from 'src/attendances/entities/attendance.entity';
@@ -44,14 +47,14 @@ export class Project {
   @ManyToOne(() => Manager, (manager) => manager.projectsAssigned)
   manager: Manager;
 
-  @ManyToMany(() => Worker, (worker) => worker.projects, { cascade: true })
+  @ManyToMany(() => Worker, (worker) => worker.projects)
   @JoinTable()
   workers: Worker[];
 
   @OneToMany(() => Inventory, (inventory) => inventory.project)
   inventory: Inventory[];
 
-  @OneToMany(() => ProjectPhoto, (photo) => photo.project)
+  @OneToMany(() => ProjectPhoto, (photo) => photo.project, { cascade: true })
   photos: ProjectPhoto[];
 
   @OneToMany(() => Attendance, (attendance) => attendance.project)
@@ -59,4 +62,11 @@ export class Project {
 
   @OneToMany(() => Payroll, (payroll) => payroll.project)
   payrolls: Payroll[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
+  @DeleteDateColumn()
+  deletedAt: Date;
 }

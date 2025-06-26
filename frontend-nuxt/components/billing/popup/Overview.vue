@@ -9,7 +9,7 @@
     <div class="timeline-section">
       <label class="section-title">Project Status:</label>
       <div class="status-card">
-        <BillingTimeline
+        <Timeline
           :value="status"
           class="custom-timeline"
           :dt="timelineDt"
@@ -50,7 +50,7 @@
               />
             </div>
           </template>
-        </BillingTimeline>
+        </Timeline>
       </div>
     </div>
   </div>

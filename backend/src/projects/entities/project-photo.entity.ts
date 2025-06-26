@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  DeleteDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Project } from './project.entity';
 
 @Entity()
@@ -14,4 +20,7 @@ export class ProjectPhoto {
 
   @ManyToOne(() => Project, (project) => project.photos)
   project: Project;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
 }

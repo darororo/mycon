@@ -1,6 +1,6 @@
 <template>
   <section>
-    <ProjectGallery :photos="project!.photos" />
+    <ProjectGallery :photos="project?.photos" />
     <ProjectOverviewHeader :project="project" />
     <ProjectOverviewContent :project="project" />
   </section>

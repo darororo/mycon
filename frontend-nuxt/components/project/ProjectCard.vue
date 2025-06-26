@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Toast />
     <Card>
       <template #content>
         <div class="card-wrapper">
@@ -10,7 +11,7 @@
             <NuxtImg
               v-if="item.photos.length > 0"
               width="360"
-              :src="`/api/storage/${item.photos[0].thumbnail}`"
+              :src="`/api/storage/${project.photos[0].thumbnail}`"
               image-style="border-radius: 10px; min-height: 200px;"
               class="project-image"
             />
@@ -36,7 +37,7 @@
                 <TieredMenu
                   ref="menu"
                   id="overlay_tmenu"
-                  :model="items"
+                  :model="actions"
                   popup
                   :dt="{
                     background: '#ffffff',
@@ -80,13 +81,13 @@
                   </template>
                 </TieredMenu>
               </div>
-              <p>{{ item.description }}</p>
+              <p>{{ project.description }}</p>
             </div>
             <div class="project-footer">
               <label class="project-author">{{
-                item.client ? item.client.firstName + ' ' + item.client.lastName : 'Anon'
+                project.client ? project.client.firstName + ' ' + project.client.lastName : 'Anon'
               }}</label>
-              <label class="project-price">{{ formatUSD.format(item.price) }}</label>
+              <label class="project-price">{{ formatUSD.format(project.price) }}</label>
             </div>
           </div>
         </div>
@@ -94,7 +95,7 @@
     </Card>
     <UpdateProjectForm
       v-model="updateFormVisible"
-      :project="item"
+      :project="project"
     />
   </div>
 </template>
@@ -104,14 +105,14 @@ import UpdateProjectForm from './form/updateProjectForm.vue'
 
 const updateFormVisible = ref(false)
 
-defineProps({
-  item: {
+const { project } = defineProps({
+  project: {
     type: Object,
   },
 })
 
 const menu = ref()
-const items = ref([
+const actions = ref([
   {
     label: 'Update',
     icon: 'material-symbols:edit-outline',
@@ -126,11 +127,42 @@ const toggle = event => {
   menu.value.toggle(event)
 }
 
+const {
+  data: deletedData,
+  execute: executeDelete,
+  status: deleteStatus,
+} = useFetch(`/api/projects/${project.id}`, {
+  method: 'DELETE',
+  immediate: false,
+  watch: false,
+})
+
+const toast = useToast()
+async function handleDelete() {
+  await executeDelete()
+
+  if (deleteStatus.value === 'error') {
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Failed to delete project',
+      life: 3000,
+    })
+  } else if (deleteStatus.value === 'sucess') {
+    toast.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Project deleted successfully',
+      life: 3000,
+    })
+  }
+}
+
 const onMenuItemClick = item => {
   if (item.label === 'Update') {
     updateFormVisible.value = true
   } else if (item.label === 'Delete') {
-    return ''
+    handleDelete()
   }
   menu.value.hide()
 }
