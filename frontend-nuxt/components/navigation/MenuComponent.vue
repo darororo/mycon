@@ -215,7 +215,7 @@ const mainMenu = ref([
   },
   {
     label: 'Project',
-    visible: !isClient,
+    visible: !isClient.value,
     icon: ['ant-design:project-filled', 'solar:alt-arrow-down-bold'],
     items: [
       {

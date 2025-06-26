@@ -38,8 +38,7 @@ export class User {
   email: string;
 
   // add new
-  @Column()
-  @Exclude()
+  @Column({ select: false })
   password: string;
 
   //add new

@@ -45,7 +45,7 @@
           radius: '20px',
         },
       }"
-      @hide="clearFormData"
+      @hide="handleFormClose"
     >
       <Form
         v-slot="$form"
@@ -139,6 +139,8 @@ import type { TimelinePost } from '~/interfaces/timeline-post.interface'
 const toast = useToast()
 const createFormVisible = defineModel()
 
+const { currentUser } = storeToRefs(useAuthStore())
+
 const description = ref('')
 
 const { images, loadImages, removeImage, uploadImages, clearImageData } = useImageUploader()
@@ -163,6 +165,7 @@ const postStore = usePostStore()
 
 const postDto = ref({
   description: description,
+  userId: currentUser.value?.id,
 })
 
 const formData = ref(new FormData())
@@ -206,16 +209,15 @@ const handleSubmit = async ({ valid }) => {
       postStore.posts.unshift(data.value)
     }
 
-    createFormVisible.value = false
     clear()
     clearImageData()
-    formData.value = new FormData()
+    handleFormClose()
   }
 }
 
-function clearFormData() {
-  description.value = ''
+function handleFormClose() {
   formData.value = new FormData()
+  createFormVisible.value = false
 }
 
 const button = {

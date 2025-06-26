@@ -67,7 +67,7 @@ if (!authStore.currentUser) {
         <ProjectCard
           v-for="item in projectStore.projects"
           :key="item.id"
-          :item="item"
+          :project="item"
         />
       </div>
     </ScrollPanel>
