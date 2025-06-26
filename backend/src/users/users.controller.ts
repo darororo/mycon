@@ -19,7 +19,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { SkipThrottle } from '@nestjs/throttler';
 import { ParseJsonPipe } from 'src/common/pipes/parse-json.pipe';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { JwtStrategy } from 'src/auth/strategies/jwt.strategy';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { JwtRefreshAuthGuard } from 'src/auth/guards/jwt-refresh-auth.guard';
 

@@ -16,5 +16,4 @@ export interface UserLogin {
 export interface AuthUser {
   email: string
   userId: string
-  username: string
 }

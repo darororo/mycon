@@ -90,6 +90,8 @@ const router = useRouter()
 // Accept user as prop (changed from userData to user)
 const { user } = defineProps<{ user: User }>()
 
+const authStore = useAuthStore()
+
 const emit = defineEmits(['logout', 'settings', 'help'])
 
 const dropdown = ref(null)
@@ -99,14 +101,16 @@ const toggleDropdown = event => {
 
 const handleAction = type => {
   dropdown.value.hide()
-  emit(type)
+  if (type === 'logout') {
+    authStore.logout()
+    router.push('/auth/login')
+  }
 }
 
 const getUserAvatar = computed(() => {
-  if (!user.photos?.[0]) {
-    return 'https://picsum.photos/id/237/200/300'
-  }
-  return '/api/storage/' + user.photos[0].thumbnail
+  return user.photos?.[0]?.thumbnail
+    ? `/api/storage/${user.photos[0].thumbnail}`
+    : 'https://picsum.photos/id/237/200/300'
 })
 
 const actions = [

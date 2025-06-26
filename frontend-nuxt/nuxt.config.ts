@@ -12,6 +12,9 @@ export default defineNuxtConfig({
     '/': {
       redirect: '/dashboard',
     },
+    '/auth': {
+      redirect: '/auth/login',
+    },
   },
 
   runtimeConfig: {

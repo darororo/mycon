@@ -11,6 +11,11 @@ const { data: projectData, pending } = useFetch<IProject[]>('/api/projects', { l
 if (projectData.value) {
   projectStore.projects = projectData.value
 }
+
+const authStore = useAuthStore()
+if (!authStore.currentUser) {
+  await authStore.fetchUser()
+}
 </script>
 
 <template>

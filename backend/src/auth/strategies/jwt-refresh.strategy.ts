@@ -4,6 +4,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Request } from 'express';
 import { AuthService } from '../auth.service';
+import { TokenPayload } from '../interfaces/token-payload.interface';
 
 @Injectable()
 export class JwtRefreshStrategy extends PassportStrategy(
@@ -16,17 +17,21 @@ export class JwtRefreshStrategy extends PassportStrategy(
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
-        (request: Request) => request.cookies?.Refresh,
+        (req: Request) => {
+          const token = req.cookies?.Refresh;
+          console.log('Extracted token from cookie:', token);
+          return token;
+        },
       ]),
       secretOrKey: configService.getOrThrow('JWT_REFRESH_TOKEN_SECRET'),
       passReqToCallback: true,
     });
   }
 
-  async validate(request: Request, payload: { sub: number; username: string }) {
+  async validate(request: Request, payload: TokenPayload) {
     return this.authService.verifyUserRefreshToken(
       request.cookies?.Refresh,
-      payload.sub,
+      payload.userId,
     );
   }
 }

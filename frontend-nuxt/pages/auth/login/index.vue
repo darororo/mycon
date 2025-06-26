@@ -188,7 +188,7 @@ const handleLocalLogin = async () => {
     })
     const u = await $fetch<User>(`/api/users/${authData.value.userId}`)
     if (u) {
-      authStore.user = u
+      authStore.currentUser = u
     }
 
     router.push({ name: 'dashboard' })

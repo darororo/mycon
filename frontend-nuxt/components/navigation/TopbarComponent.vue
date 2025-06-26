@@ -64,7 +64,7 @@
                 alt="profile"
                 class="user-profile"
               />
-              <UserProfileDropdown :user="currentUser" />
+              <UserProfileDropdown :user="currentUser!" />
               <div
                 v-if="currentUser"
                 class="username-role"
@@ -99,36 +99,19 @@ import type { User } from '~/interfaces/user.interface'
 
 // const { data } = await useFetch<User>('/api/users/1')
 
-const authStore = useAuthStore()
+// const authStore = useAuthStore()
 const { currentUser } = storeToRefs(useAuthStore())
+console.log(currentUser)
 
-onMounted(async () => {
-  const cacheData = getFromCache('userStore')
-  if (cacheData) {
-    currentUser.value = cacheData.value
-  } else {
-    currentUser.value = await $fetch<User>(`/api/users/${authStore.authUser?.userId}`)
-  }
-})
-defineProps({
-  language: {
-    type: String,
-    default: 'Cambodia',
-  },
-  name: {
-    type: String,
-    default: 'Jonh Cena',
-  },
-  role: {
-    type: String,
-    default: 'Super admin',
-  },
-  urlProfile: {
-    type: String,
-    // default: 'https://i.pinimg.com/736x/8f/86/50/8f8650ffcdfda6f1767a99565d3a4402.jpg',
-    default: '',
-  },
-})
+// onMounted(async () => {
+//   const cacheData = getFromCache('userStore')
+//   if (cacheData) {
+//     currentUser.value = cacheData.value
+//   } else {
+//     currentUser.value = await $fetch<User>(`/api/users/${authStore.authUser?.userId}`)
+//   }
+// })
+defineProps<{ user: User }>()
 </script>
 
 <style scoped>
