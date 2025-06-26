@@ -5,12 +5,14 @@
     :unstyled="true"
     style="color: black"
   >
-    <Avatar
-      :image="getUserAvatar"
+    
+    <img style="width: auto; height: 36px; border-radius: 50%; margin-bottom: 12px;" :src="user?.photos?.[0]?.url" alt="">
+    <!-- <Avatar
+      :image="user?.photos?.[0]?.url"
       shape="circle"
       style="width: auto; height: 36px"
       referrerpolicy="no-referrer"
-    />
+    /> -->
   </Button>
   <Popover
     ref="dropdown"

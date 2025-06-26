@@ -22,7 +22,9 @@ export class GoogleSignUpService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    private authService: AuthService,
+    @InjectRepository(UserPhoto)
+    private photoRepository: Repository<UserPhoto>,
+    private authService: AuthService
   ) {
     this.googleClient = new OAuth2Client(
       process.env.EMAIL_CLIENT_ID,
@@ -37,17 +39,21 @@ export class GoogleSignUpService {
         audience: process.env.EMAIL_CLIENT_ID,
       });
 
-      console.log(ticket, 'tivk');
-
       const payload = ticket.getPayload();
       if (!payload) {
         throw new BadRequestException('Invalid Google token');
       }
 
       // Check if user exists
-      const existingUser = await this.userRepository.findOne({
-        where: { email: payload.email },
-      });
+      // const existingUser = await this.userRepository.findOne({
+      //   where: { email: payload.email },
+      // });
+
+      const existingUser = await this.userRepository
+        .createQueryBuilder('user')
+        .leftJoinAndSelect('user.photos', 'photos')
+        .where('user.email = :email', { email: payload.email })
+        .getOne();
 
       if (existingUser) {
         const signData = {
@@ -55,19 +61,23 @@ export class GoogleSignUpService {
           username: existingUser.username,
           email: existingUser.email,
         };
-        return this.authService.signIn(signData, response);
+        const user = await this.authService.signIn(signData, response);
+        return {
+          accessToken: user.accessToken,
+          user: existingUser
+        }
       }
 
       // Generate password first (await the Promise)
       const hashedPassword = await this.generateRandomPassword();
 
-      // const photos: UserPhoto[] = [];
-      // const photoData = this.photoRepository.create();
-      // photoData.url = payload.picture || '';
-      // photoData.thumbnail = payload.picture || '';
+      const photos: UserPhoto[] = [];
+      const photoData = this.photoRepository.create();
+      photoData.url = payload.picture || '';
+      photoData.thumbnail = payload.picture || '';
 
-      // const photo = await this.photoRepository.save(photoData);
-      // photos.push(photo);
+      const photo = await this.photoRepository.save(photoData);
+      photos.push(photo);
 
       // Create new user - make sure all required fields match your User entity
       const newUser = this.userRepository.create({
@@ -81,6 +91,7 @@ export class GoogleSignUpService {
         password: hashedPassword,
         role: UserRole.Client,
         gender: Gender.Other,
+        photos: photos
       });
 
       const savedUser = await this.userRepository.save(newUser);
@@ -90,7 +101,11 @@ export class GoogleSignUpService {
         username: savedUser.username,
         email: savedUser.email,
       };
-      return this.authService.signIn(signData, response);
+      const user = await this.authService.signIn(signData, response);
+      return {
+        accessToken: user.accessToken,
+        user: savedUser
+      }
     } catch (error) {
       console.error('Google registration error:', error);
       if (

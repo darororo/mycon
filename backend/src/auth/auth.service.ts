@@ -13,7 +13,7 @@ export class AuthService {
     private userService: UsersService,
     private jwtService: JwtService,
     private configService: ConfigService,
-  ) {}
+  ) { }
 
   async authenticate(
     input: AuthInput,
@@ -54,17 +54,17 @@ export class AuthService {
     const expiresAccessToken = new Date();
     expiresAccessToken.setMilliseconds(
       expiresAccessToken.getTime() +
-        parseInt(this.configService.getOrThrow<string>('JWT_EXPIRATION_MS')),
+      parseInt(this.configService.getOrThrow<string>('JWT_EXPIRATION_MS')),
     );
 
     const expiresRefreshToken = new Date();
     expiresAccessToken.setMilliseconds(
       expiresAccessToken.getTime() +
-        parseInt(
-          this.configService.getOrThrow<string>(
-            'JWT_REFRESH_TOKEN_EXPIRATION_MS',
-          ),
+      parseInt(
+        this.configService.getOrThrow<string>(
+          'JWT_REFRESH_TOKEN_EXPIRATION_MS',
         ),
+      ),
     );
 
     const accessToken = this.jwtService.sign(tokenPayload, {

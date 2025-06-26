@@ -57,7 +57,7 @@
             </div>
             <hr class="line-right" />
             <div class="account-menu">
-              <div v-if="currentUser?.photos.length === 0">lol</div>
+              <div v-if="currentUser?.photos.length === 0"></div>
               <img
                 v-else
                 :src="`/api/storage/${currentUser?.photos[0].thumbnail}`"

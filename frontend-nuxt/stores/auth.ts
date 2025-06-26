@@ -27,6 +27,8 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function fetchUser() {
+    console.log(authUser?.value?.userId, 'auth');
+
     if (!authUser.value?.userId) return
     try {
       const u = await $fetch<User>(`/api/users/${authUser.value.userId}`)

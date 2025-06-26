@@ -43,6 +43,7 @@
           <Button
             :dt="buttonStyle"
             class="social-button"
+            @click="signUpWithGoogle"
           >
             <Icon
               name="flat-color-icons:google"
@@ -92,9 +93,12 @@ import { Toast } from 'primevue'
 definePageMeta({
   layout: false,
 })
+const config = useRuntimeConfig()
+const googleAuthStore = useGoogleAuthStore()
+const isLoading = ref(false)
+const isGoogleLoaded = ref(false)
 
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+const apiBase = config.public.apiBase
 
 const toast = useToast()
 
@@ -174,6 +178,159 @@ const buttonStyle = {
     },
   },
 }
+
+const signUpWithGoogle = () => {
+  if (!isGoogleLoaded.value) {
+    return
+  }
+
+  if (typeof window === 'undefined' || !(window as any).google?.accounts?.id) {
+    return
+  }
+  
+  ;(window as any).google.accounts.id.initialize({
+      client_id: config.public.googleClientId,
+      callback: handleGoogleResponse,
+      auto_select: false,
+      cancel_on_tap_outside: false
+    })
+
+    // Try One Tap first
+    ;(window as any).google.accounts.id.prompt((notification: any) => {
+      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+        // Fallback to popup
+        console.log('One Tap not available, using popup')
+        triggerGooglePopup()
+      }
+    })
+}
+
+const handleGoogleResponse = async (response: any) => {
+  try {
+    if (response.credential) {
+      const idToken = response.credential
+      await googleAuthStore.signUpWithGoogle(idToken)
+    } else {
+      console.log('err');
+    }
+  } catch (error) {
+    console.log(error)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+const triggerGooglePopup = () => {
+  try {
+    const tempButton = document.createElement('div')
+    tempButton.style.display = 'none'
+    document.body.appendChild(tempButton)
+
+    ;(window as any).google.accounts.id.renderButton(tempButton, {
+      theme: 'outline',
+      size: 'large',
+      width: '100%',
+      callback: handleGoogleResponse
+    })
+
+    // Trigger click on the hidden button
+    const googleButton = tempButton.querySelector('div[role="button"]') as HTMLElement
+    if (googleButton) {
+      googleButton.click()
+    }
+
+    // Clean up
+    setTimeout(() => {
+      document.body.removeChild(tempButton)
+    }, 1000)
+
+  } catch (error) {
+    console.error('Popup trigger error:', error)
+    isLoading.value = false
+  }
+}
+// Function to wait for Google script to load
+const waitForGoogle = (): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    if (typeof window === 'undefined') {
+      reject(new Error('Window is not available'))
+      return
+    }
+
+    if ((window as any).google?.accounts?.id) {
+      resolve()
+      return
+    }
+
+    // Wait for script to load
+    let attempts = 0
+    const maxAttempts = 50 // 5 seconds max wait
+    
+    const checkGoogle = () => {
+      attempts++
+      
+      if ((window as any).google?.accounts?.id) {
+        resolve()
+      } else if (attempts >= maxAttempts) {
+        reject(new Error('Google script failed to load'))
+      } else {
+        setTimeout(checkGoogle, 100)
+      }
+    }
+    
+    checkGoogle()
+  })
+}
+
+const loadGoogleScript = (): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    if (typeof window === 'undefined') {
+      reject(new Error('Window is not available'))
+      return
+    }
+
+    if ((window as any).google?.accounts?.id) {
+      resolve()
+      return
+    }
+
+    const existingScript = document.querySelector('script[src*="accounts.google.com/gsi/client"]')
+    if (existingScript) {
+      waitForGoogle().then(resolve).catch(reject)
+      return
+    }
+
+    const script = document.createElement('script')
+    script.src = 'https://accounts.google.com/gsi/client'
+    script.async = true
+    script.defer = true
+    
+    script.onload = () => {
+      waitForGoogle().then(resolve).catch(reject)
+    }
+    
+    script.onerror = () => {
+      reject(new Error('Failed to load Google script'))
+    }
+    
+    document.head.appendChild(script)
+  })
+}
+
+const initializeGoogle = async () => {
+  try {
+    await loadGoogleScript()
+    isGoogleLoaded.value = true
+    console.log('Google script loaded successfully')
+  } catch (error) {
+    console.error('Failed to load Google script:', error)
+  }
+}
+onMounted(() => {
+  setTimeout(() => {
+    initializeGoogle()
+  }, 100)
+})
 </script>
 
 <style scoped>

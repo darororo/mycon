@@ -186,7 +186,11 @@ const handleLocalLogin = async () => {
       detail: 'Login Success',
       life: 3000,
     })
+    console.log(authData.value, 'k');
+    
     const u = await $fetch<User>(`/api/users/${authData.value.userId}`)
+    console.log(u, 'uuuuuu');
+    
     if (u) {
       authStore.currentUser = u
     }

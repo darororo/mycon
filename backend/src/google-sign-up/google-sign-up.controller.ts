@@ -19,26 +19,26 @@ export class GoogleRegisterDto {
 @SkipThrottle()
 @Controller('google-sign-up')
 export class GoogleSignUpController {
-  constructor(private readonly googleSignUpService: GoogleSignUpService) {}
+  constructor(private readonly googleSignUpService: GoogleSignUpService) { }
 
   @Post()
-  // @HttpCode(HttpStatus.CREATED)
-  async create(@Body() body: GoogleRegisterDto, @Res() response: Response) {
+  async create(
+    @Body() body: GoogleRegisterDto,
+    @Res() response: Response,
+  ) {
     const { idToken } = body;
 
     if (!idToken) {
       throw new BadRequestException('Google ID token is required');
     }
 
-    const user = await this.googleSignUpService.registerWithGoogle(
-      idToken,
-      response,
-    );
+    const user = await this.googleSignUpService.registerWithGoogle(idToken, response);
 
-    return {
+    return response.status(200).json({
       success: true,
       message: 'User registered successfully',
       data: user,
-    };
+      accessToken: user.accessToken,
+    });
   }
 }
