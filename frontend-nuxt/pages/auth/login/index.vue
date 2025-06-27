@@ -1,5 +1,6 @@
 <template>
   <div class="login-wrapper">
+    <Toast />
     <Card
       :dt="cardDt"
       class="glass-card"
@@ -57,7 +58,7 @@
             >
           </div>
 
-          <LoginButton @click="router.push({ name: 'dashboard' })" />
+          <LoginButton @click="handleLocalLogin" />
 
           <div class="divider">
             <div class="line" />
@@ -68,6 +69,7 @@
           <Button
             :dt="buttonStyle"
             class="social-button"
+            @click="signUpWithGoogle"
           >
             <Icon
               name="flat-color-icons:google"
@@ -109,17 +111,20 @@ import EmailInputField from '~/components/auth/EmailInputField.vue'
 import LoginButton from '~/components/auth/LoginButton.vue'
 import PassInputField from '~/components/auth/PassInputField.vue'
 import type { UserLogin } from '~/interfaces/auth.interface'
+import type { User } from '~/interfaces/user.interface'
 
+const config = useRuntimeConfig()
+const googleAuthStore = useGoogleAuthStore()
 const userLoginDto = reactive(<UserLogin>{
   email: '',
   password: '',
 })
-
+const isLoading = ref(false)
+const isGoogleLoaded = ref(false)
+const showDebug = ref(true)
 definePageMeta({
   layout: false,
 })
-
-const router = useRouter()
 
 const cardDt = {
   background: 'white',
@@ -152,6 +157,204 @@ const buttonStyle = {
     },
   },
 }
+
+const authStore = useAuthStore()
+const {
+  data: authData,
+  execute: execLogin,
+  clear: clearAuthData,
+  status,
+  error: localLoginError,
+} = useFetch('/api/auth/login', {
+  method: 'POST',
+  body: userLoginDto,
+  immediate: false,
+  watch: false,
+})
+
+const router = useRouter()
+const toast = useToast()
+
+const handleLocalLogin = async () => {
+  await execLogin()
+
+  if (status.value === 'success') {
+    toast.add({
+      severity: 'success',
+      summary: 'Creation completed successfully.',
+      // detail: 'Your project has been created.',
+      detail: 'Login Success',
+      life: 3000,
+    })
+    const u = await $fetch<User>(`/api/users/${authData.value.userId}`)
+    if (u) {
+      authStore.currentUser = u
+    }
+
+    router.push({ name: 'dashboard' })
+  } else {
+    toast.add({
+      severity: 'error',
+      summary: 'Failed to login',
+      detail: localLoginError.value,
+      life: 3000,
+    })
+  }
+
+  clearAuthData()
+}
+
+const signUpWithGoogle = () => {
+  if (!isGoogleLoaded.value) {
+    return
+  }
+
+  if (typeof window === 'undefined' || !(window as any).google?.accounts?.id) {
+    return
+  }
+
+  ;(window as any).google.accounts.id.initialize({
+    client_id: config.public.googleClientId,
+    callback: handleGoogleResponse,
+    auto_select: false,
+    cancel_on_tap_outside: false,
+  })
+
+  // Try One Tap first
+  ;(window as any).google.accounts.id.prompt((notification: any) => {
+    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+      // Fallback to popup
+      console.log('One Tap not available, using popup')
+      triggerGooglePopup()
+    }
+  })
+}
+
+const handleGoogleResponse = async (response: any) => {
+  try {
+    if (response.credential) {
+      const idToken = response.credential
+      await googleAuthStore.signUpWithGoogle(idToken)
+    } else {
+      console.log('err')
+    }
+  } catch (error) {
+    console.log(error)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+const triggerGooglePopup = () => {
+  try {
+    const tempButton = document.createElement('div')
+    tempButton.style.display = 'none'
+    document.body.appendChild(tempButton)
+    ;(window as any).google.accounts.id.renderButton(tempButton, {
+      theme: 'outline',
+      size: 'large',
+      width: '100%',
+      callback: handleGoogleResponse,
+    })
+
+    // Trigger click on the hidden button
+    const googleButton = tempButton.querySelector('div[role="button"]') as HTMLElement
+    if (googleButton) {
+      googleButton.click()
+    }
+
+    // Clean up
+    setTimeout(() => {
+      document.body.removeChild(tempButton)
+    }, 1000)
+  } catch (error) {
+    console.error('Popup trigger error:', error)
+    isLoading.value = false
+  }
+}
+// Function to wait for Google script to load
+const waitForGoogle = (): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    if (typeof window === 'undefined') {
+      reject(new Error('Window is not available'))
+      return
+    }
+
+    if ((window as any).google?.accounts?.id) {
+      resolve()
+      return
+    }
+
+    // Wait for script to load
+    let attempts = 0
+    const maxAttempts = 50 // 5 seconds max wait
+
+    const checkGoogle = () => {
+      attempts++
+
+      if ((window as any).google?.accounts?.id) {
+        resolve()
+      } else if (attempts >= maxAttempts) {
+        reject(new Error('Google script failed to load'))
+      } else {
+        setTimeout(checkGoogle, 100)
+      }
+    }
+
+    checkGoogle()
+  })
+}
+
+const loadGoogleScript = (): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    if (typeof window === 'undefined') {
+      reject(new Error('Window is not available'))
+      return
+    }
+
+    if ((window as any).google?.accounts?.id) {
+      resolve()
+      return
+    }
+
+    const existingScript = document.querySelector('script[src*="accounts.google.com/gsi/client"]')
+    if (existingScript) {
+      waitForGoogle().then(resolve).catch(reject)
+      return
+    }
+
+    const script = document.createElement('script')
+    script.src = 'https://accounts.google.com/gsi/client'
+    script.async = true
+    script.defer = true
+
+    script.onload = () => {
+      waitForGoogle().then(resolve).catch(reject)
+    }
+
+    script.onerror = () => {
+      reject(new Error('Failed to load Google script'))
+    }
+
+    document.head.appendChild(script)
+  })
+}
+
+const initializeGoogle = async () => {
+  try {
+    await loadGoogleScript()
+    isGoogleLoaded.value = true
+    console.log('Google script loaded successfully')
+  } catch (error) {
+    console.error('Failed to load Google script:', error)
+  }
+}
+
+onMounted(() => {
+  setTimeout(() => {
+    initializeGoogle()
+  }, 100)
+})
 </script>
 
 <style scoped>

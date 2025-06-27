@@ -10,8 +10,8 @@
               class="user-avatar"
             />
             <div class="user-details">
-              <span class="user-name">{{ post.id + ' JOHN' }}</span>
-              <span class="use-role">{{ 'Superman' }}</span>
+              <span class="user-name">{{ post.user?.username ?? ' ANON' }}</span>
+              <span class="use-role">{{ post.user?.role ?? 'User' }}</span>
             </div>
           </div>
           <div class="user-details">
@@ -195,14 +195,15 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Image } from 'primevue'
 import CommentSection from './popup/CommentSection.vue'
+import type { TimelinePost } from '~/interfaces/timeline-post.interface'
 const toast = useToast()
 
 const OldDate = post.createdAt
 const NewDate = new Date(OldDate).toDateString()
-const { post } = defineProps(['post'])
+const { post } = defineProps<{ post: TimelinePost }>()
 
 const isLiked = ref(false)
 

@@ -14,9 +14,9 @@
         <!-- Grid Thumbnails: 2x2 layout -->
         <div class="w-[600px] grid grid-cols-2 gap-3">
           <img
-            v-for="(image, index) in photos.slice(0, 4)"
+            v-for="(image, index) in photos.slice(1, 4)"
             :key="image.id || index"
-            :src="`/api/storage/${image.thumbnail}`"
+            :src="`/api/storage/${image.url}`"
             alt="Thumbnail"
             class="w-full object-cover rounded-md"
             style="height: calc(100%)"

@@ -43,7 +43,7 @@
         <div class="end-section">
           <div class="tool-bar-group">
             <div class="notification-alert">
-              <span class="info-language">{{ language }}</span>
+              <span class="info-language">English</span>
               <Icon
                 name="ic:outline-email"
                 size="26"
@@ -57,11 +57,27 @@
             </div>
             <hr class="line-right" />
             <div class="account-menu">
-              <!-- <img :src="urlProfile" alt="profile" class="user-profile" /> -->
-              <UserProfileDropdown />
-              <div class="username-role">
-                <span class="name">{{ name }}</span>
-                <span class="role">{{ role }}</span>
+              <!-- <div v-if="currentUser?.photos.length === 0">lol</div>
+              <img
+                v-else
+                :src="`/api/storage/${currentUser?.photos[0].thumbnail}`"
+                alt="profile"
+                class="user-profile"
+              /> -->
+              <UserProfileDropdown :user="currentUser!" />
+              <div
+                v-if="currentUser"
+                class="username-role"
+              >
+                <span class="name">{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
+                <span class="role">{{ currentUser.role }}</span>
+              </div>
+              <div
+                v-else
+                class="username-role"
+              >
+                <span class="name">Anonymous</span>
+                <span class="role">Client</span>
               </div>
               <Icon
                 name="ion:chevron-down-sharp"
@@ -76,26 +92,26 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Toolbar from 'primevue/toolbar'
-defineProps({
-  language: {
-    type: String,
-    default: 'Cambodia',
-  },
-  name: {
-    type: String,
-    default: 'Jonh Cena',
-  },
-  role: {
-    type: String,
-    default: 'Super admin',
-  },
-  urlProfile: {
-    type: String,
-    default: 'https://i.pinimg.com/736x/8f/86/50/8f8650ffcdfda6f1767a99565d3a4402.jpg',
-  },
-})
+import { getFromCache } from '~/composables/useCache'
+import type { User } from '~/interfaces/user.interface'
+
+// const { data } = await useFetch<User>('/api/users/1')
+
+// const authStore = useAuthStore()
+const { currentUser } = storeToRefs(useAuthStore())
+console.log(currentUser)
+
+// onMounted(async () => {
+//   const cacheData = getFromCache('userStore')
+//   if (cacheData) {
+//     currentUser.value = cacheData.value
+//   } else {
+//     currentUser.value = await $fetch<User>(`/api/users/${authStore.authUser?.userId}`)
+//   }
+// })
+defineProps<{ user: User }>()
 </script>
 
 <style scoped>

@@ -46,8 +46,7 @@ export class AuthService {
   async signIn(user: SignInData, response: Response): Promise<AuthResult> {
     const tokenPayload: TokenPayload = {
       userId: user.userId,
-      // username: user.username,
-      // email: user.email,
+      email: user.email,
     };
 
     // console.log(response);
@@ -81,23 +80,28 @@ export class AuthService {
     await this.userService.setAndHashRefreshToken(user.userId, refreshToken);
 
     response.cookie('Authentication', accessToken, {
-      httpOnly: true,
+      httpOnly: false,
       secure: true,
+      path: '/',
       expires: expiresAccessToken,
-      sameSite: 'none',
+      sameSite: 'lax',
     });
 
     response.cookie('Refresh', refreshToken, {
-      httpOnly: true,
-      secure: false,
+      httpOnly: false,
+      secure: true,
+      path: '/',
       expires: expiresRefreshToken,
-      sameSite: 'none',
+      sameSite: 'lax',
     });
 
     return {
       email: user.email,
       username: user.username,
       userId: user.userId,
+      accessToken,
+      refreshToken,
+      // success: true,
     };
   }
 

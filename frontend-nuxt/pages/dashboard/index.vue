@@ -4,6 +4,18 @@ import ExpenseCard from '~/components/dashboard/ExpenseCard.vue'
 import NotificationCard from '~/components/dashboard/NotificationCard.vue'
 import TotalExpenseChart from '~/components/dashboard/TotalExpenseChart.vue'
 import TopProjectItem from '~/components/TopProjectItem/TopProjectItem.vue'
+import type { IProject } from '~/interfaces/project.interface'
+
+const projectStore = useProjectStore()
+const { data: projectData, pending } = useFetch<IProject[]>('/api/projects', { lazy: true })
+if (projectData.value) {
+  projectStore.projects = projectData.value
+}
+
+const authStore = useAuthStore()
+if (!authStore.currentUser) {
+  await authStore.fetchUser()
+}
 </script>
 
 <template>
@@ -42,6 +54,22 @@ import TopProjectItem from '~/components/TopProjectItem/TopProjectItem.vue'
         <CategoryExpenseChart title="Material Expense" />
       </div>
     </div>
-    <TopProjectItem style="margin-bottom: 12px" />
+    <div v-if="pending">Loading Projects ...</div>
+    <!-- <TopProjectItem
+      v-else
+      v-for="project in projectStore.projects"
+      :key="project.id"
+      :project="project"
+      style="margin-bottom: 12px"
+    /> -->
+    <ScrollPanel style="width: 62rem; height: 50rem; padding: 12px 0; border-radius: 8px">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 14px">
+        <ProjectCard
+          v-for="item in projectStore.projects"
+          :key="item.id"
+          :project="item"
+        />
+      </div>
+    </ScrollPanel>
   </div>
 </template>

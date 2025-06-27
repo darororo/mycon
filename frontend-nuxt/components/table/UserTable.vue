@@ -156,7 +156,7 @@ const genders = ref([
 ])
 
 const roles = ref([
-  { label: 'Admin', value: 'Admin' },
+  { label: 'Owner', value: 'Owner' },
   { label: 'Manager', value: 'Manager' },
   { label: 'Client', value: 'Client' },
 ])
@@ -175,16 +175,15 @@ const getGenderLabel = gender => {
 }
 
 const getRoleLabel = role => {
-  switch (role) {
-    case 'owner':
-      return 'tag-admin'
+  let r = role.toLowerCase()
 
+  switch (r) {
+    case 'owner':
+      return 'tag-Owner'
     case 'manager':
       return 'tag-manager'
-
     case 'client':
       return 'tag-client'
-
     default:
       return 'tag default'
   }
@@ -245,7 +244,7 @@ const table = {
   font-size: 14px;
 }
 
-.tag-admin {
+.tag-Owner {
   background-color: rgb(255, 225, 225);
   color: red;
 }

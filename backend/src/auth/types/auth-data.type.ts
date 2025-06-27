@@ -2,6 +2,8 @@ export type AuthResult = {
   email: string;
   userId: number;
   username: string;
+  accessToken: string;
+  refreshToken: string;
 };
 export type AuthInput = {
   email: string;

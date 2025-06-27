@@ -20,8 +20,8 @@
     >
       <div>
         <Avatar
-          v-if="avatarUrl"
-          :image="avatarUrl"
+          v-if="user?.photos?.[0]"
+          :image="`/api/storage/${user?.photos?.[0].url}`"
           shape="circle"
           style="height: 100px; width: 100px"
         />
@@ -191,6 +191,7 @@
       <Button
         style="width: 150px"
         label="Save Change"
+        @click="updateUser"
       />
     </div>
   </div>
@@ -199,6 +200,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useToast } from 'primevue/usetoast'
+import type { User } from '~/interfaces/user.interface'
 
 const toast = useToast()
 const fileupload = ref()
@@ -215,7 +217,8 @@ const gender = ref('')
 const avatarUrl = ref('')
 
 // Fetch user and bind to fields
-const { data: user } = await useFetch('/api/users/1')
+// const { data: user } = await useFetch('/api/users/1')
+const { currentUser: user } = storeToRefs(useAuthStore())
 
 onMounted(() => {
   if (user.value) {
@@ -227,9 +230,58 @@ onMounted(() => {
     role.value = user.value.role
     address.value = user.value.address || ''
     gender.value = user.value.gender
-    avatarUrl.value = user.value.avatarUrl || ''
   }
 })
+
+const formData = ref(new FormData())
+
+const { data, execute, status, error, clear } = useFetch(`/api/users/${user.value?.id}`, {
+  method: 'PATCH',
+  body: formData,
+  immediate: false,
+  watch: false,
+})
+
+const updateUser = async () => {
+  formData.value.append(
+    'jsonData',
+    JSON.stringify({
+      username: username.value,
+      firstName: firstName.value,
+      lastName: lastName.value,
+      email: email.value,
+      gender: gender.value,
+      address: address.value,
+    })
+  )
+
+  await execute()
+  if (status.value === 'error') {
+    toast.add({
+      severity: 'error',
+      summary: 'Post failed to update user',
+      detail: error.value,
+      life: 3000,
+    })
+  } else {
+    // if (images.value.length > 0) {
+    //   // await uploadImages()
+    //   // await execute()
+    // }
+
+    toast.add({
+      severity: 'success',
+      summary: 'User updated successfully.',
+      // detail: 'Your project has been created.',
+      detail: data.value,
+      life: 3000,
+    })
+    user.value = data.value
+  }
+
+  clear()
+  formData.value = new FormData()
+}
 
 // Upload avatar
 const triggerUpload = () => {
@@ -245,6 +297,7 @@ const onUpload = (event: any) => {
   }
   if (file) {
     reader.readAsDataURL(file)
+    formData.value.append('files', file)
   }
 }
 

@@ -1,0 +1,26 @@
+meta {
+  name: create an owner
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/users
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "username": "SuperOwner",
+    "firstName": "Mario",
+    "lastName": "Italia",
+    "gender": "male",
+    "role": "owner",
+    "email": "superowner@gmail.com",
+    "password": "123abcABC$",
+    "phone": "321-32-1321",
+    "address": "123 Street Name, Toul Kork District, Phnom Penh, Cambodia"
+    
+  }
+}

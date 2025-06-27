@@ -63,7 +63,10 @@
 </template>
 
 <script setup>
-const { data } = await useFetch('https://6817864126a599ae7c3aa650.mockapi.io/api/api_dashboard_ip')
+const { data } = await useFetch(
+  'https://6817864126a599ae7c3aa650.mockapi.io/api/api_dashboard_ip',
+  { lazy: true }
+)
 
 console.log(data)
 

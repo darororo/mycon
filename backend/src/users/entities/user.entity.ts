@@ -39,7 +39,6 @@ export class User {
 
   // add new
   @Column()
-  @Exclude()
   password: string;
 
   //add new

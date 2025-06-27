@@ -59,8 +59,10 @@
 
         <div class="grid grid-cols-1 gap-4">
           <h1>{{ error }}</h1>
+          <div v-if="pending">Loading Your Posts</div>
           <div
-            v-for="post in posts"
+            v-else
+            v-for="post in postStore.posts"
             :key="post.id"
             class="flex flex-row justify-center w-full h-full"
           >
@@ -83,48 +85,29 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import PostCard from '~/components/post/PostCard.vue'
 import TimelineForm from '~/components/project/form/TimelineForm.vue'
 import SideWorkflow from '~/components/workflow/SideWorkflow.vue'
+import type { TimelinePost } from '~/interfaces/timeline-post.interface'
 
 const createFormVisible = ref(false)
-const { posts } = storeToRefs(usePostStore())
+const postStore = usePostStore()
 // const { posts, postsDummy } = postStore
 
-const { data, error, execute } = useFetch('/api/posts', {
+const {
+  data: postData,
+  error,
+  pending,
+} = await useFetch<TimelinePost[]>('/api/posts', {
   method: 'GET',
+  lazy: true,
 })
 
-const project = ref([
-  {
-    project: 'Residential Building Construction',
-    code: 'CONST001',
-  },
-  {
-    project: 'Bridge Renovation Project',
-    code: 'CONST002',
-  },
-  {
-    project: 'Road Expansion Program',
-    code: 'CONST003',
-  },
-  {
-    project: 'High-Rise Apartment Development',
-    code: 'CONST004',
-  },
-  {
-    project: 'Shopping Mall Construction',
-    code: 'CONST005',
-  },
-])
-
-onMounted(async () => {
-  await execute()
-  posts.value = data.value
-  console.log(posts.value)
-})
+if (postData.value) {
+  postStore.posts = postData.value
+}
 
 const select = {
   color: 'black',

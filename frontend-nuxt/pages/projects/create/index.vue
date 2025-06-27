@@ -79,7 +79,7 @@
           <ProjectCard
             v-for="item in projects"
             :key="item.id"
-            :item="item"
+            :project="item"
           />
         </div>
       </ScrollPanel>

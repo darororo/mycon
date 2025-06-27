@@ -178,17 +178,20 @@
             style="font-size: 14px"
             :dt="{
               primary: {
+                color: 'black',
                 background: 'white',
                 border: {
                   color: 'grey',
                 },
                 hover: {
+                  color: 'black',
                   background: 'none',
                   border: {
                     color: 'grey',
                   },
                 },
                 active: {
+                  color: 'black',
                   background: 'none',
                   border: {
                     color: 'grey',

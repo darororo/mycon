@@ -12,3 +12,8 @@ export interface UserLogin {
   email: string
   password: string
 }
+
+export interface AuthUser {
+  email: string
+  userId: string
+}

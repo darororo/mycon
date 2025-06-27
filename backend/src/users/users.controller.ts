@@ -19,9 +19,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { SkipThrottle } from '@nestjs/throttler';
 import { ParseJsonPipe } from 'src/common/pipes/parse-json.pipe';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { JwtStrategy } from 'src/auth/strategies/jwt.strategy';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { JwtRefreshAuthGuard } from 'src/auth/guards/jwt-refresh-auth.guard';
+// import { JwtRefreshAuthGuard } from 'src/auth/guards/jwt-refresh-auth.guard';
 
 @SkipThrottle()
 @Controller('users')
@@ -34,13 +33,13 @@ export class UsersController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   findOne(@Param('id') id: number) {
     return this.usersService.findOne(id);
   }

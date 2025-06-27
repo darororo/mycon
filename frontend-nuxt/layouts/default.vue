@@ -2,12 +2,18 @@
 // import SidebarComponent from '~/components/navigation/SidebarComponent.vue'
 import TopbarComponent from '~/components/navigation/TopbarComponent.vue'
 import MenuComponent from '~/components/navigation/MenuComponent.vue'
+
+const { authUser, currentUser } = storeToRefs(useAuthStore())
+if (!currentUser.value) {
+  const { data: u } = useFetch(`/api/users/${authUser.value?.userId}`)
+  currentUser.value = u.value
+}
 </script>
 
 <template>
   <div class="relative overflow-x-clip p-[10px]">
     <div class="fixed z-30 w-full pr-4 top-0">
-      <TopbarComponent />
+      <TopbarComponent :user="currentUser!" />
     </div>
     <div style="height: 1000px; top: 80px; width: auto; position: fixed">
       <MenuComponent />

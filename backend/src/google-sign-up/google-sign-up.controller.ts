@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { GoogleSignUpService } from './google-sign-up.service';
 import { SkipThrottle } from '@nestjs/throttler';
+import { Response } from 'express';
 
 export class GoogleRegisterDto {
   idToken: string;
@@ -22,10 +23,7 @@ export class GoogleSignUpController {
 
   @Post()
   // @HttpCode(HttpStatus.CREATED)
-  async create(
-    @Body() body: GoogleRegisterDto,
-    @Res({ passthrough: true }) response,
-  ) {
+  async create(@Body() body: GoogleRegisterDto, @Res() response: Response) {
     const { idToken } = body;
 
     if (!idToken) {
@@ -40,17 +38,7 @@ export class GoogleSignUpController {
     return {
       success: true,
       message: 'User registered successfully',
-      user,
+      data: user,
     };
-  }
-
-  @Get('test')
-  findAll() {
-    return 'kab dav';
-  }
-
-  @Get()
-  getRoot() {
-    return 'Google sign-up module is working!';
   }
 }

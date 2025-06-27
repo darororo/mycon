@@ -6,9 +6,10 @@
     style="color: black"
   >
     <Avatar
-      :image="user.avatar"
+      :image="getUserAvatar"
       shape="circle"
       style="width: auto; height: 36px"
+      referrerpolicy="no-referrer"
     />
   </Button>
   <Popover
@@ -30,12 +31,12 @@
               <Avatar
                 @click="router.push({ name: 'users', params: { id: 1 } })"
                 style="cursor: pointer"
-                :image="user.avatar"
+                :image="getUserAvatar"
                 shape="circle"
                 class="user-profile"
               />
               <div class="user-details">
-                <h3>{{ user.name }}</h3>
+                <h3>{{ user.firstName }} {{ user.lastName }}</h3>
                 <p>{{ user.role }}</p>
                 <div class="contact-info">
                   <p>
@@ -50,32 +51,13 @@
                       name="typcn:location"
                       size="16px"
                     />
-                    {{ user.location }}
+                    {{ user.address }}
                   </p>
                 </div>
               </div>
             </div>
           </div>
           <hr class="line" />
-          <div>
-            <div
-              v-for="(company, index) in companies"
-              :key="index"
-              class="company-item"
-            >
-              <div class="company-info">
-                <Avatar
-                  :image="company.logo"
-                  shape="circle"
-                  class="list-user-profile"
-                />
-                <span>{{ company.name }}</span>
-              </div>
-              <button class="menu-button">
-                <i class="pi pi-ellipsis-h"></i>
-              </button>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -100,8 +82,15 @@
   </Popover>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import type { User } from '@/interfaces/user.interface'
+
 const router = useRouter()
+
+// Accept user as prop (changed from userData to user)
+const { user } = defineProps<{ user: User }>()
+
+const authStore = useAuthStore()
 
 const emit = defineEmits(['logout', 'settings', 'help'])
 
@@ -112,27 +101,17 @@ const toggleDropdown = event => {
 
 const handleAction = type => {
   dropdown.value.hide()
-  emit(type)
+  if (type === 'logout') {
+    authStore.logout()
+    router.push('/auth/login')
+  }
 }
 
-const user = {
-  name: 'Jonh Cena',
-  role: 'Super admin',
-  email: 'cenajohn169@gmail.com',
-  location: 'Cambodia',
-  avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
-}
-
-const companies = [
-  {
-    name: 'Global Innovation CJ',
-    logo: 'https://randomuser.me/api/portraits/men/91.jpg',
-  },
-  {
-    name: 'Visionary Venture LT',
-    logo: 'https://randomuser.me/api/portraits/men/32.jpg',
-  },
-]
+const getUserAvatar = computed(() => {
+  return user.photos?.[0]?.thumbnail
+    ? `/api/storage/${user.photos[0].thumbnail}`
+    : 'https://picsum.photos/id/237/200/300'
+})
 
 const actions = [
   {

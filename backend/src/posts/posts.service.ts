@@ -14,6 +14,7 @@ import { CommentsService } from 'src/comments/comments.service';
 import { UploadService } from 'src/upload/upload.service';
 import { PostPhoto } from './entities/post-photo.entity';
 import { ConfigService } from '@nestjs/config';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class PostsService {
@@ -24,10 +25,15 @@ export class PostsService {
     @Inject(forwardRef(() => CommentsService))
     private readonly commentService: CommentsService,
     private readonly uploadService: UploadService,
+    private readonly userService: UsersService,
   ) {}
 
   async create(createPostDto: CreatePostDto, files: Express.Multer.File[]) {
     const post = this.postRepository.create(createPostDto);
+
+    const user = await this.userService.findOne(createPostDto.userId);
+
+    post.user = user;
 
     if (files) {
       const pathPrefix = 'posts/';
@@ -68,14 +74,14 @@ export class PostsService {
 
   async findAll() {
     return this.postRepository.find({
-      relations: { comments: true, photos: true },
+      relations: { comments: true, photos: true, user: true },
     });
   }
 
   async findOne(id: number) {
     const post = await this.postRepository.findOne({
       where: { id },
-      relations: { comments: true, photos: true },
+      relations: { comments: true, photos: true, user: true },
     });
     if (!post) {
       throw new NotFoundException();

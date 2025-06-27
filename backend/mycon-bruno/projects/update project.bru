@@ -10,26 +10,18 @@ patch {
   auth: inherit
 }
 
-body:json {
-  {
-    "name": "project 01",
-    "description": "hello world",
-    "location": "VIETNAM",
-    "longtitude": 168,
-    "latitude": 360,
-    "price": 2400
-  }
-}
-
 body:multipart-form {
   jsonData: '''
     {
-      "name": "Koh Kong 01",
-      "description": "hello world",
-      "location": "Cambodia",
-      "longtitude": 168,
-      "latitude": 360,
-      "price": 2400
-    }
+        "name": "Green Valley Residence",
+        "description": "A sustainable housing project focused on clean energy and natural ventilation systems.",
+        "location": "Ching Mai, Thailand",
+        "longtitude": 104888,
+        "latitude": 11556,
+        "price": 43000,
+        "clientId": 1
+     }
+    
+    
   '''
 }
